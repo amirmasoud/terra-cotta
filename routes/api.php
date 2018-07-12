@@ -26,6 +26,10 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::resource('settings/icons', 'Settings\IconController')->except([
         'create'
     ]);
+
+    Route::resource('settings/tags', 'Settings\TagController')->except([
+        'create'
+    ]);
 });
 
 Route::group(['middleware' => 'guest:api'], function () {

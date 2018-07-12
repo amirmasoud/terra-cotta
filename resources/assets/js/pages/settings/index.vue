@@ -42,6 +42,11 @@ export default {
           icon: 'circle',
           name: this.$t('icons'),
           route: 'settings.icons.browse'
+        },
+        {
+          icon: 'tags',
+          name: this.$t('tags'),
+          route: 'settings.tags.browse'
         }
       ]
     }

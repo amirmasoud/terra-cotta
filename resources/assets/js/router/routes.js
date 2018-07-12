@@ -15,6 +15,11 @@ const SettingsIconsShow = () => import('~/pages/settings/icons/show').then(m => 
 const SettingsIconsCreate = () => import('~/pages/settings/icons/create').then(m => m.default || m)
 const SettingsIconsEdit = () => import('~/pages/settings/icons/edit').then(m => m.default || m)
 
+const SettingsTagsBrowse = () => import('~/pages/settings/tags/browse').then(m => m.default || m)
+const SettingsTagsShow = () => import('~/pages/settings/tags/show').then(m => m.default || m)
+const SettingsTagsCreate = () => import('~/pages/settings/tags/create').then(m => m.default || m)
+const SettingsTagsEdit = () => import('~/pages/settings/tags/edit').then(m => m.default || m)
+
 export default [
   { path: '/', name: 'welcome', component: Welcome },
 
@@ -34,7 +39,12 @@ export default [
       { path: 'icons', name: 'settings.icons.browse', component: SettingsIconsBrowse },
       { path: 'icons/create', name: 'settings.icons.create', component: SettingsIconsCreate },
       { path: 'icons/:icons', name: 'settings.icons.show', component: SettingsIconsShow },
-      { path: 'icons/:icons/edit', name: 'settings.icons.edit', component: SettingsIconsEdit }
+      { path: 'icons/:icons/edit', name: 'settings.icons.edit', component: SettingsIconsEdit },
+
+      { path: 'tags', name: 'settings.tags.browse', component: SettingsTagsBrowse },
+      { path: 'tags/create', name: 'settings.tags.create', component: SettingsTagsCreate },
+      { path: 'tags/:tags', name: 'settings.tags.show', component: SettingsTagsShow },
+      { path: 'tags/:tags/edit', name: 'settings.tags.edit', component: SettingsTagsEdit }
     ] },
 
   { path: '*', component: NotFound }
