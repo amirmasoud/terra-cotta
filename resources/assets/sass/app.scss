@@ -1,6 +1,7 @@
 @import 'variables';
-@import '~bootstrap/scss/bootstrap';
+@import '~bootstrap/dist/css/bootstrap.css';
 @import '~sweetalert2/src/sweetalert2';
+@import '~bootstrap-vue/dist/bootstrap-vue.css';
 
 @import 'elements/card';
 @import 'elements/navbar';

@@ -4,16 +4,10 @@ import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 
 // import { } from '@fortawesome/fontawesome-free-regular/shakable.es'
 
-import {
-  faUser, faLock, faSignOutAlt, faCog
-} from '@fortawesome/fontawesome-free-solid/shakable.es'
+import fas from '@fortawesome/fontawesome-free-solid';
+import fab from '@fortawesome/fontawesome-free-brands';
+import far from '@fortawesome/fontawesome-free-regular';
 
-import {
-  faGithub
-} from '@fortawesome/fontawesome-free-brands/shakable.es'
-
-fontawesome.library.add(
-  faUser, faLock, faSignOutAlt, faCog, faGithub
-)
+fontawesome.library.add( fas, fab, far )
 
 Vue.component('fa', FontAwesomeIcon)

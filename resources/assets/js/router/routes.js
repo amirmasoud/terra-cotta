@@ -10,6 +10,11 @@ const Settings = () => import('~/pages/settings/index').then(m => m.default || m
 const SettingsProfile = () => import('~/pages/settings/profile').then(m => m.default || m)
 const SettingsPassword = () => import('~/pages/settings/password').then(m => m.default || m)
 
+const SettingsIconsBrowse = () => import('~/pages/settings/icons/browse').then(m => m.default || m)
+const SettingsIconsShow = () => import('~/pages/settings/icons/show').then(m => m.default || m)
+const SettingsIconsCreate = () => import('~/pages/settings/icons/create').then(m => m.default || m)
+const SettingsIconsEdit = () => import('~/pages/settings/icons/edit').then(m => m.default || m)
+
 export default [
   { path: '/', name: 'welcome', component: Welcome },
 
@@ -24,7 +29,12 @@ export default [
     children: [
       { path: '', redirect: { name: 'settings.profile' } },
       { path: 'profile', name: 'settings.profile', component: SettingsProfile },
-      { path: 'password', name: 'settings.password', component: SettingsPassword }
+      { path: 'password', name: 'settings.password', component: SettingsPassword },
+
+      { path: 'icons', name: 'settings.icons.browse', component: SettingsIconsBrowse },
+      { path: 'icons/create', name: 'settings.icons.create', component: SettingsIconsCreate },
+      { path: 'icons/:icons', name: 'settings.icons.show', component: SettingsIconsShow },
+      { path: 'icons/:icons/edit', name: 'settings.icons.edit', component: SettingsIconsEdit }
     ] },
 
   { path: '*', component: NotFound }
