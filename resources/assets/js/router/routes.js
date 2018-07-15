@@ -25,6 +25,11 @@ const SettingsCategoriesShow = () => import('~/pages/settings/categories/show').
 const SettingsCategoriesCreate = () => import('~/pages/settings/categories/create').then(m => m.default || m)
 const SettingsCategoriesEdit = () => import('~/pages/settings/categories/edit').then(m => m.default || m)
 
+const SettingsTypesBrowse = () => import('~/pages/settings/types/browse').then(m => m.default || m)
+const SettingsTypesShow = () => import('~/pages/settings/types/show').then(m => m.default || m)
+const SettingsTypesCreate = () => import('~/pages/settings/types/create').then(m => m.default || m)
+const SettingsTypesEdit = () => import('~/pages/settings/types/edit').then(m => m.default || m)
+
 export default [
   { path: '/', name: 'welcome', component: Welcome },
 
@@ -54,7 +59,12 @@ export default [
       { path: 'categories', name: 'settings.categories.browse', component: SettingsCategoriesBrowse },
       { path: 'categories/create', name: 'settings.categories.create', component: SettingsCategoriesCreate },
       { path: 'categories/:categories', name: 'settings.categories.show', component: SettingsCategoriesShow },
-      { path: 'categories/:categories/edit', name: 'settings.categories.edit', component: SettingsCategoriesEdit }
+      { path: 'categories/:categories/edit', name: 'settings.categories.edit', component: SettingsCategoriesEdit },
+
+      { path: 'types', name: 'settings.types.browse', component: SettingsTypesBrowse },
+      { path: 'types/create', name: 'settings.types.create', component: SettingsTypesCreate },
+      { path: 'types/:types', name: 'settings.types.show', component: SettingsTypesShow },
+      { path: 'types/:types/edit', name: 'settings.types.edit', component: SettingsTypesEdit }
     ] },
 
   { path: '*', component: NotFound }

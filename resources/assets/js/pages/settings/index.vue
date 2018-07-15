@@ -52,6 +52,11 @@ export default {
           icon: 'folder',
           name: this.$t('categories'),
           route: 'settings.categories.browse'
+        },
+        {
+          icon: 'allergies',
+          name: this.$t('types'),
+          route: 'settings.types.browse'
         }
       ]
     }
