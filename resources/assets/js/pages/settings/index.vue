@@ -47,6 +47,11 @@ export default {
           icon: 'tags',
           name: this.$t('tags'),
           route: 'settings.tags.browse'
+        },
+        {
+          icon: 'folder',
+          name: this.$t('categories'),
+          route: 'settings.categories.browse'
         }
       ]
     }

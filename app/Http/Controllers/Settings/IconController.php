@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Settings;
 
 use App\Icon;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Settings\Icon\SearchRequest;
 use App\Http\Requests\Settings\Icon\CreateRequest;
 use App\Http\Requests\Settings\Icon\UpdateRequest;
 
@@ -77,5 +79,16 @@ class IconController extends Controller
         return $icon->delete()
             ? response(null, 204)
             : response(null, 500);
+    }
+
+    /**
+     * Search icons with name.
+     *
+     * @param  Request $request
+     * @return JSON
+     */
+    public function search(SearchRequest $request)
+    {
+        return Icon::Where('name', 'LIKE', "%{$request->q}%")->paginate();
     }
 }

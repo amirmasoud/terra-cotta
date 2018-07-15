@@ -23,11 +23,17 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::patch('settings/profile', 'Settings\ProfileController@update');
     Route::patch('settings/password', 'Settings\PasswordController@update');
 
+    Route::get('settings/icons/search', 'Settings\IconController@search')
+        ->name('icons.search');
     Route::resource('settings/icons', 'Settings\IconController')->except([
         'create'
     ]);
 
     Route::resource('settings/tags', 'Settings\TagController')->except([
+        'create'
+    ]);
+
+    Route::resource('settings/categories', 'Settings\CategoryController')->except([
         'create'
     ]);
 });

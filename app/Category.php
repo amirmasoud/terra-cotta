@@ -2,10 +2,10 @@
 
 namespace App;
 
-use App\Category;
+use App\Icon;
 use Illuminate\Database\Eloquent\Model;
 
-class Icon extends Model
+class Category extends Model
 {
     /**
      * The attributes that are mass assignable.
@@ -13,16 +13,16 @@ class Icon extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'class', 'markup',
+        'name', 'icon_id',
     ];
 
     /**
-     * An icon has many category.
+     * A category belongs to an icon.
      *
-     * @return \App\Category
+     * @return \App\Icon
      */
-    public function categories()
+    public function icon()
     {
-        return $this->hasMany(Category::class);
+        return $this->belongsTo(Icon::class);
     }
 }

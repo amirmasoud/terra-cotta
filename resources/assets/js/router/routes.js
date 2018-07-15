@@ -20,6 +20,11 @@ const SettingsTagsShow = () => import('~/pages/settings/tags/show').then(m => m.
 const SettingsTagsCreate = () => import('~/pages/settings/tags/create').then(m => m.default || m)
 const SettingsTagsEdit = () => import('~/pages/settings/tags/edit').then(m => m.default || m)
 
+const SettingsCategoriesBrowse = () => import('~/pages/settings/categories/browse').then(m => m.default || m)
+const SettingsCategoriesShow = () => import('~/pages/settings/categories/show').then(m => m.default || m)
+const SettingsCategoriesCreate = () => import('~/pages/settings/categories/create').then(m => m.default || m)
+const SettingsCategoriesEdit = () => import('~/pages/settings/categories/edit').then(m => m.default || m)
+
 export default [
   { path: '/', name: 'welcome', component: Welcome },
 
@@ -44,7 +49,12 @@ export default [
       { path: 'tags', name: 'settings.tags.browse', component: SettingsTagsBrowse },
       { path: 'tags/create', name: 'settings.tags.create', component: SettingsTagsCreate },
       { path: 'tags/:tags', name: 'settings.tags.show', component: SettingsTagsShow },
-      { path: 'tags/:tags/edit', name: 'settings.tags.edit', component: SettingsTagsEdit }
+      { path: 'tags/:tags/edit', name: 'settings.tags.edit', component: SettingsTagsEdit },
+
+      { path: 'categories', name: 'settings.categories.browse', component: SettingsCategoriesBrowse },
+      { path: 'categories/create', name: 'settings.categories.create', component: SettingsCategoriesCreate },
+      { path: 'categories/:categories', name: 'settings.categories.show', component: SettingsCategoriesShow },
+      { path: 'categories/:categories/edit', name: 'settings.categories.edit', component: SettingsCategoriesEdit }
     ] },
 
   { path: '*', component: NotFound }
