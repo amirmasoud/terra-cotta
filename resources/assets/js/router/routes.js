@@ -30,6 +30,11 @@ const SettingsTypesShow = () => import('~/pages/settings/types/show').then(m => 
 const SettingsTypesCreate = () => import('~/pages/settings/types/create').then(m => m.default || m)
 const SettingsTypesEdit = () => import('~/pages/settings/types/edit').then(m => m.default || m)
 
+const SettingsGroupsBrowse = () => import('~/pages/settings/groups/browse').then(m => m.default || m)
+const SettingsGroupsShow = () => import('~/pages/settings/groups/show').then(m => m.default || m)
+const SettingsGroupsCreate = () => import('~/pages/settings/groups/create').then(m => m.default || m)
+const SettingsGroupsEdit = () => import('~/pages/settings/groups/edit').then(m => m.default || m)
+
 export default [
   { path: '/', name: 'welcome', component: Welcome },
 
@@ -64,7 +69,12 @@ export default [
       { path: 'types', name: 'settings.types.browse', component: SettingsTypesBrowse },
       { path: 'types/create', name: 'settings.types.create', component: SettingsTypesCreate },
       { path: 'types/:types', name: 'settings.types.show', component: SettingsTypesShow },
-      { path: 'types/:types/edit', name: 'settings.types.edit', component: SettingsTypesEdit }
+      { path: 'types/:types/edit', name: 'settings.types.edit', component: SettingsTypesEdit },
+
+      { path: 'groups', name: 'settings.groups.browse', component: SettingsGroupsBrowse },
+      { path: 'groups/create', name: 'settings.groups.create', component: SettingsGroupsCreate },
+      { path: 'groups/:groups', name: 'settings.groups.show', component: SettingsGroupsShow },
+      { path: 'groups/:groups/edit', name: 'settings.groups.edit', component: SettingsGroupsEdit }
     ] },
 
   { path: '*', component: NotFound }

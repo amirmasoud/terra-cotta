@@ -57,6 +57,11 @@ export default {
           icon: 'allergies',
           name: this.$t('types'),
           route: 'settings.types.browse'
+        },
+        {
+          icon: 'archive',
+          name: this.$t('groups'),
+          route: 'settings.groups.browse'
         }
       ]
     }

@@ -40,6 +40,10 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::resource('settings/types', 'Settings\TypeController')->except([
         'create'
     ]);
+
+    Route::resource('settings/groups', 'Settings\GroupController')->except([
+        'create'
+    ]);
 });
 
 Route::group(['middleware' => 'guest:api'], function () {
