@@ -6,6 +6,7 @@ use App\Group;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Settings\Group\CreateRequest;
 use App\Http\Requests\Settings\Group\UpdateRequest;
+use App\Http\Requests\Settings\Group\SearchRequest;
 
 class GroupController extends Controller
 {
@@ -77,5 +78,16 @@ class GroupController extends Controller
         return $group->delete()
             ? response(null, 204)
             : response(null, 500);
+    }
+
+    /**
+     * Search groups with name.
+     *
+     * @param  Request $request
+     * @return JSON
+     */
+    public function search(SearchRequest $request)
+    {
+        return Group::Where('name', 'LIKE', "%{$request->q}%")->paginate();
     }
 }

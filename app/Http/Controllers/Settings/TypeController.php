@@ -6,6 +6,7 @@ use App\Type;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Settings\Type\CreateRequest;
 use App\Http\Requests\Settings\Type\UpdateRequest;
+use App\Http\Requests\Settings\Type\SearchRequest;
 
 class TypeController extends Controller
 {
@@ -77,5 +78,16 @@ class TypeController extends Controller
         return $type->delete()
             ? response(null, 204)
             : response(null, 500);
+    }
+
+    /**
+     * Search types with name.
+     *
+     * @param  Request $request
+     * @return JSON
+     */
+    public function search(SearchRequest $request)
+    {
+        return Type::Where('name', 'LIKE', "%{$request->q}%")->paginate();
     }
 }

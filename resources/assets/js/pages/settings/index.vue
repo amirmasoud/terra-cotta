@@ -62,6 +62,11 @@ export default {
           icon: 'archive',
           name: this.$t('groups'),
           route: 'settings.groups.browse'
+        },
+        {
+          icon: 'file-alt',
+          name: this.$t('fields'),
+          route: 'settings.fields.browse'
         }
       ]
     }

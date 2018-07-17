@@ -35,6 +35,11 @@ const SettingsGroupsShow = () => import('~/pages/settings/groups/show').then(m =
 const SettingsGroupsCreate = () => import('~/pages/settings/groups/create').then(m => m.default || m)
 const SettingsGroupsEdit = () => import('~/pages/settings/groups/edit').then(m => m.default || m)
 
+const SettingsFieldsBrowse = () => import('~/pages/settings/fields/browse').then(m => m.default || m)
+const SettingsFieldsShow = () => import('~/pages/settings/fields/show').then(m => m.default || m)
+const SettingsFieldsCreate = () => import('~/pages/settings/fields/create').then(m => m.default || m)
+const SettingsFieldsEdit = () => import('~/pages/settings/fields/edit').then(m => m.default || m)
+
 export default [
   { path: '/', name: 'welcome', component: Welcome },
 
@@ -74,7 +79,12 @@ export default [
       { path: 'groups', name: 'settings.groups.browse', component: SettingsGroupsBrowse },
       { path: 'groups/create', name: 'settings.groups.create', component: SettingsGroupsCreate },
       { path: 'groups/:groups', name: 'settings.groups.show', component: SettingsGroupsShow },
-      { path: 'groups/:groups/edit', name: 'settings.groups.edit', component: SettingsGroupsEdit }
+      { path: 'groups/:groups/edit', name: 'settings.groups.edit', component: SettingsGroupsEdit },
+
+      { path: 'fields', name: 'settings.fields.browse', component: SettingsFieldsBrowse },
+      { path: 'fields/create', name: 'settings.fields.create', component: SettingsFieldsCreate },
+      { path: 'fields/:fields', name: 'settings.fields.show', component: SettingsFieldsShow },
+      { path: 'fields/:fields/edit', name: 'settings.fields.edit', component: SettingsFieldsEdit }
     ] },
 
   { path: '*', component: NotFound }

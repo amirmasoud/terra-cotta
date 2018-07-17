@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Icon;
+use App\Field;
 use Illuminate\Database\Eloquent\Model;
 
 class Group extends Model
@@ -24,5 +25,15 @@ class Group extends Model
     public function icon()
     {
         return $this->belongsTo(Icon::class);
+    }
+
+    /**
+     * An type has many groups.
+     *
+     * @return hasMany
+     */
+    public function groups()
+    {
+        return $this->hasMany(Field::class);
     }
 }

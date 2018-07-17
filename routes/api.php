@@ -37,11 +37,19 @@ Route::group(['middleware' => 'auth:api'], function () {
         'create'
     ]);
 
+    Route::get('settings/types/search', 'Settings\TypeController@search')
+        ->name('types.search');
     Route::resource('settings/types', 'Settings\TypeController')->except([
         'create'
     ]);
 
+    Route::get('settings/groups/search', 'Settings\GroupController@search')
+        ->name('groups.search');
     Route::resource('settings/groups', 'Settings\GroupController')->except([
+        'create'
+    ]);
+
+    Route::resource('settings/fields', 'Settings\FieldController')->except([
         'create'
     ]);
 });
