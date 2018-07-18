@@ -23,6 +23,8 @@ class CreateFieldsTable extends Migration
             $table->foreign('type_id')->references('id')->on('types');
             $table->unsignedInteger('group_id');
             $table->foreign('group_id')->references('id')->on('groups');
+            $table->unsignedInteger('safe_id');
+            $table->foreign('safe_id')->references('id')->on('safes');
             $table->timestamps();
         });
     }

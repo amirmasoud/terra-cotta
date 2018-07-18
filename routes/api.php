@@ -52,6 +52,12 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::resource('settings/fields', 'Settings\FieldController')->except([
         'create'
     ]);
+
+    Route::get('safes/search', 'SafeController@search')
+        ->name('safes.search');
+    Route::resource('safes', 'SafeController')->except([
+        'create'
+    ]);
 });
 
 Route::group(['middleware' => 'guest:api'], function () {

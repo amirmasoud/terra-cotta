@@ -40,6 +40,12 @@ const SettingsFieldsShow = () => import('~/pages/settings/fields/show').then(m =
 const SettingsFieldsCreate = () => import('~/pages/settings/fields/create').then(m => m.default || m)
 const SettingsFieldsEdit = () => import('~/pages/settings/fields/edit').then(m => m.default || m)
 
+const Safes = () => import('~/pages/safes/index').then(m => m.default || m)
+const SafesBrowse = () => import('~/pages/safes/crud/browse').then(m => m.default || m)
+const SafesShow = () => import('~/pages/safes/crud/show').then(m => m.default || m)
+const SafesCreate = () => import('~/pages/safes/crud/create').then(m => m.default || m)
+const SafesEdit = () => import('~/pages/safes/crud/edit').then(m => m.default || m)
+
 export default [
   { path: '/', name: 'welcome', component: Welcome },
 
@@ -86,6 +92,16 @@ export default [
       { path: 'fields/:fields', name: 'settings.fields.show', component: SettingsFieldsShow },
       { path: 'fields/:fields/edit', name: 'settings.fields.edit', component: SettingsFieldsEdit }
     ] },
+
+  { path: '/safes',
+    component: Safes,
+    children: [
+      { path: '/', name: 'safes.browse', component: SafesBrowse },
+      { path: 'create', name: 'safes.create', component: SafesCreate },
+      { path: ':safes', name: 'safes.show', component: SafesShow },
+      { path: ':safes/edit', name: 'safes.edit', component: SafesEdit }
+    ]
+  },
 
   { path: '*', component: NotFound }
 ]

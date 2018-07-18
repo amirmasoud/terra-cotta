@@ -1,17 +1,18 @@
 <template>
-  <card :title="$t('fields')"
-    :router-name="$t('create_field')"
-    :router-link="'settings.fields.create'">
+  <card :title="$t('safes')"
+    :router-name="$t('create_safe')"
+    :router-link="'safes.create'">
     <vuetable ref="vuetable"
-      api-url="/api/settings/fields"
+      api-url="/api/safes"
       :fields="fields"
+      track-by="id"
     >
       <template slot="actions" slot-scope="props">
         <div class="custom-actions">
           <b-link
-            @click="$router.push({ name: 'settings.fields.show', params: { fields: props.rowData.id }})"><fa icon="eye"></fa></b-link>
+            @click="$router.push({ name: 'safes.show', params: { safes: props.rowData.id }})"><fa icon="eye"></fa></b-link>
           <b-link
-            @click="$router.push({ name: 'settings.fields.edit', params: { fields: props.rowData.id }})"><fa icon="edit"></fa></b-link>
+            @click="$router.push({ name: 'safes.edit', params: { safes: props.rowData.id }})"><fa icon="edit"></fa></b-link>
           <b-link
             @click="confirmDelete(props.rowData.id, props.rowIndex)"><fa icon="trash"></fa></b-link>
         </div>
@@ -34,7 +35,7 @@ export default {
   },
 
   metaInfo () {
-    return { title: this.$t('fields') }
+    return { title: this.$t('safes') }
   },
 
   computed: mapGetters({
@@ -48,22 +49,7 @@ export default {
           name: '__checkbox'
         },
         {
-          name: 'lable',
-        },
-        {
-          name: 'value',
-        },
-        {
-          name: 'icon_id',
-        },
-        {
-          name: 'type_id',
-        },
-        {
-          name: 'group_id',
-        },
-        {
-          name: 'safe_id',
+          name: 'name',
         },
         {
           name: '__slot:actions',
@@ -75,25 +61,25 @@ export default {
 
   methods: {
     /**
-     * Destroy an field.
+     * Destroy an safe.
      *
-     * @param  {integer} fieldId
+     * @param  {integer} safeId
      * @param  {integer} index
      * @return {void}
      */
-    async destroy (fieldId, index) {
-      await axios.delete('/api/settings/fields/' + fieldId)
+    async destroy (safeId, index) {
+      await axios.delete('/api/safes/' + safeId)
       this.$refs.vuetable.refresh()
     },
 
     /**
      * Show confirm dialog before destroy.
      *
-     * @param  {integer} fieldId
+     * @param  {integer} safeId
      * @param  {index}   index
      * @return {void}
      */
-    confirmDelete(fieldId, index) {
+    confirmDelete(safeId, index) {
       swal({
         title: this.$t('are_you_sure'),
         text: this.$t('delete_confirm_description'),
@@ -104,10 +90,10 @@ export default {
         confirmButtonText: this.$t('yes_delete_it'),
       }).then((result) => {
         if (result.value) {
-          this.destroy(fieldId, index)
+          this.destroy(safeId, index)
           swal(
             this.$t('deleted!'),
-            this.$t('field_deleted'),
+            this.$t('safe_deleted'),
             'success'
           )
         }

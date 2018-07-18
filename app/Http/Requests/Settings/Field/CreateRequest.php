@@ -28,7 +28,8 @@ class CreateRequest extends FormRequest
             'value'    => 'required|max:255',
             'icon_id'  => 'nullable|exists:icons,id',
             'type_id'  => 'required|exists:types,id',
-            'group_id' => 'required|exists:groups,id'
+            'group_id' => 'required|exists:groups,id',
+            'safe_id'  => 'required|exists:safes,id'
         ];
     }
 }
