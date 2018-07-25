@@ -6,6 +6,7 @@ use App\Tag;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Settings\Tag\CreateRequest;
 use App\Http\Requests\Settings\Tag\UpdateRequest;
+use App\Http\Requests\Settings\Tag\SearchRequest;
 
 class TagController extends Controller
 {
@@ -77,5 +78,16 @@ class TagController extends Controller
         return $tag->delete()
             ? response(null, 204)
             : response(null, 500);
+    }
+
+    /**
+     * Search categories with name.
+     *
+     * @param  Request $request
+     * @return JSON
+     */
+    public function search(SearchRequest $request)
+    {
+        return Tag::Where('name', 'LIKE', "%{$request->q}%")->paginate();
     }
 }

@@ -25,7 +25,8 @@ class UpdateRequest extends FormRequest
     {
         return [
             'name'    => 'required|max:255',
-            'icon_id' => 'nullable|exists:icons,id'
+            'icon_id' => 'nullable|exists:icons,id',
+            'safe_id' => 'required|exists:safes,id'
         ];
     }
 }

@@ -1,0 +1,38 @@
+.vue-tags-input {
+  width: 100%;
+  max-width: 100% !important;
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out !important;
+  &:focus-within {
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out !important;
+    .input {
+      border-color: #80bdff !important;
+    }
+  }
+  .input {
+    border: 1px solid #ced4da;
+    padding: 4px;
+    border-radius: 0.25rem;
+  }
+  .tag.valid {
+    background-color: #057aff;
+    border-radius: 0.25rem;
+  }
+
+  &.is-invalid {
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out !important;
+    &:focus-within {
+      box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+      transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out !important;
+    }
+    .input {
+      border-color: #dc3545 !important;
+    }
+  }
+  .selected-item {
+    background-color: #057aff !important;
+    border-radius: 0.25rem !important;
+  }
+}

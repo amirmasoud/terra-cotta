@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Tag;
+use App\Type;
 use App\Safe;
+use App\Field;
+use App\Group;
+use App\Category;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Safe\CreateRequest;
 use App\Http\Requests\Safe\UpdateRequest;
@@ -28,7 +33,36 @@ class SafeController extends Controller
      */
     public function store(CreateRequest $request)
     {
-        return Safe::create($request->all());
+        $safe = Safe::create($request->all());
+
+        // Attach categories
+        if ($request->categories) {
+            foreach ($request->categories as $categoryId) {
+                $safe->categories()->attach($categoryId);
+            }
+        }
+
+        // Attach tags
+        if ($request->tags) {
+            foreach ($request->tags as $tagId) {
+                $safe->tags()->attach($tagId);
+            }
+        }
+
+        // Create and save groups and fields
+        foreach ($request->groups as $g) {
+            $group = $safe->groups()->create($g);
+            if (array_key_exists('fields', $g)) {
+                foreach ($g['fields'] as $f) {
+                    $field = new Field($f);
+                    $field->type_id = $f['type'] ?? Type::default()->id;
+                    $field->group_id = $group->id;
+                    $safe->fields()->save($field);
+                }
+            }
+        }
+
+        return response(null, 201);
     }
 
     /**

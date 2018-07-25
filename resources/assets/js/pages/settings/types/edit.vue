@@ -1,6 +1,6 @@
 <template>
   <form @submit.prevent="update" @keydown="form.onKeydown($event)">
-    <alert-success :form="form" :message="$t('icon_updated')" class="mt-2" />
+    <alert-success :form="form" :message="$t('type_updated')" class="mt-2" />
     <card :title="$t('update_icon')">
       <!-- Name -->
       <div class="form-group row">

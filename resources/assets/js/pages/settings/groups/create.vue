@@ -29,6 +29,24 @@
         </div>
       </div>
 
+      <!-- Safe ID -->
+      <div class="form-group row">
+        <label class="col-md-3 col-form-label text-md-right">{{ $t('safe_id') }}</label>
+        <div class="col-md-7">
+          <autocomplete
+            source="/api/safes/search?q="
+            results-property="data"
+            results-display="name"
+            name="safe_id"
+            :class="{ 'is-invalid': form.errors.has('safe_id') }"
+            @selected="addSafeId"
+            @clear="clearSafeId"
+            initialValue="form.safe_id">
+          </autocomplete>
+          <div class="help-block invalid-feedback d-block" v-if="form.errors.has('safe_id')" v-html="form.errors.get('safe_id')"/>
+        </div>
+      </div>
+
       <!-- Submit Button -->
       <div class="form-group row">
         <div class="col-md-9 ml-auto">
@@ -64,7 +82,8 @@ export default {
     return {
       form: new Form({
         name: '',
-        icon_id: ''
+        icon_id: '',
+        group_id: ''
       })
     }
   },
@@ -83,6 +102,15 @@ export default {
 
     clearIconId () {
       this.form.icon_id = null
+    },
+
+    addSafeId (safe) {
+      this.form.safe_id = safe.value
+      this.form.errors.clear('safe_id')
+    },
+
+    clearSafeId () {
+      this.form.safe_id = null
     }
   }
 }

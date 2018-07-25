@@ -24,7 +24,11 @@ class CreateRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required',
+            'name'       => 'required',
+            'categories' => 'required',
+            'tags'       => 'nullable',
+            // 'groups'     => 'required',
+            // 'fields'     => 'required',
         ];
     }
 }

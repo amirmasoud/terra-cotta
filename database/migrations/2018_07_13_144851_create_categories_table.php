@@ -17,7 +17,8 @@ class CreateCategoriesTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->unsignedInteger('icon_id')->nullable();
-            $table->foreign('icon_id')->references('id')->on('icons');
+            $table->foreign('icon_id')->references('id')
+                  ->on('icons')->onDelete('cascade');
             $table->timestamps();
         });
     }

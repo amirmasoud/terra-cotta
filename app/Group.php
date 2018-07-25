@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Icon;
+use App\Safe;
 use App\Field;
 use Illuminate\Database\Eloquent\Model;
 
@@ -14,7 +15,7 @@ class Group extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'icon_id'
+        'name', 'icon_id', 'safe_id'
     ];
 
     /**
@@ -28,12 +29,22 @@ class Group extends Model
     }
 
     /**
-     * An type has many groups.
+     * A field has many groups.
      *
      * @return hasMany
      */
-    public function groups()
+    public function fields()
     {
         return $this->hasMany(Field::class);
+    }
+
+    /**
+     * A group belongs to a safe.
+     *
+     * @return belongsTo
+     */
+    public function safe()
+    {
+        return $this->belongsTo(Safe::class);
     }
 }

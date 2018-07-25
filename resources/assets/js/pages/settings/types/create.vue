@@ -1,6 +1,6 @@
 <template>
   <form @submit.prevent="store" @keydown="form.onKeydown($event)">
-    <alert-success :form="form" :message="$t('tag_created')" class="mt-2" />
+    <alert-success :form="form" :message="$t('type_created')" class="mt-2" />
     <card :title="$t('create_tag')">
       <!-- Name -->
       <div class="form-group row">

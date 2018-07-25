@@ -6,6 +6,7 @@ use App\Category;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Settings\Category\CreateRequest;
 use App\Http\Requests\Settings\Category\UpdateRequest;
+use App\Http\Requests\Settings\Category\SearchRequest;
 
 class CategoryController extends Controller
 {
@@ -77,5 +78,16 @@ class CategoryController extends Controller
         return $category->delete()
             ? response(null, 204)
             : response(null, 500);
+    }
+
+    /**
+     * Search categories with name.
+     *
+     * @param  Request $request
+     * @return JSON
+     */
+    public function search(SearchRequest $request)
+    {
+        return Category::Where('name', 'LIKE', "%{$request->q}%")->paginate();
     }
 }

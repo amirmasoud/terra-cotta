@@ -1,6 +1,6 @@
 <template>
   <div>
-    <template v-if="! loading">
+    <template v-if="! safeLoading && ! iconLoading">
       <form @submit.prevent="update" @keydown="form.onKeydown($event)">
         <alert-success :form="form" :message="$t('group_updated')" class="mt-2" />
         <card :title="$t('update_group')">
@@ -29,6 +29,25 @@
                 :initialDisplay="iconIdInitialDisplay">
               </autocomplete>
               <div class="help-block invalid-feedback d-block" v-if="form.errors.has('icon_id')" v-html="form.errors.get('icon_id')"/>
+            </div>
+          </div>
+
+          <!-- Safe ID -->
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label text-md-right">{{ $t('safe_id') }}</label>
+            <div class="col-md-7">
+              <autocomplete
+                source="/api/safes/search?q="
+                results-property="data"
+                results-display="name"
+                name="safe_id"
+                :class="{ 'is-invalid': form.errors.has('safe_id') }"
+                @selected="addSafeId"
+                @clear="clearSafeId"
+                :initialValue="form.safe_id"
+                :initialDisplay="safeIdInitialDisplay">
+              </autocomplete>
+              <div class="help-block invalid-feedback d-block" v-if="form.errors.has('safe_id')" v-html="form.errors.get('safe_id')"/>
             </div>
           </div>
 
@@ -72,10 +91,13 @@ export default {
     return {
       form: new Form({
         name: '',
-        icon_id: ''
+        icon_id: '',
+        safe_id: ''
       }),
       iconIdInitialDisplay: null,
-      loading: true
+      safeIdInitialDisplay: null,
+      iconLoading: true,
+      safeLoading: true
     }
   },
 
@@ -95,6 +117,11 @@ export default {
       })
 
       this.fillIconName()
+      this.fillSafeName()
+    },
+
+    async update () {
+      await this.form.patch('/api/settings/groups/' + this.$route.params.groups)
     },
 
     async fillIconName () {
@@ -105,11 +132,7 @@ export default {
         this.iconIdInitialDisplay = ''
         this.form.icon_id = null
       }
-      this.loading = false
-    },
-
-    async update () {
-      await this.form.patch('/api/settings/groups/' + this.$route.params.groups)
+      this.iconLoading = false
     },
 
     addIconId (icon) {
@@ -119,6 +142,26 @@ export default {
 
     clearIconId () {
       this.form.icon_id = null
+    },
+
+    async fillSafeName () {
+      if (this.form.safe_id) {
+        const { data } = await axios.get('/api/safes/' + this.form.safe_id)
+        this.safeIdInitialDisplay = data.name
+      } else {
+        this.safeIdInitialDisplay = ''
+        this.form.safe_id = null
+      }
+      this.safeLoading = false
+    },
+
+    addSafeId (safe) {
+      this.form.safe_id = icon.value
+      this.form.errors.clear('safe_id')
+    },
+
+    clearSafeId () {
+      this.form.safe_id = null
     }
   }
 }

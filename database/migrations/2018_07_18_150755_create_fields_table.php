@@ -18,13 +18,17 @@ class CreateFieldsTable extends Migration
             $table->string('label');
             $table->string('value')->nullable();
             $table->unsignedInteger('icon_id')->nullable();
-            $table->foreign('icon_id')->references('id')->on('icons');
+            $table->foreign('icon_id')->references('id')
+                  ->on('icons')->onDelete('cascade');
             $table->unsignedInteger('type_id');
-            $table->foreign('type_id')->references('id')->on('types');
+            $table->foreign('type_id')->references('id')
+                  ->on('types')->onDelete('cascade');
             $table->unsignedInteger('group_id');
-            $table->foreign('group_id')->references('id')->on('groups');
+            $table->foreign('group_id')->references('id')
+                  ->on('groups')->onDelete('cascade');
             $table->unsignedInteger('safe_id');
-            $table->foreign('safe_id')->references('id')->on('safes');
+            $table->foreign('safe_id')->references('id')
+                  ->on('safes')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -29,10 +29,14 @@ Route::group(['middleware' => 'auth:api'], function () {
         'create'
     ]);
 
+    Route::get('settings/tags/search', 'Settings\TagController@search')
+        ->name('tags.search');
     Route::resource('settings/tags', 'Settings\TagController')->except([
         'create'
     ]);
 
+    Route::get('settings/categories/search', 'Settings\CategoryController@search')
+        ->name('categories.search');
     Route::resource('settings/categories', 'Settings\CategoryController')->except([
         'create'
     ]);

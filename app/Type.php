@@ -25,4 +25,14 @@ class Type extends Model
     {
         return $this->hasMany(Field::class);
     }
+
+    /**
+     * Return default type model.
+     *
+     * @return \App\Type
+     */
+    public static function default()
+    {
+        return self::orderBy('created_at', 'asc')->first();
+    }
 }

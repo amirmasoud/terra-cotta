@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Icon;
+use App\Safe;
 use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
@@ -24,5 +25,15 @@ class Category extends Model
     public function icon()
     {
         return $this->belongsTo(Icon::class);
+    }
+
+    /**
+     * A category belongs to many safe.
+     *
+     * @return belonsToMany
+     */
+    public function safes()
+    {
+        return $this->belongsToMany(Safe::class)->withTimestamps();
     }
 }
