@@ -26,6 +26,7 @@
     "sweetalert2": "^7.19.3",
     "vform": "^1.0.0",
     "vue": "^2.5.16",
+    "vue-color": "^2.4.6",
     "vue-i18n": "^7.6.0",
     "vue-meta": "^1.5.0",
     "vue-router": "^3.0.1",
