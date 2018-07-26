@@ -1,6 +1,6 @@
 <?php
 
-return [
+$validation = [
 
     /*
     |--------------------------------------------------------------------------
@@ -116,6 +116,22 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        //
+    ],
 
 ];
+
+if (request()['groups']) {
+    foreach (request()['groups'] as $gkey => $group) {
+        $validation['attributes']['groups.' . $gkey . '.name'] = 'group name';
+        if ($group['fields']) {
+            foreach ($group['fields'] as $fkey => $field) {
+                $validation['attributes']['groups.' . $gkey . '.fields.' . $fkey . '.label'] = 'label';
+                $validation['attributes']['groups.' . $gkey . '.fields.' . $fkey . '.value'] = 'value';
+            }
+        }
+    }
+}
+
+return $validation;

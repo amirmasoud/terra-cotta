@@ -50,23 +50,25 @@
       <div v-for="(group, index) in form.groups">
         <div class="form-group row">
           <div class="input-group col-md-7 offset-md-3">
-            <input v-model="group.name" class="form-control" type="text" name="groups[index]['name']" aria-label="Text input with segmented dropdown button">
+            <input v-model="group.name" class="form-control" type="text" name="groups[index]['name']" aria-label="Text input with segmented dropdown button" :class="{ 'is-invalid': form.errors.has('groups.' + index + '.name') }">
             <input v-model="group.id" class="form-control" type="hidden" name="groups[index]['id']" aria-label="Text input with segmented dropdown button">
             <div class="input-group-append">
-              <button type="button" class="btn btn-outline-danger" @click="deleteGroup(index)"><fa icon="minus-circle" fixed-width /></button>
+              <button type="button" class="btn btn-outline-danger" @click="deleteGroup(index)" style="border-radius: 0 4px 4px 0;"><fa icon="minus-circle" fixed-width /></button>
             </div>
+            <div class="help-block invalid-feedback d-block" v-if="form.errors.has('groups.' + index + '.name')" v-html="form.errors.get('groups.' + index + '.name')"/>
           </div>
         </div>
 
         <div class="form-group row fields-group" v-for="(field, findex) in group.fields" :key="findex">
           <div class="col-md-3 text-md-right mb-1">
-            <input v-model="field.label" class="form-control" type="text" name="groups[index]['fields'][findex]['label']">
+            <input v-model="field.label" class="form-control" type="text" name="groups[index]['fields'][findex]['label']" :class="{ 'is-invalid': form.errors.has('groups.' + index + '.fields.' + findex + '.label') }">
+            <div class="help-block invalid-feedback d-block" v-if="form.errors.has('groups.' + index + '.fields.' + findex + '.label')" v-html="form.errors.get('groups.' + index + '.fields.' + findex + '.label')"/>
           </div>
           <div class="input-group col-md-7 mb-1">
-            <input v-model="field.value" type="text" class="form-control" aria-label="Text input with segmented dropdown button" name="groups[index]['fields'][findex]['value']">
+            <input v-model="field.value" type="text" class="form-control" aria-label="Text input with segmented dropdown button" name="groups[index]['fields'][findex]['value']" :class="{ 'is-invalid': form.errors.has('groups.' + index + '.fields.' + findex + '.value') }">
             <div class="input-group-append">
               <button type="button" class="btn btn-outline-danger" @click="deleteField(findex, index)"><fa icon="minus" fixed-width /></button>
-              <button type="button" class="btn btn-outline-secondary dropdown-toggle px-2" :class="{'dropdown-loading': !types}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <button type="button" class="btn btn-outline-secondary dropdown-toggle px-2" :class="{'dropdown-loading': !types}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="border-radius: 0 4px 4px 0;">
                 <span class="sr-only">Toggle Dropdown</span>
                 <fa v-if="!types" icon="spinner" size="lg" fixed-width spin />
               </button>
@@ -74,6 +76,7 @@
                 <a class="dropdown-item" href="#" v-for="type in types" @click.prevent="fieldType(index, findex, type.id)">{{ type.name }}</a>
               </div>
             </div>
+            <div class="help-block invalid-feedback d-block" v-if="form.errors.has('groups.' + index + '.fields.' + findex + '.value')" v-html="form.errors.get('groups.' + index + '.fields.' + findex + '.value')"/>
           </div>
         </div>
 

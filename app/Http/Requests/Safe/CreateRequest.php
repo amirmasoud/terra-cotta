@@ -23,12 +23,59 @@ class CreateRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        $rules = [
             'name'       => 'required',
             'categories' => 'required',
             'tags'       => 'nullable',
             // 'groups'     => 'required',
             // 'fields'     => 'required',
         ];
+        foreach (request()['groups'] as $gkey => $group) {
+            $rules['groups.' . $gkey . '.name'] = 'required';
+            if ($group['fields']) {
+                foreach ($group['fields'] as $fkey => $field) {
+                    $rules['groups.' . $gkey . '.fields.' . $fkey . '.label'] = 'required';
+                    $rules['groups.' . $gkey . '.fields.' . $fkey . '.value'] = 'required' . $this->smartRules($field['label'], $field['type']);
+                }
+            }
+        }
+        return $rules;
+    }
+
+    /**
+     * Guess additional rules from label and type
+     *
+     * @return string
+     */
+    private function smartRules($label, $type)
+    {
+        $label = strtolower($label);
+        $rules = [];
+
+        switch ($label) {
+            case 'ip':
+                $rules[] = 'ip';
+                break;
+
+            case 'mail':
+            case 'email':
+            case 'e-mail':
+                $rules[] = 'email';
+                break;
+
+            case 'url':
+                $rules[] = 'url';
+                break;
+
+            default:
+                //
+                break;
+        }
+
+        if (empty($rules)) {
+            return '';
+        } else {
+            return '|' . implode('|', $rules);
+        }
     }
 }
