@@ -10,9 +10,9 @@
         <slot name="actions">
           <div class="custom-actions">
             <b-link
-              @click="$router.push({ name: 'settings.' + plural + '.show', params: { [plural]: props.rowData.id }})"><fa icon="eye"></fa></b-link>
+              @click="$router.push({ name: [pathNamePrefix()] + '.show', params: { [plural]: props.rowData.id }})"><fa icon="eye"></fa></b-link>
             <b-link
-              @click="$router.push({ name: 'settings.' + plural + '.edit', params: { [plural]: props.rowData.id }})"><fa icon="edit"></fa></b-link>
+              @click="$router.push({ name: [pathNamePrefix()] + '.edit', params: { [plural]: props.rowData.id }})"><fa icon="edit"></fa></b-link>
             <b-link
               @click="confirmDelete(props.rowData.id, props.rowIndex)"><fa icon="trash"></fa></b-link>
           </div>
@@ -61,7 +61,8 @@ export default {
     fields: { type: Array },
     paginationPath: { type: String, default: '' },
     singular: { type: String },
-    plural: { type: String }
+    plural: { type: String },
+    prefix: { type: String, default: 'settings' }
   },
 
   data: function () {
@@ -142,6 +143,18 @@ export default {
      */
     onChangePage (page) {
       this.$refs.vuetable.changePage(page)
+    },
+
+    /**
+     * Set path name prefix
+     * @return {string}
+     */
+    pathNamePrefix () {
+      if (this.prefix != '') {
+        return this.prefix + '.' + this.plural
+      } else {
+        return this.plural
+      }
     }
   }
 
