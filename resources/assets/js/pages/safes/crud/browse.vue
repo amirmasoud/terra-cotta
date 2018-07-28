@@ -5,7 +5,8 @@
     <crud-table :fields="fields"
       api-url="/api/safes/"
       singular="safe"
-      plural="safes"></crud-table>
+      plural="safes"
+      prefix=""></crud-table>
   </card>
 </template>
 
