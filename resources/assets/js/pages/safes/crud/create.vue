@@ -19,7 +19,6 @@
             v-model="category"
             :tags="categories"
             :autocomplete-items="categoriesAutocompleteItems"
-            :add-only-from-autocomplete="true"
             :placeholder="$t('add_category')"
             @tags-changed="updateCategories"
             :class="{ 'is-invalid': form.errors.has('categories') }"
@@ -37,7 +36,6 @@
             v-model="tag"
             :tags="tags"
             :autocomplete-items="tagsAutocompleteItems"
-            :add-only-from-autocomplete="true"
             :placeholder="$t('add_tag')"
             @tags-changed="updateTags"
             :class="{ 'is-invalid': form.errors.has('tags') }"
@@ -153,18 +151,13 @@ export default {
 
   methods: {
     async store () {
-      console.log(this.form)
       await this.form.post('/api/safes')
-
-      // this.form.reset()
-      // this.tags = []
-      // this.categories = []
     },
     updateCategories (newCategories) {
       this.categoriesAutocompleteItems = []
       this.categories = newCategories
       this.form.categories = newCategories.map(c => {
-        return c.id
+        return c.text
       })
     },
     categoriesInitItems () {
@@ -184,7 +177,7 @@ export default {
       this.tagsAutocompleteItems = []
       this.tags = newTags
       this.form.tags = newTags.map(t => {
-        return t.id
+        return t.text
       })
     },
     TagsInitItems () {
@@ -209,7 +202,6 @@ export default {
     },
     fieldType (groupIndex, fieldIndex, typeId) {
       this.form.groups[groupIndex].fields[fieldIndex].type = typeId
-      console.log(this.form)
     },
     deleteField (fieldIndex, groupIndex) {
       this.form.groups[groupIndex].fields.splice(fieldIndex,1)
