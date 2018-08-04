@@ -28,12 +28,14 @@ class UpdateRequest extends FormRequest
             'categories' => 'required',
             'tags'       => 'nullable',
         ];
-        foreach (request()['groups'] as $gkey => $group) {
-            $rules['groups.' . $gkey . '.name'] = 'required';
-            if ($group['fields']) {
-                foreach ($group['fields'] as $fkey => $field) {
-                    $rules['groups.' . $gkey . '.fields.' . $fkey . '.label'] = 'required';
-                    $rules['groups.' . $gkey . '.fields.' . $fkey . '.value'] = 'required' . $this->smartRules($field['label']);
+        if (array_key_exists('groups', request())) {
+            foreach (request()['groups'] as $gkey => $group) {
+                $rules['groups.' . $gkey . '.name'] = 'required';
+                if ($group['fields']) {
+                    foreach ($group['fields'] as $fkey => $field) {
+                        $rules['groups.' . $gkey . '.fields.' . $fkey . '.label'] = 'required';
+                        $rules['groups.' . $gkey . '.fields.' . $fkey . '.value'] = 'required' . $this->smartRules($field['label']);
+                    }
                 }
             }
         }

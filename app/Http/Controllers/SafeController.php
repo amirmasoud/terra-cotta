@@ -69,14 +69,16 @@ class SafeController extends Controller
         }
 
         // Create and save groups and fields
-        foreach ($request->groups as $g) {
-            $group = $safe->groups()->create($g);
-            if (array_key_exists('fields', $g)) {
-                foreach ($g['fields'] as $f) {
-                    $field = new Field($f);
-                    $field->type_id = $f['type'] ?? Type::default()->id;
-                    $field->group_id = $group->id;
-                    $safe->fields()->save($field);
+        if ($request->groups) {
+            foreach ($request->groups as $g) {
+                $group = $safe->groups()->create($g);
+                if (array_key_exists('fields', $g)) {
+                    foreach ($g['fields'] as $f) {
+                        $field = new Field($f);
+                        $field->type_id = $f['type'] ?? Type::default()->id;
+                        $field->group_id = $group->id;
+                        $safe->fields()->save($field);
+                    }
                 }
             }
         }
@@ -158,14 +160,16 @@ class SafeController extends Controller
         // @TODO: Find difference instead of deleting
         $safe->groups()->delete();
         $safe->fields()->delete();
-        foreach ($request->groups as $g) {
-            $group = $safe->groups()->create($g);
-            if (array_key_exists('fields', $g)) {
-                foreach ($g['fields'] as $f) {
-                    $field = new Field($f);
-                    $field->type_id = $f['type'] ?? Type::default()->id;
-                    $field->group_id = $group->id;
-                    $safe->fields()->save($field);
+        if ($request->groups) {
+            foreach ($request->groups as $g) {
+                $group = $safe->groups()->create($g);
+                if (array_key_exists('fields', $g)) {
+                    foreach ($g['fields'] as $f) {
+                        $field = new Field($f);
+                        $field->type_id = $f['type'] ?? Type::default()->id;
+                        $field->group_id = $group->id;
+                        $safe->fields()->save($field);
+                    }
                 }
             }
         }
