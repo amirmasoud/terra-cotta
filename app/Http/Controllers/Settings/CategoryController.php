@@ -90,4 +90,14 @@ class CategoryController extends Controller
     {
         return Category::Where('name', 'LIKE', "%{$request->q}%")->paginate();
     }
+
+    /**
+     * Get all unpaginated categories.
+     *
+     * @return JSON
+     */
+    public function all()
+    {
+        return Category::with('icon')->get();
+    }
 }
