@@ -37,6 +37,8 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     Route::get('settings/categories/search', 'Settings\CategoryController@search')
         ->name('categories.search');
+    Route::get('settings/categories/all', 'Settings\CategoryController@all')
+        ->name('categories.all');
     Route::resource('settings/categories', 'Settings\CategoryController')->except([
         'create'
     ]);
