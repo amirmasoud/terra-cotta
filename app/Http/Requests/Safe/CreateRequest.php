@@ -27,8 +27,6 @@ class CreateRequest extends FormRequest
             'name'       => 'required',
             'categories' => 'required',
             'tags'       => 'nullable',
-            // 'groups'     => 'required',
-            // 'fields'     => 'required',
         ];
         foreach (request()['groups'] as $gkey => $group) {
             $rules['groups.' . $gkey . '.name'] = 'required';
