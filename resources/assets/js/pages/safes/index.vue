@@ -11,19 +11,39 @@
           </li>
         </ul>
       </card>
+
+      <card :title="$t('categories')" class="safes-card" :loading="loadingCategories">
+        <ul class="nav flex-column nav-pills" v-if="categories">
+          <li v-for="category in categories" :key="category.id" class="nav-item">
+            <router-link :to="{ name: 'safes.browse', query: { 'category': category.id } }" class="nav-link" active-class="active" exact>
+              <fa :icon="category.icon ? category.icon.name : 'circle'" fixed-width/>
+              {{ category.name }}
+            </router-link>
+          </li>
+        </ul>
+      </card>
     </div>
 
     <div class="col-md-9">
       <transition name="fade" mode="out-in">
-        <router-view/>
+        <router-view :key="$route.fullPath"/>
       </transition>
     </div>
   </div>
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   middleware: 'auth',
+
+  data: function () {
+    return {
+      categories: null,
+      loadingCategories: true
+    }
+  },
 
   computed: {
     tabs () {
@@ -34,6 +54,18 @@ export default {
           route: 'safes.browse'
         }
       ]
+    }
+  },
+
+  created: function () {
+    this.fetchCategories()
+  },
+
+  methods: {
+    async fetchCategories () {
+      const { data } = await axios.get('/api/settings/categories/all')
+      this.categories = data
+      this.loadingCategories = false
     }
   }
 }
