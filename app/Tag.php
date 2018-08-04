@@ -17,6 +17,15 @@ class Tag extends Model
     ];
 
     /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'pivot',
+    ];
+
+    /**
      * A tag belongs to a safe.
      *
      * @return belonsToMany
