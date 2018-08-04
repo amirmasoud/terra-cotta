@@ -5,6 +5,7 @@
       :fields="fields"
       :pagination-path="paginationPath"
       @vuetable:pagination-data="onPaginationData"
+      :append-params="{'category': $route.query.category}"
     >
       <template slot="actions" slot-scope="props">
         <slot name="actions">
@@ -62,7 +63,7 @@ export default {
     paginationPath: { type: String, default: '' },
     singular: { type: String },
     plural: { type: String },
-    prefix: { type: String, default: 'settings' }
+    prefix: { type: String, default: 'settings' },
   },
 
   data: function () {
