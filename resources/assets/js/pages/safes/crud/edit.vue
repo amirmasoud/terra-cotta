@@ -1,7 +1,7 @@
 <template>
   <form @submit.prevent="update" @keydown="form.onKeydown($event)">
     <alert-success :form="form" :message="$t('icon_updated')" class="mt-2" />
-    <card :title="$t('update_icon')">
+    <card :title="$t('update_safe')" :loading="typeLoading || loading">
       <!-- Name -->
       <div class="form-group row">
         <label class="col-md-3 col-form-label text-md-right">{{ $t('name') }}</label>
@@ -10,6 +10,89 @@
           <has-error :form="form" field="name"/>
         </div>
       </div>
+
+      <!-- Categories -->
+      <div class="form-group row">
+        <label class="col-md-3 col-form-label text-md-right">{{ $t('categories') }}</label>
+        <div class="col-md-7">
+          <vue-tags-input
+            v-model="category"
+            :tags="categories"
+            :autocomplete-items="categoriesAutocompleteItems"
+            :placeholder="$t('add_category')"
+            @tags-changed="updateCategories"
+            :class="{ 'is-invalid': form.errors.has('categories') }"
+            name="categories"
+          />
+          <div class="help-block invalid-feedback d-block" v-if="form.errors.has('categories')" v-html="form.errors.get('categories')"/>
+        </div>
+      </div>
+
+      <!-- Tags -->
+      <div class="form-group row">
+        <label class="col-md-3 col-form-label text-md-right">{{ $t('tags') }}</label>
+        <div class="col-md-7">
+          <vue-tags-input
+            v-model="tag"
+            :tags="tags"
+            :autocomplete-items="tagsAutocompleteItems"
+            :placeholder="$t('add_tag')"
+            @tags-changed="updateTags"
+            :class="{ 'is-invalid': form.errors.has('tags') }"
+            name="tags"
+          />
+          <div class="help-block invalid-feedback d-block" v-if="form.errors.has('tags')" v-html="form.errors.get('tags')"/>
+        </div>
+      </div>
+
+      <div v-for="(group, index) in form.groups">
+        <div class="form-group row">
+          <div class="input-group col-md-7 offset-md-3">
+            <input v-model="group.name" class="form-control" type="text" name="groups[index]['name']" aria-label="Text input with segmented dropdown button" :class="{ 'is-invalid': form.errors.has('groups.' + index + '.name') }">
+            <input v-model="group.id" class="form-control" type="hidden" name="groups[index]['id']" aria-label="Text input with segmented dropdown button">
+            <div class="input-group-append">
+              <button type="button" class="btn btn-outline-danger" @click="deleteGroup(index)" style="border-radius: 0 4px 4px 0;"><fa icon="minus-circle" fixed-width /></button>
+            </div>
+            <div class="help-block invalid-feedback d-block" v-if="form.errors.has('groups.' + index + '.name')" v-html="form.errors.get('groups.' + index + '.name')"/>
+          </div>
+        </div>
+
+        <div class="form-group row fields-group" v-for="(field, findex) in group.fields" :key="findex">
+          <div class="col-md-3 text-md-right mb-1">
+            <input v-model="field.label" class="form-control" type="text" name="groups[index]['fields'][findex]['label']" :class="{ 'is-invalid': form.errors.has('groups.' + index + '.fields.' + findex + '.label') }">
+            <div class="help-block invalid-feedback d-block" v-if="form.errors.has('groups.' + index + '.fields.' + findex + '.label')" v-html="form.errors.get('groups.' + index + '.fields.' + findex + '.label')"/>
+          </div>
+          <div class="input-group col-md-7 mb-1">
+            <input v-model="field.value" type="text" class="form-control" aria-label="Text input with segmented dropdown button" name="groups[index]['fields'][findex]['value']" :class="{ 'is-invalid': form.errors.has('groups.' + index + '.fields.' + findex + '.value') }">
+            <div class="input-group-append">
+              <button type="button" class="btn btn-outline-danger" @click="deleteField(findex, index)"><fa icon="minus" fixed-width /></button>
+              <button type="button" class="btn btn-outline-secondary dropdown-toggle px-2" :class="{'dropdown-loading': !types}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="border-radius: 0 4px 4px 0;">
+                <span class="sr-only">Toggle Dropdown</span>
+                <fa v-if="!types" icon="spinner" size="lg" fixed-width spin />
+              </button>
+              <div class="dropdown-menu" v-if="types">
+                <a class="dropdown-item" href="#" v-for="type in types" @click.prevent="fieldType(index, findex, type.id)">{{ type.name }}</a>
+              </div>
+            </div>
+            <div class="help-block invalid-feedback d-block" v-if="form.errors.has('groups.' + index + '.fields.' + findex + '.value')" v-html="form.errors.get('groups.' + index + '.fields.' + findex + '.value')"/>
+          </div>
+        </div>
+
+        <!-- Add field -->
+        <div class="form-group row">
+          <div class="col-md-9 ml-auto">
+            <v-button type="primary" native-type="button" @click.native="addField(index)">{{ $t('add_field') }}</v-button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Add group -->
+      <div class="form-group row">
+        <div class="col-md-9 ml-auto">
+          <v-button type="primary" native-type="button" @click.native="addGroup">{{ $t('add_group') }}</v-button>
+        </div>
+      </div>
+
 
       <!-- Submit Button -->
       <div class="form-group row">
@@ -25,42 +108,148 @@
 import Form from 'vform'
 import axios from 'axios'
 import { mapGetters } from 'vuex'
+import VueTagsInput from '@johmun/vue-tags-input'
 
 export default {
   scrollToTop: true,
 
-  metaInfo () {
-    return { title: this.$t('safes') }
+  components: {
+    VueTagsInput,
   },
 
-  data: function () {
-    return {
-      form: new Form({
-        name: ''
-      }),
-    }
+  metaInfo () {
+    return { title: this.$t('safes') }
   },
 
   computed: mapGetters({
     user: 'auth/user'
   }),
 
-  created() {
+  data: function () {
+    return {
+      form: new Form({
+        name: '',
+        categories: '',
+        tags: '',
+        groups: []
+      }),
+      category: '',
+      categories: [],
+      categoriesAutocompleteItems: [],
+      tag: '',
+      tags: [],
+      tagsAutocompleteItems: [],
+      debounce: null,
+      types: null,
+      typeLoading: true,
+      loading: true
+    }
+  },
+
+  created: function () {
+    this.fetchTypes()
     this.fill()
   },
 
   methods: {
+    async update () {
+      await this.form.patch('/api/safes/' + this.$route.params.safes)
+    },
+    updateCategories (newCategories) {
+      this.categoriesAutocompleteItems = []
+      this.categories = newCategories
+      this.form.categories = newCategories.map(c => {
+        return c.text
+      })
+    },
+    categoriesInitItems () {
+      if (this.category.length === 0) return
+      const url = `/api/settings/categories/search?q=${this.category}`
+
+      clearTimeout(this.debounce)
+      this.debounce = setTimeout(() => {
+        axios.get(url).then(response => {
+          this.categoriesAutocompleteItems = response.data.data.map(c => {
+            return { text: c.name, id: c.id }
+          })
+        }).catch(() => console.warn('Oh. Something went wrong'))
+      }, 300)
+    },
+    updateTags (newTags) {
+      this.tagsAutocompleteItems = []
+      this.tags = newTags
+      this.form.tags = newTags.map(t => {
+        return t.text
+      })
+    },
+    TagsInitItems () {
+      if (this.tag.length === 0) return
+      const url = `/api/settings/tags/search?q=${this.tag}`
+
+      clearTimeout(this.debounce)
+      this.debounce = setTimeout(() => {
+        axios.get(url).then(response => {
+          this.tagsAutocompleteItems = response.data.data.map(t => {
+            return { text: t.name, id: t.id }
+          })
+        }).catch(() => console.warn('Oh. Something went wrong'))
+      }, 300)
+    },
+    addField (groupIndex) {
+      this.form.groups[groupIndex].fields.push({
+        label: '',
+        value: '',
+        type: ''
+      })
+    },
+    fieldType (groupIndex, fieldIndex, typeId) {
+      this.form.groups[groupIndex].fields[fieldIndex].type = typeId
+    },
+    deleteField (fieldIndex, groupIndex) {
+      this.form.groups[groupIndex].fields.splice(fieldIndex,1)
+    },
+    addGroup () {
+      this.form.groups.push({
+        id: 0,
+        name: '',
+        fields: []
+      })
+    },
+    deleteGroup (groupIndex) {
+      this.form.groups.splice(groupIndex,1)
+    },
+    async fetchTypes() {
+      const { data } = await axios.get('/api/settings/types')
+      this.types = data.data
+      this.typeLoading = false
+    },
     async fill () {
       const { data } = await axios.get('/api/safes/' + this.$route.params.safes + '/edit')
 
       this.form.keys().forEach(key => {
         this.form[key] = data[key]
       })
-    },
 
-    async update () {
-      await this.form.patch('/api/safes/' + this.$route.params.safes)
+      // Fill tags
+      for (var i = data.tags.length - 1; i >= 0; i--) {
+        this.tags.push({ 'text': data.tags[i].name })
+        this.form.tags = []
+        this.form.tags.push(data.tags[i].name)
+      }
+
+      // Fill categories
+      for (var i = data.categories.length - 1; i >= 0; i--) {
+        this.categories.push({ 'text': data.categories[i].name })
+        this.form.categories = []
+        this.form.categories.push(data.categories[i].name)
+      }
+
+      this.loading = false
     },
-  }
+  },
+  watch: {
+    'category': 'categoriesInitItems',
+    'tag': 'TagsInitItems',
+  },
 }
 </script>
