@@ -11,7 +11,7 @@ class TypeTest extends TestCase
     /** @var \App\User */
     protected $user;
 
-    /** @var \App\type */
+    /** @var \App\Type */
     protected $type;
 
     public function setUp()
