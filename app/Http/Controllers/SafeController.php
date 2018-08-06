@@ -185,6 +185,8 @@ class SafeController extends Controller
      */
     public function destroy(Safe $safe)
     {
+        $safe->groups()->delete();
+        $safe->fields()->delete();
         return $safe->delete()
             ? response(null, 204)
             : response(null, 500);
