@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Settings;
 
 use App\Icon;
+use App\Contracts\Content;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Settings\Icon\SearchRequest;
@@ -12,13 +13,31 @@ use App\Http\Requests\Settings\Icon\UpdateRequest;
 class IconController extends Controller
 {
     /**
+     * Content Service Provider
+     *
+     * @var \App\Contracts\Content
+     */
+    private $content;
+
+    /**
+     * Constructor of the class.
+     *
+     * @param \App\Contracts\Content $content
+     */
+    public function __construct(Content $content)
+    {
+        $this->content = $content;
+        $this->content->model = Icon::class;
+    }
+
+    /**
      * Show paginated icons.
      *
      * @return JSON
      */
     public function index()
     {
-        return Icon::paginate();
+        return $this->content->index();
     }
 
     /**
@@ -29,7 +48,7 @@ class IconController extends Controller
      */
     public function store(CreateRequest $request)
     {
-        return Icon::create($request->all());
+        return $this->content->store($request);
     }
 
     /**
@@ -40,7 +59,7 @@ class IconController extends Controller
      */
     public function show(Icon $icon)
     {
-        return $icon;
+        return $this->content->show($icon);
     }
 
     /**
@@ -51,7 +70,7 @@ class IconController extends Controller
      */
     public function edit(Icon $icon)
     {
-        return $icon;
+        return $this->content->edit($icon);
     }
 
     /**
@@ -63,9 +82,7 @@ class IconController extends Controller
      */
     public function update(UpdateRequest $request, Icon $icon)
     {
-        return $icon->update($request->all())
-            ? response(null, 204)
-            : response(null, 500);
+        return $this->content->update($request, $icon);
     }
 
     /**
@@ -76,9 +93,7 @@ class IconController extends Controller
      */
     public function destroy(Icon $icon)
     {
-        return $icon->delete()
-            ? response(null, 204)
-            : response(null, 500);
+        return $this->content->destroy($icon);
     }
 
     /**
@@ -89,6 +104,6 @@ class IconController extends Controller
      */
     public function search(SearchRequest $request)
     {
-        return Icon::Where('name', 'LIKE', "%{$request->q}%")->paginate();
+        return $this->content->search($request);
     }
 }

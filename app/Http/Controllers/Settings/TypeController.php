@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Settings;
 
 use App\Type;
+use App\Contracts\Content;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Settings\Type\CreateRequest;
 use App\Http\Requests\Settings\Type\UpdateRequest;
@@ -11,13 +12,31 @@ use App\Http\Requests\Settings\Type\SearchRequest;
 class TypeController extends Controller
 {
     /**
+     * Content Service Provider
+     *
+     * @var \App\Contracts\Content
+     */
+    private $content;
+
+    /**
+     * Constructor of the class.
+     *
+     * @param \App\Contracts\Content $content
+     */
+    public function __construct(Content $content)
+    {
+        $this->content = $content;
+        $this->content->model = Type::class;
+    }
+
+    /**
      * Show paginated types.
      *
      * @return JSON
      */
     public function index()
     {
-        return Type::paginate();
+        return $this->content->index();
     }
 
     /**
@@ -28,7 +47,7 @@ class TypeController extends Controller
      */
     public function store(CreateRequest $request)
     {
-        return Type::create($request->all());
+        return $this->content->store($request);
     }
 
     /**
@@ -39,7 +58,7 @@ class TypeController extends Controller
      */
     public function show(Type $type)
     {
-        return $type;
+        return $this->content->show($type);
     }
 
     /**
@@ -50,7 +69,7 @@ class TypeController extends Controller
      */
     public function edit(Type $type)
     {
-        return $type;
+        return $this->content->edit($type);
     }
 
     /**
@@ -62,9 +81,7 @@ class TypeController extends Controller
      */
     public function update(UpdateRequest $request, Type $type)
     {
-        return $type->update($request->all())
-            ? response(null, 204)
-            : response(null, 500);
+        return $this->content->update($request, $type);
     }
 
     /**
@@ -75,9 +92,7 @@ class TypeController extends Controller
      */
     public function destroy(Type $type)
     {
-        return $type->delete()
-            ? response(null, 204)
-            : response(null, 500);
+        return $this->content->destroy($type);
     }
 
     /**
@@ -88,6 +103,6 @@ class TypeController extends Controller
      */
     public function search(SearchRequest $request)
     {
-        return Type::Where('name', 'LIKE', "%{$request->q}%")->paginate();
+        return $this->content->search($request);
     }
 }

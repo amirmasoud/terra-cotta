@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Settings;
 
 use App\Field;
+use App\Contracts\Content;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Settings\Field\CreateRequest;
 use App\Http\Requests\Settings\Field\UpdateRequest;
@@ -10,13 +11,31 @@ use App\Http\Requests\Settings\Field\UpdateRequest;
 class FieldController extends Controller
 {
     /**
+     * Content Service Provider
+     *
+     * @var \App\Contracts\Content
+     */
+    private $content;
+
+    /**
+     * Constructor of the class.
+     *
+     * @param \App\Contracts\Content $content
+     */
+    public function __construct(Content $content)
+    {
+        $this->content = $content;
+        $this->content->model = Field::class;
+    }
+
+    /**
      * Show paginated fields.
      *
      * @return JSON
      */
     public function index()
     {
-        return Field::paginate();
+        return $this->content->index();
     }
 
     /**
@@ -27,7 +46,7 @@ class FieldController extends Controller
      */
     public function store(CreateRequest $request)
     {
-        return Field::create($request->all());
+        return $this->content->store($request);
     }
 
     /**
@@ -38,7 +57,7 @@ class FieldController extends Controller
      */
     public function show(Field $field)
     {
-        return $field;
+        return $this->content->show($field);
     }
 
     /**
@@ -49,7 +68,7 @@ class FieldController extends Controller
      */
     public function edit(Field $field)
     {
-        return $field;
+        return $this->content->edit($field);
     }
 
     /**
@@ -61,9 +80,7 @@ class FieldController extends Controller
      */
     public function update(UpdateRequest $request, Field $field)
     {
-        return $field->update($request->all())
-            ? response(null, 204)
-            : response(null, 500);
+        return $this->content->update($request, $field);
     }
 
     /**
@@ -74,8 +91,6 @@ class FieldController extends Controller
      */
     public function destroy(Field $field)
     {
-        return $field->delete()
-            ? response(null, 204)
-            : response(null, 500);
+        return $this->content->destroy($field);
     }
 }

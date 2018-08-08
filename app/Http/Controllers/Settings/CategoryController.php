@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Settings;
 
 use App\Category;
+use App\Contracts\Content;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Settings\Category\CreateRequest;
 use App\Http\Requests\Settings\Category\UpdateRequest;
@@ -11,13 +12,31 @@ use App\Http\Requests\Settings\Category\SearchRequest;
 class CategoryController extends Controller
 {
     /**
+     * Content Service Provider
+     *
+     * @var \App\Contracts\Content
+     */
+    private $content;
+
+    /**
+     * Constructor of the class.
+     *
+     * @param \App\Contracts\Content $content
+     */
+    public function __construct(Content $content)
+    {
+        $this->content = $content;
+        $this->content->model = Category::class;
+    }
+
+    /**
      * Show paginated categories.
      *
      * @return JSON
      */
     public function index()
     {
-        return Category::paginate();
+        return $this->content->index();
     }
 
     /**
@@ -28,7 +47,7 @@ class CategoryController extends Controller
      */
     public function store(CreateRequest $request)
     {
-        return Category::create($request->all());
+        return $this->content->store($request);
     }
 
     /**
@@ -39,7 +58,7 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        return $category;
+        return $this->content->show($category);
     }
 
     /**
@@ -50,7 +69,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        return $category;
+        return $this->content->edit($category);
     }
 
     /**
@@ -62,9 +81,7 @@ class CategoryController extends Controller
      */
     public function update(UpdateRequest $request, Category $category)
     {
-        return $category->update($request->all())
-            ? response(null, 204)
-            : response(null, 500);
+        return $this->content->update($request, $category);
     }
 
     /**
@@ -75,9 +92,7 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        return $category->delete()
-            ? response(null, 204)
-            : response(null, 500);
+        return $this->content->destroy($category);
     }
 
     /**
@@ -88,12 +103,14 @@ class CategoryController extends Controller
      */
     public function search(SearchRequest $request)
     {
-        return Category::Where('name', 'LIKE', "%{$request->q}%")->paginate();
+        return $this->content->search($request);
     }
 
     /**
      * Get all unpaginated categories.
      *
+     * @deprecated 1.1.0 - to be deprecated and use index method instead
+     * @version 1.0.0
      * @return JSON
      */
     public function all()

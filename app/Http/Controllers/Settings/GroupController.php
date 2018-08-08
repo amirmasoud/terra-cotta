@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Settings;
 
 use App\Group;
+use App\Contracts\Content;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Settings\Group\CreateRequest;
 use App\Http\Requests\Settings\Group\UpdateRequest;
@@ -11,13 +12,31 @@ use App\Http\Requests\Settings\Group\SearchRequest;
 class GroupController extends Controller
 {
     /**
+     * Content Service Provider
+     *
+     * @var \App\Contracts\Content
+     */
+    private $content;
+
+    /**
+     * Constructor of the class.
+     *
+     * @param \App\Contracts\Content $content
+     */
+    public function __construct(Content $content)
+    {
+        $this->content = $content;
+        $this->content->model = Group::class;
+    }
+
+    /**
      * Show paginated groups.
      *
      * @return JSON
      */
     public function index()
     {
-        return Group::paginate();
+        return $this->content->index();
     }
 
     /**
@@ -28,7 +47,7 @@ class GroupController extends Controller
      */
     public function store(CreateRequest $request)
     {
-        return Group::create($request->all());
+        return $this->content->store($request);
     }
 
     /**
@@ -39,7 +58,7 @@ class GroupController extends Controller
      */
     public function show(Group $group)
     {
-        return $group;
+        return $this->content->show($group);
     }
 
     /**
@@ -50,7 +69,7 @@ class GroupController extends Controller
      */
     public function edit(Group $group)
     {
-        return $group;
+        return $this->content->edit($group);
     }
 
     /**
@@ -62,9 +81,7 @@ class GroupController extends Controller
      */
     public function update(UpdateRequest $request, Group $group)
     {
-        return $group->update($request->all())
-            ? response(null, 204)
-            : response(null, 500);
+        return $this->content->update($request, $group);
     }
 
     /**
@@ -75,9 +92,7 @@ class GroupController extends Controller
      */
     public function destroy(Group $group)
     {
-        return $group->delete()
-            ? response(null, 204)
-            : response(null, 500);
+        return $this->content->destroy($group);
     }
 
     /**
@@ -88,6 +103,6 @@ class GroupController extends Controller
      */
     public function search(SearchRequest $request)
     {
-        return Group::Where('name', 'LIKE', "%{$request->q}%")->paginate();
+        return $this->content->search($request);
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Settings;
 
 use App\Tag;
+use App\Contracts\Content;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Settings\Tag\CreateRequest;
 use App\Http\Requests\Settings\Tag\UpdateRequest;
@@ -11,13 +12,31 @@ use App\Http\Requests\Settings\Tag\SearchRequest;
 class TagController extends Controller
 {
     /**
+     * Content Service Provider
+     *
+     * @var \App\Contracts\Content
+     */
+    private $content;
+
+    /**
+     * Constructor of the class.
+     *
+     * @param \App\Contracts\Content $content
+     */
+    public function __construct(Content $content)
+    {
+        $this->content = $content;
+        $this->content->model = Tag::class;
+    }
+
+    /**
      * Show paginated tags.
      *
      * @return JSON
      */
     public function index()
     {
-        return Tag::paginate();
+        return $this->content->index();
     }
 
     /**
@@ -28,7 +47,7 @@ class TagController extends Controller
      */
     public function store(CreateRequest $request)
     {
-        return Tag::create($request->all());
+        return $this->content->store($request);
     }
 
     /**
@@ -39,7 +58,7 @@ class TagController extends Controller
      */
     public function show(Tag $tag)
     {
-        return $tag;
+        return $this->content->show($tag);
     }
 
     /**
@@ -50,7 +69,7 @@ class TagController extends Controller
      */
     public function edit(Tag $tag)
     {
-        return $tag;
+        return $this->content->edit($tag);
     }
 
     /**
@@ -62,9 +81,7 @@ class TagController extends Controller
      */
     public function update(UpdateRequest $request, Tag $tag)
     {
-        return $tag->update($request->all())
-            ? response(null, 204)
-            : response(null, 500);
+        return $this->content->update($request, $tag);
     }
 
     /**
@@ -75,19 +92,17 @@ class TagController extends Controller
      */
     public function destroy(Tag $tag)
     {
-        return $tag->delete()
-            ? response(null, 204)
-            : response(null, 500);
+        return $this->content->destroy($tag);
     }
 
     /**
-     * Search categories with name.
+     * Search tags with name.
      *
      * @param  Request $request
      * @return JSON
      */
     public function search(SearchRequest $request)
     {
-        return Tag::Where('name', 'LIKE', "%{$request->q}%")->paginate();
+        return $this->content->search($request);
     }
 }

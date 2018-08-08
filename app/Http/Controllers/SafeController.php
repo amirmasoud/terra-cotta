@@ -8,6 +8,7 @@ use App\Safe;
 use App\Field;
 use App\Group;
 use App\Category;
+use App\Contracts\Content;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Safe\IndexRequest;
 use App\Http\Requests\Safe\CreateRequest;
@@ -16,6 +17,19 @@ use App\Http\Requests\Safe\SearchRequest;
 
 class SafeController extends Controller
 {
+    private $content;
+
+    /**
+     * Constructor of the class.
+     *
+     * @param \App\Contracts\Content $content
+     */
+    public function __construct(Content $content)
+    {
+        $this->content = $content;
+        $this->content->model = Safe::class;
+    }
+
     /**
      * Show paginated safes.
      *
@@ -23,13 +37,7 @@ class SafeController extends Controller
      */
     public function index(IndexRequest $request)
     {
-        return Safe::when($request->category, function ($query) use ($request) {
-                    return Safe::whereHas('categories', function ($q) use ($request) {
-                        $q->where('category_id', $request->category);
-                    });
-                }, function ($query) {
-                    return $query;
-                })->paginate();
+        return $this->content->index($request);
     }
 
     /**
@@ -40,7 +48,7 @@ class SafeController extends Controller
      */
     public function store(CreateRequest $request)
     {
-        $safe = Safe::create($request->all());
+        $safe = $this->content->store($request);
 
         // Attach categories
         if ($request->categories) {
@@ -94,7 +102,7 @@ class SafeController extends Controller
      */
     public function show(Safe $safe)
     {
-        return $safe;
+        return $this->content->show($safe);
     }
 
     /**
@@ -185,11 +193,7 @@ class SafeController extends Controller
      */
     public function destroy(Safe $safe)
     {
-        $safe->groups()->delete();
-        $safe->fields()->delete();
-        return $safe->delete()
-            ? response(null, 204)
-            : response(null, 500);
+        return $this->content->destroy($safe);
     }
 
     /**
@@ -200,6 +204,6 @@ class SafeController extends Controller
      */
     public function search(SearchRequest $request)
     {
-        return Safe::Where('name', 'LIKE', "%{$request->q}%")->paginate();
+        return $this->content->search($request);
     }
 }
