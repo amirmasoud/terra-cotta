@@ -1,38 +1,66 @@
 .vue-tags-input {
   width: 100%;
   max-width: 100% !important;
-  border-radius: 0.25rem;
-  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out !important;
+  @include transition($input-transition);
+
+  // Note: This has no effect on <select>s in some browsers, due to the limited stylability of `<select>`s in CSS.
+  @if $enable-rounded {
+    // Manually use the if/else instead of the mixin to account for iOS override
+    border-radius: $input-border-radius;
+  } @else {
+    // Otherwise undo the iOS default
+    border-radius: 0;
+  }
+
   &:focus-within {
-    border-color: #80bdff;
-    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
-    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out !important;
+    border-color: $input-focus-border-color;
+    box-shadow: 0 0 0 $input-btn-focus-width $input-btn-focus-color;
+
     .input {
-      border-color: #80bdff !important;
+      border-color: $input-focus-border-color !important;
     }
   }
+
   .input {
-    border: 1px solid #ced4da;
-    padding: 4px;
-    border-radius: 0.25rem;
+    border-color: $input-border-color !important;
+    padding: $input-tags-padding-y $input-padding-x !important;
+
+    @if $enable-rounded {
+      border-radius: $input-border-radius;
+    } @else {
+      border-radius: 0;
+    }
   }
+
   .tag.valid {
-    background-color: #057aff;
-    border-radius: 0.25rem;
+    background-color: $primary;
+
+    @if $enable-rounded {
+      border-radius: $input-border-radius;
+    } @else {
+      border-radius: 0;
+    }
   }
 
   &.is-invalid {
-    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out !important;
+    @include transition($input-transition);
+
     &:focus-within {
-      box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
-      transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out !important;
+      box-shadow: 0 0 0 $input-focus-width rgba($form-feedback-invalid-color, .25);
     }
+
     .input {
-      border-color: #dc3545 !important;
+      border-color: $form-feedback-invalid-color !important;
     }
   }
+
   .selected-item {
-    background-color: #057aff !important;
-    border-radius: 0.25rem !important;
+    background-color: $primary !important;
+
+    @if $enable-rounded {
+      border-radius: $input-border-radius;
+    } @else {
+      border-radius: 0;
+    }
   }
 }
