@@ -1,0 +1,81 @@
+.autocomplete__box {
+  font-size: $font-size-base;
+  line-height: $input-line-height;
+  color: $input-color;
+  background-color: $input-bg !important;
+  background-clip: padding-box !important;
+  border: $input-border-width solid $input-border-color !important;
+  padding: $input-autocomplete-padding-y $input-padding-x !important;
+
+  // Note: This has no effect on <select>s in some browsers, due to the limited stylability of `<select>`s in CSS.
+  @if $enable-rounded {
+    // Manually use the if/else instead of the mixin to account for iOS override
+    border-radius: $input-border-radius !important;
+  } @else {
+    // Otherwise undo the iOS default
+    border-radius: 0 !important;
+  }
+}
+
+ul.autocomplete__results {
+  border: $input-border-width solid $input-border-color !important;
+  background-color: $input-bg !important;
+  color: $input-color !important;
+
+  @if $enable-rounded {
+    border-radius: $input-border-radius !important;
+  } @else {
+    border-radius: 0 !important;
+  }
+
+  li.autocomplete__results__item {
+    padding: $input-autocomplete-padding-y $input-padding-x !important;
+    color: $gray-900 !important;
+
+    &:hover, &:focus,
+    &.autocomplete__selected {
+      background-color: $gray-100 !important;
+      color: darken($gray-900, 5%) !important;
+    }
+
+    &:active {
+      background-color: $component-active-bg !important;
+      color: $component-active-color !important;
+    }
+  }
+}
+
+.autocomplete__inputs {
+  padding: 0 0 !important;
+}
+.autocomplete__icon {
+  display: none;
+}
+.autocomplete {
+  @include transition($input-transition);
+
+  @if $enable-rounded {
+    border-radius: $input-border-radius !important;
+  } @else {
+    border-radius: 0 !important;
+  }
+
+  &.is-invalid .autocomplete__box {
+    border-color: $form-feedback-invalid-color !important;
+  }
+}
+.autocomplete:focus-within {
+  .autocomplete__box {
+    border-color: $input-focus-border-color !important;
+  }
+  // color: #495057;
+  // background-color: #fff;
+  // outline: 0;
+
+  box-shadow: 0 0 0 $input-btn-focus-width $input-btn-focus-color;
+  @include transition($input-transition);
+
+  &.is-invalid {
+    box-shadow: 0 0 0 $input-focus-width rgba($form-feedback-invalid-color, .25) !important;
+  }
+}
