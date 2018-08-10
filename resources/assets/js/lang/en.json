@@ -60,6 +60,11 @@
   "value": "Value",
   "field": "Field",
   "group": "Group",
+  "all": "All",
+  "add_group": "Add group",
+  "add_field": "Add field",
+  "add_category": "Search categories",
+  "add_tag": "Add tags",
 
   "create_icon": "Create icon",
   "update_icon": "Update icon",
@@ -95,5 +100,11 @@
   "create_field": "Create field",
   "update_field": "Update field",
   "field_updated": "Field updated",
-  "field_created": "Field created"
+  "field_created": "Field created",
+
+  "safe_info": "Safe information",
+  "create_safe": "Create safe",
+  "update_safe": "Update safe",
+  "safe_updated": "Safe updated",
+  "safe_created": "Safe created"
 }

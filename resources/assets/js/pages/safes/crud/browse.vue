@@ -37,6 +37,7 @@ export default {
         },
         {
           name: 'name',
+          title: this.$t('name')
         },
         {
           name: '__slot:actions',
