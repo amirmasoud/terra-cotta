@@ -32,10 +32,8 @@ export default {
     return {
       fields: [
         {
-          name: '__checkbox'
-        },
-        {
           name: 'name',
+          title: this.$t('name')
         },
         {
           name: '__slot:actions',

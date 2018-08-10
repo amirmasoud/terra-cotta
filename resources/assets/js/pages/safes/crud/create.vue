@@ -97,7 +97,7 @@
       <!-- Submit Button -->
       <div class="form-group row">
         <div class="col-md-9 ml-auto">
-          <v-button :loading="form.busy" type="success">{{ $t('create') }}</v-button>
+          <v-button :loading="form.busy" type="primary">{{ $t('create') }}</v-button>
         </div>
       </div>
     </card>

@@ -1,5 +1,5 @@
 <template>
-  <card :title="$t('group_info')">
+  <card :title="$t('field_info')">
     <div class="form-group row" v-for="(value, key) in field" v-if="field">
       <label class="col-sm-4 col-form-label">{{ $t(key) }}</label>
       <div class="col-sm-8">

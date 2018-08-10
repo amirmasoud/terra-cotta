@@ -1,7 +1,7 @@
 <template>
   <form @submit.prevent="store" @keydown="form.onKeydown($event)">
-    <alert-success :form="form" :message="$t('group_created')" class="mt-2" />
-    <card :title="$t('create_group')">
+    <alert-success :form="form" :message="$t('field_created')" class="mt-2" />
+    <card :title="$t('create_field')">
       <!-- Label -->
       <div class="form-group row">
         <label class="col-md-3 col-form-label text-md-right">{{ $t('label') }}</label>

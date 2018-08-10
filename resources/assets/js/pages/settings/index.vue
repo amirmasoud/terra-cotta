@@ -1,9 +1,20 @@
 <template>
   <div class="row">
     <div class="col-md-3">
-      <card :title="$t('settings')" class="settings-card">
+      <card :title="$t('settings')" class="settings-card mb-4">
         <ul class="nav flex-column nav-pills">
-          <li v-for="tab in tabs" :key="tab.route" class="nav-item">
+          <li v-for="tab in settings" :key="tab.route" class="nav-item">
+            <router-link :to="{ name: tab.route }" class="nav-link" active-class="active">
+              <fa :icon="tab.icon" fixed-width/>
+              {{ tab.name }}
+            </router-link>
+          </li>
+        </ul>
+      </card>
+
+      <card :title="$t('system')" class="settings-card">
+        <ul class="nav flex-column nav-pills">
+          <li v-for="tab in system" :key="tab.route" class="nav-item">
             <router-link :to="{ name: tab.route }" class="nav-link" active-class="active">
               <fa :icon="tab.icon" fixed-width/>
               {{ tab.name }}
@@ -26,7 +37,7 @@ export default {
   middleware: 'auth',
 
   computed: {
-    tabs () {
+    settings () {
       return [
         {
           icon: 'user',
@@ -37,7 +48,11 @@ export default {
           icon: 'lock',
           name: this.$t('password'),
           route: 'settings.password'
-        },
+        }
+      ]
+    },
+    system () {
+      return [
         {
           icon: 'circle',
           name: this.$t('icons'),

@@ -2,8 +2,8 @@
   <div>
     <template v-if="! loadingIcon && ! loadingType && ! loadingGroup && ! loadingSafe">
       <form @submit.prevent="update" @keydown="form.onKeydown($event)">
-        <alert-success :form="form" :message="$t('group_updated')" class="mt-2" />
-        <card :title="$t('update_group')">
+        <alert-success :form="form" :message="$t('field_updated')" class="mt-2" />
+        <card :title="$t('update_field')">
           <!-- Label -->
           <div class="form-group row">
             <label class="col-md-3 col-form-label text-md-right">{{ $t('label') }}</label>

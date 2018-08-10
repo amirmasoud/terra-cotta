@@ -32,25 +32,28 @@ export default {
     return {
       fields: [
         {
-          name: '__checkbox'
-        },
-        {
-          name: 'lable',
+          name: 'label',
+          title: this.$t('label')
         },
         {
           name: 'value',
+          title: this.$t('value')
         },
         {
           name: 'icon_id',
+          title: this.$t('icon_id')
         },
         {
           name: 'type_id',
+          title: this.$t('type_id')
         },
         {
           name: 'group_id',
+          title: this.$t('group_id')
         },
         {
           name: 'safe_id',
+          title: this.$t('safe_id')
         },
         {
           name: '__slot:actions',

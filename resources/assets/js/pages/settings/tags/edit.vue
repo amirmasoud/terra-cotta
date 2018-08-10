@@ -1,7 +1,7 @@
 <template>
   <form @submit.prevent="update" @keydown="form.onKeydown($event)">
-    <alert-success :form="form" :message="$t('icon_updated')" class="mt-2" />
-    <card :title="$t('update_icon')">
+    <alert-success :form="form" :message="$t('tag_updated')" class="mt-2" />
+    <card :title="$t('update_tag')">
       <!-- Name -->
       <div class="form-group row">
         <label class="col-md-3 col-form-label text-md-right">{{ $t('name') }}</label>
