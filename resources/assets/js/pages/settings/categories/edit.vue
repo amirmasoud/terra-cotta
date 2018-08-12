@@ -1,7 +1,7 @@
 <template>
   <div>
     <template v-if="! loading">
-      <form @submit.prevent="update" @keydown="form.onKeydown($event)">
+      <form @submit.prevent="updateResource()" @keydown="form.onKeydown($event)">
         <alert-success :form="form" :message="$t('category_updated')" class="mt-2" />
         <card :title="$t('update_category')">
           <!-- Name -->
@@ -23,8 +23,8 @@
                 results-display="name"
                 name="icon_id"
                 :class="{ 'is-invalid': form.errors.has('icon_id') }"
-                @selected="addIconId"
-                @clear="clearIconId"
+                @selected="addResourceId('icon', $event)"
+                @clear="clearResourceId('icon')"
                 :initialValue="form.icon_id"
                 :initialDisplay="iconIdInitialDisplay">
               </autocomplete>
@@ -55,6 +55,7 @@
 import Form from 'vform'
 import axios from 'axios'
 import { mapGetters } from 'vuex'
+import { content } from '~/mixins/content'
 import Autocomplete from 'vuejs-auto-complete'
 
 export default {
@@ -68,6 +69,8 @@ export default {
     Autocomplete,
   },
 
+  mixins:[content],
+
   data: function () {
     return {
       form: new Form({
@@ -75,7 +78,8 @@ export default {
         icon_id: ''
       }),
       iconIdInitialDisplay: null,
-      loading: true
+      loading: true,
+      apiUrl: '/api/settings/categories/'
     }
   },
 
@@ -83,42 +87,15 @@ export default {
     user: 'auth/user'
   }),
 
-  created() {
+  created () {
     this.fill()
   },
 
   methods: {
     async fill () {
-      const { data } = await axios.get('/api/settings/categories/' + this.$route.params.categories + '/edit')
-      this.form.keys().forEach(key => {
-        this.form[key] = data[key]
-      })
-
-      this.fillIconName()
-    },
-
-    async fillIconName () {
-      if (this.form.icon_id) {
-        const { data } = await axios.get('/api/settings/icons/' + this.form.icon_id)
-        this.iconIdInitialDisplay = data.name
-      } else {
-        this.iconIdInitialDisplay = ''
-        this.form.icon_id = null
-      }
+      await this.fillResource()
+      await this.fillResourceName('icon_id', 'iconIdInitialDisplay', '/api/settings/icons/')
       this.loading = false
-    },
-
-    async update () {
-      await this.form.patch('/api/settings/categories/' + this.$route.params.categories)
-    },
-
-    addIconId (icon) {
-      this.form.icon_id = icon.value
-      this.form.errors.clear('icon_id')
-    },
-
-    clearIconId () {
-      this.form.icon_id = null
     }
   }
 }

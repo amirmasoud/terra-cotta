@@ -1,5 +1,5 @@
 <template>
-  <card :title="$t('category_info')">
+  <card :title="$t('category_info')" :loading="loading">
     <div class="form-group row" v-for="(value, key) in category" v-if="category">
       <label class="col-sm-4 col-form-label">{{ $t(key) }}</label>
       <div class="col-sm-8">
@@ -13,6 +13,7 @@
 import Form from 'vform'
 import axios from 'axios'
 import { mapGetters } from 'vuex'
+import { content } from '~/mixins/content'
 
 export default {
   scrollToTop: true,
@@ -25,21 +26,19 @@ export default {
     user: 'auth/user'
   }),
 
+  mixins:[content],
+
   data: function () {
     return {
-      category: null
+      category: null,
+      apiUrl: '/api/settings/categories/',
+      loading: true
     }
   },
 
-  created () {
-    this.show()
-  },
-
-  methods: {
-    async show () {
-      const { data } = await axios.get('/api/settings/categories/' + this.$route.params.categories)
-      this.category = data
-    }
+  async created () {
+    await this.showResource()
+    this.loading = false
   }
 }
 </script>

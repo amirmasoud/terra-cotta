@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="store" @keydown="form.onKeydown($event)">
+  <form @submit.prevent="storeResource('settings.categories.browse')" @keydown="form.onKeydown($event)">
     <alert-success :form="form" :message="$t('category_created')" class="mt-2" />
     <card :title="$t('create_category')">
       <!-- Name -->
@@ -19,10 +19,11 @@
             source="/api/settings/icons/search?q="
             results-property="data"
             results-display="name"
+            input-class="form-control"
             name="icon_id"
             :class="{ 'is-invalid': form.errors.has('icon_id') }"
-            @selected="addIconId"
-            @clear="clearIconId"
+            @selected="addResourceId('icon_id', $event)"
+            @clear="clearResourceId('icon_id')"
             initialValue="form.icon_id">
           </autocomplete>
           <div class="help-block invalid-feedback d-block" v-if="form.errors.has('icon_id')" v-html="form.errors.get('icon_id')"/>
@@ -41,8 +42,8 @@
 
 <script>
 import Form from 'vform'
-import axios from 'axios'
 import { mapGetters } from 'vuex'
+import { content } from '~/mixins/content'
 import Autocomplete from 'vuejs-auto-complete'
 
 export default {
@@ -56,6 +57,8 @@ export default {
     Autocomplete,
   },
 
+  mixins:[content],
+
   computed: mapGetters({
     user: 'auth/user'
   }),
@@ -65,25 +68,9 @@ export default {
       form: new Form({
         name: '',
         icon_id: ''
-      })
+      }),
+      apiUrl: '/api/settings/categories/'
     }
   },
-
-  methods: {
-    async store () {
-      await this.form.post('/api/settings/categories')
-
-      this.form.reset()
-    },
-
-    addIconId (icon) {
-      this.form.icon_id = icon.value
-      this.form.errors.clear('icon_id')
-    },
-
-    clearIconId () {
-      this.form.icon_id = null
-    }
-  }
 }
 </script>
