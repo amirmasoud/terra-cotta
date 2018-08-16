@@ -1,3 +1,25 @@
 {
-  "plugins": ["syntax-dynamic-import"]
+  "plugins": ["syntax-dynamic-import"],
+  "env": {
+      "test": {
+          "presets": [
+              [
+                  "env",
+                  {
+                      "targets": {
+                          "node": "current"
+                      }
+                  }
+              ]
+          ]
+      }
+  },
+  "presets": [
+    [
+      "env",
+      {
+        "modules": false
+      }
+    ]
+  ]
 }

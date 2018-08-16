@@ -1,25 +1,51 @@
-language: php
+matrix:
+  include:
+    - language: php
 
-php:
-  - 7.1
-  - 7.2
+      php:
+        - 7.1
+        - 7.2
 
-before_script:
-  - cp .env.travis .env
-  - composer self-update
-  - composer install --prefer-source --no-interaction --dev
-  - php artisan key:generate
-  - php artisan jwt:secret
-  - php artisan migrate
+      before_script:
+        - cp .env.travis .env
+        - composer self-update
+        - composer install --prefer-source --no-interaction --dev
+        - php artisan key:generate
+        - php artisan jwt:secret
+        - php artisan migrate
 
-before_install:
-  - mysql -e 'CREATE DATABASE passwords;'
+      before_install:
+        - mysql -e 'CREATE DATABASE passwords;'
 
-script:
-  - phpunit
+      script:
+        - phpunit
 
-services:
-  - mysql
+      services:
+        - mysql
 
-notifications:
-  email: false
+      notifications:
+        email: false
+
+
+    - language: node_js
+
+      node_js:
+        - '10'
+
+      sudo: false
+
+      before_install:
+        - curl -o- -L https://yarnpkg.com/install.sh | bash
+        - export PATH="$HOME/.yarn/bin:$PATH"
+
+      cache:
+        yarn: true
+        directories:
+          - '.eslintcache'
+          - 'node_modules'
+
+      before_script:
+        - yarn install
+
+      script:
+        - yarn run jest
