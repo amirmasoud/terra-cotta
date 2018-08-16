@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Safe;
+use App\Observers\SafeObserver;
 use Laravel\Dusk\DuskServiceProvider;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
@@ -15,6 +17,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Safe::observe(SafeObserver::class);
+
         if ($this->app->runningUnitTests()) {
             Schema::defaultStringLength(191);
         }

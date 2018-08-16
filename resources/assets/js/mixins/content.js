@@ -1,102 +1,110 @@
+import Form from 'vform'
 import axios from 'axios'
+import { config } from './config'
+import { helper } from './helper'
 
 export const content = {
-  methods:{
+  mixins: [config, helper],
+
+  data () {
+    return {
+      domain: 'content',
+      loading: true,
+      form: new Form({}),
+      resource: null
+    }
+  },
+
+  computed: {
+    api: function () {
+      return this.config('api')
+    },
+  },
+
+  async created () {
+    await this.formReady()
+    await this.showReady()
+    this.loading = false
+  },
+
+  methods: {
     /**
      * Store a new resource.
      *
-     * @param  {string} next
+     * @param  {object} event
      * @return {void}
      */
-    async storeResource (next = null) {
-      await this.form.post(this.apiUrl)
-      this.stayOrRedirect(next)
-    },
+    async storeResource (event) {
+      let createRoute = this.$route.name.split('.')
+      createRoute[createRoute.length - 1] = 'edit'
+      let editRoute = createRoute.join('.')
 
-    /**
-     * Add resource ID from autocomplete component.
-     *
-     * @param {string} name
-     * @param {object} resource
-     * @return {void}
-     */
-    addResourceId(name, resource) {
-      this.form[name] = resource.value
-      this.form.errors.clear(name)
-    },
+      const { data } = await this.form.post(this.api)
 
-    /**
-     * Clear selected item of autocomplete component.
-     *
-     * @param  {string} name
-     * @return {void}
-     */
-    clearResourceId (name) {
-      this.form[name] = null
+      this.$router.push({ name: editRoute, params: { 'resource': data.id } })
     },
 
     /**
      * Fill a update form.
      *
+     * @param  {integer|string} resourceId
      * @return {void}
      */
     async fillResource () {
-      const { data } = await axios.get(this.apiUrl + this.$route.params.categories + '/edit')
+      const { data } = await axios.get(this.api + this.$route.params.resource + '/edit')
       this.form.keys().forEach(key => {
         this.form[key] = data[key]
       })
     },
 
     /**
-     * Fill an autocomplete name and id.
+     * Update a resource and redirect after success response.
      *
-     * @param  {string} resourceId
-     * @param  {string} intialDisplay
-     * @param  {string} api
+     * @param  {object} event
      * @return {void}
      */
-    async fillResourceName (resourceId, intialDisplay, api) {
-      if (this.form[resourceId]) {
-        const { data } = await axios.get(api + this.form[resourceId])
-        this[intialDisplay] = data.name
-      } else {
-        this[intialDisplay] = ''
-        this.form[resourceId] = null
+    async updateResource (event) {
+      await this.form.patch(this.api + this.$route.params.resource)
+    },
+
+    /**
+     * Show a resource.
+     *
+     * @param  {integer|string} resourceId
+     * @return {void}
+     */
+    async showResource () {
+      const { data } = await axios.get(this.api + this.$route.params.resource)
+      this.resource = data
+    },
+
+    /**
+     * Ready form for edit and create.
+     *
+     * @return {void}
+     */
+    async formReady () {
+      if (['edit', 'create'].includes(this.action())) {
+        // For create and edit
+        let name = this.config('form').map(f => f.name)
+        for (var i = name.length - 1; i >= 0; i--) {
+          this.$set(this.form, name[i], '')
+        }
+        // For edit
+        if (this.action() == 'edit') {
+          await this.fillResource()
+        }
       }
     },
 
     /**
-     * Update a resource and redirect after success response.
-     *
-     * @param  {string} next
-     * @return {void}
-     */
-    async updateResource (next = null) {
-      await this.form.patch(this.apiUrl + this.$route.params.categories)
-      this.stayOrRedirect(next)
-    },
-
-    /**
-     * Show and resource.
+     * Ready form for edit and create.
      *
      * @return {void}
      */
-    async showResource () {
-      const { data } = await axios.get(this.apiUrl + this.$route.params.categories)
-      this.category = data
-    },
-
-    /**
-     * Stay in current page or redirect to next page.
-     *
-     * @param  {string|null} next
-     * @return {void}
-     */
-    stayOrRedirect (next = null) {
-      if (next) {
-        this.$router.push({ name: next })
-      } else {
-        this.form.reset()
+    async showReady () {
+      if (['show'].includes(this.action())) {
+        await this.showResource()
       }
     }
   }

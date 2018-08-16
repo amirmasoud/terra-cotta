@@ -1,13 +1,8 @@
 <template>
   <b-card :header="title ? title : ''" class="mt-2">
-    <template v-if="loading">
-      <div class="text-center p-3">
-        <fa icon="spinner" size="lg" fixed-width spin />
-        <p class="mb-0 mt-1" v-if="loadingMessage">{{ loadingMessage }}</p>
-      </div>
-    </template>
+    <component-loading v-if="loading"></component-loading>
     <template v-else>
-      <slot/>
+      <slot></slot>
       <template v-if="routerName && routerLink">
         <b-link
           :to="{ name: routerLink }"

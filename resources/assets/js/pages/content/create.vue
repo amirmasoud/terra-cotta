@@ -11,25 +11,25 @@
 </template>
 
 <script>
-import ContentForm from '~/pages/content/form'
-import { safe } from '~/mixins/safe'
+import ContentForm from './form'
 import { mapGetters } from 'vuex'
+import { content } from '~/mixins/content'
 
 export default {
   scrollToTop: true,
-
-  mixins: [safe],
-
-  components: {
-    ContentForm,
-  },
 
   metaInfo () {
     return { title: this.$t(this.config('title')) }
   },
 
+  components: {
+    ContentForm,
+  },
+
+  mixins: [content],
+
   computed: mapGetters({
     user: 'auth/user'
-  })
+  }),
 }
 </script>

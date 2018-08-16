@@ -1,0 +1,136 @@
+{
+    "icons": {
+        "title": "icons",
+        "singular": "icon",
+        "api": "/api/settings/icons/",
+        "form": [
+            {
+                "name": "name",
+                "label": "name",
+                "type": "text"
+            },
+            {
+                "name": "class",
+                "label": "class",
+                "type": "text"
+            },
+            {
+                "name": "markup",
+                "label": "markup",
+                "type": "textarea"
+            }
+        ]
+    },
+    "tags": {
+        "title": "tags",
+        "singular": "tag",
+        "api": "/api/settings/tags/",
+        "form": [
+            {
+                "name": "name",
+                "label": "name",
+                "type": "text"
+            },
+            {
+                "name": "color",
+                "label": "color",
+                "type": "color"
+            }
+        ]
+    },
+    "categories": {
+        "title": "categories",
+        "singular": "category",
+        "api": "/api/settings/categories/",
+        "form": [
+            {
+                "name": "name",
+                "label": "name",
+                "type": "text"
+            },
+            {
+                "name": "icon_id",
+                "label": "icon_id",
+                "type": "autocomplete",
+                "source": "/api/settings/icons/"
+            }
+        ]
+    },
+    "types": {
+        "title": "types",
+        "singular": "type",
+        "api": "/api/settings/types/",
+        "form": [
+            {
+                "name": "name",
+                "label": "name",
+                "type": "text"
+            }
+        ]
+    },
+    "groups": {
+        "title": "groups",
+        "singular": "group",
+        "api": "/api/settings/groups/",
+        "form": [
+            {
+                "name": "name",
+                "label": "name",
+                "type": "text"
+            },
+            {
+                "name": "icon_id",
+                "label": "icon_id",
+                "type": "autocomplete",
+                "source": "/api/settings/icons/"
+            },
+            {
+                "name": "safe_id",
+                "label": "safe_id",
+                "type": "autocomplete",
+                "source": "/api/safes/"
+            }
+        ]
+    },
+    "fields": {
+        "title": "fields",
+        "singular": "field",
+        "api": "/api/settings/fields/",
+        "form": [
+            {
+                "name": "label",
+                "label": "label",
+                "type": "text"
+            },
+            {
+                "name": "value",
+                "label": "value",
+                "type": "text"
+            },
+            {
+                "name": "icon_id",
+                "label": "icon_id",
+                "type": "autocomplete",
+                "source": "/api/settings/icons/"
+            },
+            {
+                "name": "type_id",
+                "label": "type_id",
+                "type": "autocomplete",
+                "source": "/api/settings/types/"
+            },
+            {
+                "name": "group_id",
+                "label": "group_id",
+                "type": "autocomplete",
+                "source": "/api/settings/groups/"
+            },
+            {
+                "name": "safe_id",
+                "label": "safe_id",
+                "type": "autocomplete",
+                "source": "/api/safes/"
+            }
+        ]
+    }
+}

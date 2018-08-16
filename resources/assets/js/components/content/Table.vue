@@ -10,10 +10,8 @@
       <template slot="actions" slot-scope="props">
         <slot name="actions">
           <div class="custom-actions">
-            <b-link
-              @click="$router.push({ name: [pathNamePrefix()] + '.show', params: { [plural]: props.rowData.id }})"><fa icon="eye"></fa></b-link>
-            <b-link
-              @click="$router.push({ name: [pathNamePrefix()] + '.edit', params: { [plural]: props.rowData.id }})"><fa icon="edit"></fa></b-link>
+            <!-- <b-link :to="{ path: (props.rowData.id).toString() }" append><fa icon="eye"></fa></b-link> -->
+            <b-link :to="{ path: props.rowData.id + '/edit' }" append><fa icon="edit"></fa></b-link>
             <b-link
               @click="confirmDelete(props.rowData.id, props.rowIndex)"><fa icon="trash"></fa></b-link>
           </div>
@@ -45,7 +43,7 @@ import VuetablePaginationInfo from 'vuetable-2/src/components/VuetablePagination
 export default {
   scrollToTop: true,
 
-  name: 'CrudTable',
+  name: 'CTable',
 
   components: {
     Vuetable,
@@ -143,6 +141,7 @@ export default {
      * @return {void}
      */
     onChangePage (page) {
+      console.log(this.$route.params.content)
       this.$refs.vuetable.changePage(page)
     },
 

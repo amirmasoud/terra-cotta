@@ -14,8 +14,8 @@
 
       <card :title="$t('system')" class="settings-card">
         <ul class="nav flex-column nav-pills">
-          <li v-for="tab in system" :key="tab.route" class="nav-item">
-            <router-link :to="{ name: tab.route }" class="nav-link" active-class="active">
+          <li v-for="(tab, index) in system" :key="index" class="nav-item">
+            <router-link :to="{ name: 'content.browse', params: { content: tab.content } }" class="nav-link" active-class="active">
               <fa :icon="tab.icon" fixed-width/>
               {{ tab.name }}
             </router-link>
@@ -26,15 +26,25 @@
 
     <div class="col-md-9">
       <transition name="fade" mode="out-in">
-        <router-view/>
+        <router-view :key="$route.fullPath"/>
       </transition>
     </div>
   </div>
 </template>
 
 <script>
+import { config } from '~/mixins/config'
+
 export default {
   middleware: 'auth',
+
+  mixins: [config],
+
+  data: function () {
+    return {
+      domain: 'content',
+    }
+  },
 
   computed: {
     settings () {
@@ -56,32 +66,32 @@ export default {
         {
           icon: 'circle',
           name: this.$t('icons'),
-          route: 'settings.icons.browse'
+          content: 'icons'
         },
         {
           icon: 'tags',
           name: this.$t('tags'),
-          route: 'settings.tags.browse'
+          content: 'tags'
         },
         {
           icon: 'folder',
           name: this.$t('categories'),
-          route: 'settings.categories.browse'
+          content: 'categories'
         },
         {
           icon: 'allergies',
           name: this.$t('types'),
-          route: 'settings.types.browse'
+          content: 'types'
         },
         {
           icon: 'archive',
           name: this.$t('groups'),
-          route: 'settings.groups.browse'
+          content: 'groups'
         },
         {
           icon: 'file-alt',
           name: this.$t('fields'),
-          route: 'settings.fields.browse'
+          content: 'fields'
         }
       ]
     }

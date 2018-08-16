@@ -21,12 +21,7 @@
         </div>
       </div>
 
-      <!-- Submit Button -->
-      <div class="form-group row">
-        <div class="col-md-9 ml-md-auto">
-          <v-button :loading="form.busy" type="success">{{ $t('update') }}</v-button>
-        </div>
-      </div>
+      <c-submit :loading="form.busy">{{ $t('create') }}</c-submit>
     </form>
   </card>
 </template>

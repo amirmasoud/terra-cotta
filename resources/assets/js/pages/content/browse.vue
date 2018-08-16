@@ -1,7 +1,7 @@
 <template>
   <card :title="$t(config('title'))"
     :router-name="$t('create_' + config('singular'))"
-    :router-link="'safes.create'"
+    :router-link="'content.create'"
     :loading="loading">
     <c-table :fields="fields"
       :api-url="config('api')"
@@ -13,7 +13,7 @@
 <script>
 import axios from 'axios'
 import { mapGetters } from 'vuex'
-import { safe } from '~/mixins/safe'
+import { content } from '~/mixins/content'
 import CTable from '~/components/content/Table'
 
 export default {
@@ -23,7 +23,7 @@ export default {
     CTable
   },
 
-  mixins: [safe],
+  mixins: [content],
 
   metaInfo () {
     return { title: this.$t(this.config('title')) }
@@ -37,14 +37,19 @@ export default {
     return {
       fields: [
         {
-          name: 'name',
-          title: this.$t('name')
-        },
-        {
           name: '__slot:actions',
           title: this.$t('actions'),
         }
       ]
+    }
+  },
+
+  created: function () {
+    for (var i = this.config('form').length - 1; i >= 0; i--) {
+      this.fields.unshift({
+        name: this.config('form')[i].name,
+        title: this.$t(this.config('form')[i].label)
+      })
     }
   }
 }
