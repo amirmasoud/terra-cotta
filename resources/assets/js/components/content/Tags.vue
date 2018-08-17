@@ -3,6 +3,7 @@
     <label class="col-md-3 col-form-label text-md-right"><slot></slot></label>
     <div class="col-md-7">
       <vue-tags-input
+        v-if="!loading"
         v-model="tag"
         :tags="tags"
         :autocomplete-items="autocompleteItems"
@@ -11,6 +12,7 @@
         :class="{ 'is-invalid': form.errors.has(name) }"
         :name="name"
       />
+      <component-loading v-else></component-loading>
       <div class="help-block invalid-feedback d-block" v-if="form.errors.has(name)" v-html="form.errors.get(name)"/>
     </div>
   </div>
@@ -40,14 +42,20 @@ export default {
       tags: [],
       autocompleteItems: [],
       debounce: null,
+      loading: true
     }
+  },
+
+  async created () {
+    await this.fillTags()
+    this.loading = false
   },
 
   methods: {
     update (newTags) {
       this.autocompleteItems = []
       this.tags = newTags
-      this.form[name] = newTags.map(t => {
+      this.form[this.name] = newTags.map(t => {
         return t.text
       })
     },
@@ -67,8 +75,15 @@ export default {
           })
         }).catch((e) => console.warn(e))
       }, 300)
+    },
 
-      console.log(this.form)
+    async fillTags () {
+      let form = []
+      for (var i = this.form[this.name].length - 1; i >= 0; i--) {
+        this.tags.push({ 'text': this.form[this.name][i].name })
+        form.push(this.form[this.name][i].name)
+      }
+      this.form[this.name] = form
     }
   },
 

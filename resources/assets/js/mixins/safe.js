@@ -7,7 +7,8 @@ export const safe = {
   data () {
     return {
       domain: 'safe',
-      content: 'safes'
+      content: 'safes',
+      data: null
     }
   },
 
@@ -36,24 +37,17 @@ export const safe = {
         this.form[key] = data[key]
       })
 
-      this.tags = []
-      this.categories = []
-
-      // Fill tags
-      for (var i = data.tags.length - 1; i >= 0; i--) {
-        this.tags.push({ 'text': data.tags[i].name })
-        this.form.tags = []
-        this.form.tags.push(data.tags[i].name)
-      }
-
-      // Fill categories
-      for (var i = data.categories.length - 1; i >= 0; i--) {
-        this.categories.push({ 'text': data.categories[i].name })
-        this.form.categories = []
-        this.form.categories.push(data.categories[i].name)
-      }
-
       this.loading = false
-    }
+    },
+
+    /**
+     * Update a safe.
+     *
+     * @param  {object} event
+     * @return {void}
+     */
+    async updateResource (event) {
+      await this.form.patch(this.api + this.$route.params.safes)
+    },
   }
 }
