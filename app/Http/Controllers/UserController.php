@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use App\Http\Resources\UserCollection;
 use App\Http\Resources\User as UserResource;
 
 class UserController extends Controller
@@ -17,5 +18,15 @@ class UserController extends Controller
     public function user(Request $request)
     {
         return new UserResource($request->user());
+    }
+
+    /**
+     * Get all users.
+     *
+     * @return \App\Http\Resources\UserCollection
+     */
+    public function all()
+    {
+        return new UserCollection(User::paginate());
     }
 }
