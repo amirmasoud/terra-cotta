@@ -46,7 +46,7 @@ class Crud extends Content implements ContentInterface
 
             return $query->paginate($this->helper->perPage($request));
         } else {
-            return $this->model->paginate($this->helper->perPage($request));
+            return $this->model->paginate(config('content.default.per_page'));
         }
     }
 
