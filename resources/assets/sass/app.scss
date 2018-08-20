@@ -9,3 +9,7 @@
 @import 'elements/transitions';
 @import 'elements/autocomplete';
 @import 'elements/tagsinput';
+
+.text-shadow {
+  filter: drop-shadow(0 1px 0 $primary);
+}

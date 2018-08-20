@@ -18,6 +18,24 @@
           </li>
         </ul>
       </card>
+
+      <card :title="$t('tags')" class="safes-card" :loading="loadingTags">
+        <ul class="nav flex-column nav-pills" v-if="tags">
+          <li class="nav-item">
+            <router-link :to="{ name: 'safes.browse' }" class="nav-link" active-class="active" exact>
+              <fa icon="circle" fixed-width/>
+              {{ $t('all') }}
+            </router-link>
+          </li>
+
+          <li v-for="tag in tags" :key="tag.id" class="nav-item">
+            <router-link :to="{ name: 'safes.browse', query: { 'tag': tag.id } }" class="nav-link" active-class="active" exact>
+              <fa icon="circle" fixed-width :style="{color: tag.color}" class="text-shadow" />
+              {{ tag.name }}
+            </router-link>
+          </li>
+        </ul>
+      </card>
     </div>
 
     <div class="col-md-9">
@@ -37,19 +55,28 @@ export default {
   data: function () {
     return {
       categories: null,
-      loadingCategories: true
+      loadingCategories: true,
+      tags: null,
+      loadingTags: true
     }
   },
 
   created: function () {
     this.fetchCategories()
+    this.fetchTags()
   },
 
   methods: {
     async fetchCategories () {
-      const { data } = await axios.get('/api/settings/categories')
+      const { data } = await axios.get('/api/settings/categories?per_page=-1')
       this.categories = data.data
       this.loadingCategories = false
+    },
+
+    async fetchTags () {
+      const { data } = await axios.get('/api/settings/tags?per_page=-1')
+      this.tags = data.data
+      this.loadingTags = false
     }
   }
 }

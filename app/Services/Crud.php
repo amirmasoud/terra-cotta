@@ -44,9 +44,9 @@ class Crud extends Content implements ContentInterface
             $query = $this->helper->filter($query, $request);
             $query = $this->helper->sort($query, $request);
 
-            return $query->paginate($this->helper->config('default.per_page'));
+            return $query->paginate($this->helper->perPage($request));
         } else {
-            return $this->model->paginate($this->helper->config('default.per_page'));
+            return $this->model->paginate($this->helper->perPage($request));
         }
     }
 
@@ -137,6 +137,6 @@ class Crud extends Content implements ContentInterface
             $query->where($col, config('content.search.clause'), "%{$request->q}%");
         }
 
-        return $query->paginate();
+        return $query->paginate($this->helper->perPage($request));
     }
 }

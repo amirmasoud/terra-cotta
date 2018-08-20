@@ -5,7 +5,7 @@
       :fields="fields"
       :pagination-path="paginationPath"
       @vuetable:pagination-data="onPaginationData"
-      :append-params="{'category': $route.query.category}"
+      :append-params="{'category': $route.query.category, 'tag': $route.query.tag}"
       pagination-path="meta"
     >
       <template slot="actions" slot-scope="props">

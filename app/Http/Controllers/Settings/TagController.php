@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Settings;
 use App\Tag;
 use App\Contracts\Content;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Settings\Tag\IndexRequest;
 use App\Http\Requests\Settings\Tag\CreateRequest;
 use App\Http\Requests\Settings\Tag\UpdateRequest;
 use App\Http\Requests\Settings\Tag\SearchRequest;
@@ -35,11 +36,12 @@ class TagController extends Controller
     /**
      * Show paginated tags.
      *
+     * @param  IndexRequest $request
      * @return JSON
      */
-    public function index()
+    public function index(IndexRequest $request)
     {
-        return new TagCollection($this->content->index());
+        return new TagCollection($this->content->index($request));
     }
 
     /**

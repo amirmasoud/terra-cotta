@@ -33,6 +33,10 @@ return [
                         'column' => 'category_id',
                         'relationship' => 'categories'
                     ],
+                    'tag' => [
+                        'column' => 'id',
+                        'relationship' => 'tags'
+                    ],
                 ],
             ]
         ]
