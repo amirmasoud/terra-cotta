@@ -1,7 +1,21 @@
 <template>
-  <card :title="$t('home')">
-    {{ $t('you_are_logged_in') }}
-  </card>
+  <b-row>
+    <b-col>
+      <card>
+        {{ $t('you_are_logged_in') }}
+      </card>
+    </b-col>
+    <b-col>
+      <card>
+        {{ $t('you_are_logged_in') }}
+      </card>
+    </b-col>
+    <b-col>
+      <card>
+        {{ $t('you_are_logged_in') }}
+      </card>
+    </b-col>
+  </b-row>
 </template>
 
 <script>

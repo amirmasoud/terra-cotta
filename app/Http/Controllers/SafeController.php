@@ -15,6 +15,9 @@ use App\Http\Requests\Safe\CreateRequest;
 use App\Http\Requests\Safe\UpdateRequest;
 use App\Http\Requests\Safe\SearchRequest;
 
+use App\Http\Resources\SafeCollection;
+use App\Http\Resources\Safe as SafeResource;
+
 class SafeController extends Controller
 {
     private $content;
@@ -27,7 +30,8 @@ class SafeController extends Controller
     public function __construct(Content $content)
     {
         $this->content = $content;
-        $this->content->model = Safe::class;
+        $this->content->model = Safe::with('categories', 'tags', 'groups',
+            'groups.fields', 'groups.fields.type', 'categories.icon');
     }
 
     /**
@@ -37,7 +41,7 @@ class SafeController extends Controller
      */
     public function index(IndexRequest $request)
     {
-        return $this->content->index($request);
+        return new SafeCollection($this->content->index($request));
     }
 
     /**
@@ -83,7 +87,7 @@ class SafeController extends Controller
                 if (array_key_exists('fields', $g)) {
                     foreach ($g['fields'] as $f) {
                         $field = new Field($f);
-                        $field->type_id = $f['type'] ?? Type::default()->id;
+                        $field->type_id = $f['type']['id'] ?? Type::default()->id;
                         $field->group_id = $group->id;
                         $safe->fields()->save($field);
                     }
@@ -102,7 +106,11 @@ class SafeController extends Controller
      */
     public function show(Safe $safe)
     {
-        return $this->content->show($safe);
+        return new SafeResource(
+            $this->content->show($safe)
+                ->load('categories', 'tags', 'groups', 'groups.fields',
+                       'groups.fields.type', 'categories.icon')
+        );
     }
 
     /**
@@ -113,12 +121,11 @@ class SafeController extends Controller
      */
     public function edit(Safe $safe)
     {
-        return Safe::whereId($safe->id)
-            ->with(['groups:id,name,icon_id,safe_id',
-                    'groups.fields:id,label,value,type_id,group_id',
-                    'categories:id,name,icon_id',
-                    'tags:id,name,color'])
-            ->get()[0]; // @TODO: Add API resource
+        return new SafeResource(
+            $this->content->show($safe)
+                ->load('categories', 'tags', 'groups', 'groups.fields',
+                       'groups.fields.type', 'categories.icon')
+        );
     }
 
     /**
@@ -174,7 +181,7 @@ class SafeController extends Controller
                 if (array_key_exists('fields', $g)) {
                     foreach ($g['fields'] as $f) {
                         $field = new Field($f);
-                        $field->type_id = $f['type'] ?? Type::default()->id;
+                        $field->type_id = $f['type']['id'] ?? Type::default()->id;
                         $field->group_id = $group->id;
                         $safe->fields()->save($field);
                     }
@@ -204,6 +211,6 @@ class SafeController extends Controller
      */
     public function search(SearchRequest $request)
     {
-        return $this->content->search($request);
+        return new SafeCollection($this->content->search($request));
     }
 }

@@ -40,13 +40,13 @@ class Crud extends Content implements ContentInterface
     public function index($request = null)
     {
         if ($request) {
-            $query = $this->model::query();
+            $query = $this->model;
             $query = $this->helper->filter($query, $request);
             $query = $this->helper->sort($query, $request);
 
             return $query->paginate($this->helper->config('default.per_page'));
         } else {
-            return $this->model::paginate($this->helper->config('default.per_page'));
+            return $this->model->paginate($this->helper->config('default.per_page'));
         }
     }
 
@@ -68,7 +68,7 @@ class Crud extends Content implements ContentInterface
      */
     public function store($request)
     {
-        return $this->model::create($request->all());
+        return $this->model->create($request->all());
     }
 
     /**
@@ -79,10 +79,10 @@ class Crud extends Content implements ContentInterface
      */
     public function show($model)
     {
-        if ($model instanceof $this->model) {
+        if (! is_integer($model)) {
             return $model;
         } else {
-            return $this->model::find($model);
+            return $this->model->find($model);
         }
     }
 
@@ -132,7 +132,7 @@ class Crud extends Content implements ContentInterface
      */
     public function search($request)
     {
-        $query = $this->model::query();
+        $query = $this->model;
         foreach (config('content.search.columns') as $col) {
             $query->where($col, config('content.search.clause'), "%{$request->q}%");
         }

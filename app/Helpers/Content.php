@@ -56,8 +56,12 @@ class Content
      */
     protected function perPage(Request $request) : int
     {
-        if ($request->query($this->config('map.paginate'))) {
-            return $request->query($this->config('map.paginate'));
+        if ($paginate = $request->query($this->config('map.paginate'))) {
+            if ($paginate > 0) {
+                return $paginate;
+            } else {
+                return 9999;
+            }
         } else {
             return $this->config('default.per_page');
         }

@@ -47,8 +47,8 @@ export default {
 
   methods: {
     async fetchCategories () {
-      const { data } = await axios.get('/api/settings/categories/all')
-      this.categories = data
+      const { data } = await axios.get('/api/settings/categories')
+      this.categories = data.data
       this.loadingCategories = false
     }
   }

@@ -5,9 +5,13 @@ namespace App\Http\Controllers\Settings;
 use App\Category;
 use App\Contracts\Content;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Settings\Category\IndexRequest;
 use App\Http\Requests\Settings\Category\CreateRequest;
 use App\Http\Requests\Settings\Category\UpdateRequest;
 use App\Http\Requests\Settings\Category\SearchRequest;
+
+use App\Http\Resources\CategoryCollection;
+use App\Http\Resources\Category as CategoryResource;
 
 class CategoryController extends Controller
 {
@@ -26,50 +30,50 @@ class CategoryController extends Controller
     public function __construct(Content $content)
     {
         $this->content = $content;
-        $this->content->model = Category::class;
+        $this->content->model = Category::with('icon');
     }
 
     /**
      * Show paginated categories.
      *
-     * @return JSON
+     * @return \App\Http\ResourcesCategoryCollection
      */
-    public function index()
+    public function index(IndexRequest $request)
     {
-        return $this->content->index();
+        return new CategoryCollection($this->content->index($request));
     }
 
     /**
      * Create new category.
      *
      * @param  \App\Http\Requests\Settings\Category\CreateRequest $request
-     * @return JSON
+     * @return \App\Http\Resources\Category
      */
     public function store(CreateRequest $request)
     {
-        return $this->content->store($request);
+        return new CategoryResource($this->content->store($request));
     }
 
     /**
      * Show an category.
      *
      * @param  \App\Category $category
-     * @return JSON
+     * @return \App\Http\Resources\Category
      */
     public function show(Category $category)
     {
-        return $this->content->show($category);
+        return new CategoryResource($this->content->show($category)->load('icon'));
     }
 
     /**
      * Show single category for edit.
      *
      * @param  \App\Category $category
-     * @return JSON
+     * @return \App\Http\Resources\Category
      */
     public function edit(Category $category)
     {
-        return $this->content->edit($category);
+        return new CategoryResource($this->content->edit($category)->load('icon'));
     }
 
     /**
@@ -77,7 +81,7 @@ class CategoryController extends Controller
      *
      * @param  \App\Http\Requests\Settings\Category\UpdateRequest $request
      * @param  \App\Category $category
-     * @return JSON
+     * @return Boolean
      */
     public function update(UpdateRequest $request, Category $category)
     {
@@ -88,7 +92,7 @@ class CategoryController extends Controller
      * Destroy/delete an category.
      *
      * @param  \App\Category $category
-     * @return JSON
+     * @return Boolean
      */
     public function destroy(Category $category)
     {
@@ -99,22 +103,10 @@ class CategoryController extends Controller
      * Search categories with name.
      *
      * @param  Request $request
-     * @return JSON
+     * @return \App\Http\ResourcesCategoryCollection
      */
     public function search(SearchRequest $request)
     {
-        return $this->content->search($request);
-    }
-
-    /**
-     * Get all unpaginated categories.
-     *
-     * @deprecated 1.1.0 - to be deprecated and use index method instead
-     * @version 1.0.0
-     * @return JSON
-     */
-    public function all()
-    {
-        return Category::with('icon')->get();
+        return new CategoryCollection($this->content->search($request));
     }
 }

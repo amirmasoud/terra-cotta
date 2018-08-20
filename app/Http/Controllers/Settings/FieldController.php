@@ -8,6 +8,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Settings\Field\CreateRequest;
 use App\Http\Requests\Settings\Field\UpdateRequest;
 
+use App\Http\Resources\FieldCollection;
+use App\Http\Resources\Field as FieldResource;
+
 class FieldController extends Controller
 {
     /**
@@ -25,7 +28,7 @@ class FieldController extends Controller
     public function __construct(Content $content)
     {
         $this->content = $content;
-        $this->content->model = Field::class;
+        $this->content->model = Field::with('type', 'group', 'safe', 'icon');
     }
 
     /**
@@ -35,7 +38,7 @@ class FieldController extends Controller
      */
     public function index()
     {
-        return $this->content->index();
+        return new FieldCollection($this->content->index());
     }
 
     /**
@@ -46,7 +49,7 @@ class FieldController extends Controller
      */
     public function store(CreateRequest $request)
     {
-        return $this->content->store($request);
+        return new FieldResource($this->content->store($request));
     }
 
     /**
@@ -57,7 +60,7 @@ class FieldController extends Controller
      */
     public function show(Field $field)
     {
-        return $this->content->show($field);
+        return new FieldResource($this->content->show($field->load('icon', 'group', 'safe', 'type')));
     }
 
     /**
@@ -68,7 +71,7 @@ class FieldController extends Controller
      */
     public function edit(Field $field)
     {
-        return $this->content->edit($field);
+        return new FieldResource($this->content->edit($field->load('icon', 'group', 'safe', 'type')));
     }
 
     /**

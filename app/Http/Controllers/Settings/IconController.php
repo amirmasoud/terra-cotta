@@ -10,6 +10,9 @@ use App\Http\Requests\Settings\Icon\SearchRequest;
 use App\Http\Requests\Settings\Icon\CreateRequest;
 use App\Http\Requests\Settings\Icon\UpdateRequest;
 
+use App\Http\Resources\IconCollection;
+use App\Http\Resources\Icon as IconResource;
+
 class IconController extends Controller
 {
     /**
@@ -27,7 +30,7 @@ class IconController extends Controller
     public function __construct(Content $content)
     {
         $this->content = $content;
-        $this->content->model = Icon::class;
+        $this->content->model = Icon::with('categories', 'groups', 'fields');
     }
 
     /**
@@ -37,7 +40,7 @@ class IconController extends Controller
      */
     public function index()
     {
-        return $this->content->index();
+        return new IconCollection($this->content->index());
     }
 
     /**
@@ -48,7 +51,7 @@ class IconController extends Controller
      */
     public function store(CreateRequest $request)
     {
-        return $this->content->store($request);
+        $this->content->store($request);
     }
 
     /**

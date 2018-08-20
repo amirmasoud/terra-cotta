@@ -34,7 +34,7 @@ export const safe = {
       const { data } = await axios.get('/api/safes/' + this.$route.params.safes + '/edit')
 
       this.form.keys().forEach(key => {
-        this.form[key] = data[key]
+        this.form[key] = data.data[key]
       })
 
       this.loading = false

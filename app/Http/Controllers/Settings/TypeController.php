@@ -9,6 +9,9 @@ use App\Http\Requests\Settings\Type\CreateRequest;
 use App\Http\Requests\Settings\Type\UpdateRequest;
 use App\Http\Requests\Settings\Type\SearchRequest;
 
+use App\Http\Resources\TypeCollection;
+use App\Http\Resources\Type as TypeResource;
+
 class TypeController extends Controller
 {
     /**
@@ -26,7 +29,7 @@ class TypeController extends Controller
     public function __construct(Content $content)
     {
         $this->content = $content;
-        $this->content->model = Type::class;
+        $this->content->model = Type::query();
     }
 
     /**
@@ -36,7 +39,7 @@ class TypeController extends Controller
      */
     public function index()
     {
-        return $this->content->index();
+        return new TypeCollection($this->content->index());
     }
 
     /**
@@ -47,7 +50,7 @@ class TypeController extends Controller
      */
     public function store(CreateRequest $request)
     {
-        return $this->content->store($request);
+        return new TypeResource($this->content->store($request));
     }
 
     /**
@@ -58,7 +61,7 @@ class TypeController extends Controller
      */
     public function show(Type $type)
     {
-        return $this->content->show($type);
+        return new TypeResource($this->content->show($type));
     }
 
     /**
@@ -69,7 +72,7 @@ class TypeController extends Controller
      */
     public function edit(Type $type)
     {
-        return $this->content->edit($type);
+        return new TypeResource($this->content->edit($type));
     }
 
     /**
@@ -103,6 +106,6 @@ class TypeController extends Controller
      */
     public function search(SearchRequest $request)
     {
-        return $this->content->search($request);
+        return new TypeCollection($this->content->search($request));
     }
 }

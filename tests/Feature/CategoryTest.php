@@ -38,14 +38,6 @@ class CategoryTest extends TestCase
     }
 
     /** @test */
-    public function all_categories()
-    {
-        $this->actingAs($this->user)
-            ->getJson('/api/settings/categories/all')
-            ->assertSuccessful();
-    }
-
-    /** @test */
     public function get_categories()
     {
         $this->actingAs($this->user)

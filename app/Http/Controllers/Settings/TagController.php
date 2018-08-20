@@ -9,6 +9,9 @@ use App\Http\Requests\Settings\Tag\CreateRequest;
 use App\Http\Requests\Settings\Tag\UpdateRequest;
 use App\Http\Requests\Settings\Tag\SearchRequest;
 
+use App\Http\Resources\TagCollection;
+use App\Http\Resources\Tag as TagResource;
+
 class TagController extends Controller
 {
     /**
@@ -26,7 +29,7 @@ class TagController extends Controller
     public function __construct(Content $content)
     {
         $this->content = $content;
-        $this->content->model = Tag::class;
+        $this->content->model = Tag::query();
     }
 
     /**
@@ -36,7 +39,7 @@ class TagController extends Controller
      */
     public function index()
     {
-        return $this->content->index();
+        return new TagCollection($this->content->index());
     }
 
     /**
@@ -47,7 +50,7 @@ class TagController extends Controller
      */
     public function store(CreateRequest $request)
     {
-        return $this->content->store($request);
+        return new TagResource($this->content->store($request));
     }
 
     /**
@@ -58,7 +61,7 @@ class TagController extends Controller
      */
     public function show(Tag $tag)
     {
-        return $this->content->show($tag);
+        return new TagResource($this->content->show($tag));
     }
 
     /**
@@ -69,7 +72,7 @@ class TagController extends Controller
      */
     public function edit(Tag $tag)
     {
-        return $this->content->edit($tag);
+        return new TagResource($this->content->edit($tag));
     }
 
     /**
@@ -103,6 +106,6 @@ class TagController extends Controller
      */
     public function search(SearchRequest $request)
     {
-        return $this->content->search($request);
+        return new TagCollection($this->content->search($request));
     }
 }

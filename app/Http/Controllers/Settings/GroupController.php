@@ -9,6 +9,9 @@ use App\Http\Requests\Settings\Group\CreateRequest;
 use App\Http\Requests\Settings\Group\UpdateRequest;
 use App\Http\Requests\Settings\Group\SearchRequest;
 
+use App\Http\Resources\GroupCollection;
+use App\Http\Resources\Group as GroupResource;
+
 class GroupController extends Controller
 {
     /**
@@ -26,7 +29,7 @@ class GroupController extends Controller
     public function __construct(Content $content)
     {
         $this->content = $content;
-        $this->content->model = Group::class;
+        $this->content->model = Group::with('icon', 'safe', 'fields');
     }
 
     /**
@@ -36,7 +39,7 @@ class GroupController extends Controller
      */
     public function index()
     {
-        return $this->content->index();
+        return new GroupCollection($this->content->index());
     }
 
     /**

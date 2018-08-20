@@ -41,7 +41,7 @@ export const content = {
 
       const { data } = await this.form.post(this.api)
 
-      this.$router.push({ name: editRoute, params: { 'resource': data.id } })
+      this.$router.push({ name: editRoute, params: { 'resource': data.data.id } })
     },
 
     /**
@@ -53,7 +53,7 @@ export const content = {
     async fillResource () {
       const { data } = await axios.get(this.api + this.$route.params.resource + '/edit')
       this.form.keys().forEach(key => {
-        this.form[key] = data[key]
+        this.form[key] = data.data[key]
       })
     },
 
@@ -75,7 +75,7 @@ export const content = {
      */
     async showResource () {
       const { data } = await axios.get(this.api + this.$route.params.resource)
-      this.resource = data
+      this.resource = data.data
     },
 
     /**

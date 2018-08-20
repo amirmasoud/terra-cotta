@@ -6,6 +6,7 @@
       :pagination-path="paginationPath"
       @vuetable:pagination-data="onPaginationData"
       :append-params="{'category': $route.query.category}"
+      pagination-path="meta"
     >
       <template slot="actions" slot-scope="props">
         <slot name="actions">
