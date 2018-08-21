@@ -19,6 +19,8 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('/user', 'UserController@user');
     Route::get('/users', 'UserController@all');
 
+    Route::get('/home', 'HomeController@get');
+
     Route::patch('settings/profile', 'Settings\ProfileController@update');
     Route::patch('settings/password', 'Settings\PasswordController@update');
 
