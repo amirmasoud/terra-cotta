@@ -1,6 +1,12 @@
 <template>
-  <div class="row">
-    <div class="col-md-3">
+  <b-row>
+    <b-col cols="12" md="9" order-sm="12">
+      <transition name="fade" mode="out-in">
+        <router-view :key="$route.fullPath"/>
+      </transition>
+    </b-col>
+
+    <b-col cols="12" md="3" order-sm="1">
       <card :title="$t('categories')" class="safes-card" :loading="loadingCategories">
         <ul class="nav flex-column nav-pills" v-if="categories">
           <li class="nav-item">
@@ -36,14 +42,8 @@
           </li>
         </ul>
       </card>
-    </div>
-
-    <div class="col-md-9">
-      <transition name="fade" mode="out-in">
-        <router-view :key="$route.fullPath"/>
-      </transition>
-    </div>
-  </div>
+    </b-col>
+  </b-row>
 </template>
 
 <script>

@@ -4,11 +4,9 @@
     <template v-else>
       <slot></slot>
       <template v-if="routerName && routerLink">
-        <b-link
-          :to="{ name: routerLink }"
-          class="card-link">
-        {{ routerName }}
-        </b-link>
+        <b-button :to="{ name: routerLink }" class="card-link" variant="primary">
+          {{ routerName }}
+        </b-button>
       </template>
     </template>
   </b-card>
