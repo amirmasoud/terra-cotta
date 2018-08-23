@@ -95,7 +95,11 @@ class SafeController extends Controller
             }
         }
 
-        return response(null, 201);
+        return new SafeResource(
+            $this->content->show($safe)
+                ->load('categories', 'tags', 'groups', 'groups.fields',
+                       'groups.fields.type', 'categories.icon')
+        );
     }
 
     /**

@@ -14,6 +14,18 @@ export const safe = {
 
   methods: {
     /**
+     * Store a new resource.
+     *
+     * @param  {object} event
+     * @return {void}
+     */
+    async storeResource (event) {
+      const { data } = await this.form.post(this.api)
+
+      this.$router.push({ name: 'safes.edit', params: { 'safes': data.data.id } })
+    },
+
+    /**
      * Show a resource.
      *
      * @param  {integer|string} resourceId
@@ -31,7 +43,7 @@ export const safe = {
      * @return {void}
      */
     async fillResource (event) {
-      const { data } = await axios.get('/api/safes/' + this.$route.params.safes + '/edit')
+      const { data } = await axios.get(this.api + this.$route.params.safes + '/edit')
 
       this.form.keys().forEach(key => {
         this.form[key] = data.data[key]
