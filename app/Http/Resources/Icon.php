@@ -19,9 +19,10 @@ class Icon extends JsonResource
     public function toArray($request)
     {
         return [
+            'id' => $this->id,
             'name' => $this->name,
             'class' => $this->class,
-            'markup' => $this->markup,
+            'prefix' => $this->prefix,
             'categories' => CategoryResource::collection($this->whenLoaded('categories')),
             'groups' => GroupResource::collection($this->whenLoaded('groups')),
             'fields' => FieldResource::collection($this->whenLoaded('fields')),

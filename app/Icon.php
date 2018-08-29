@@ -15,7 +15,7 @@ class Icon extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'class', 'markup',
+        'name', 'class', 'prefix',
     ];
 
     /**

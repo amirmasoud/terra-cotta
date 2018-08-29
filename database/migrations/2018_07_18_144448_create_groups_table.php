@@ -18,7 +18,7 @@ class CreateGroupsTable extends Migration
             $table->string('name');
             $table->unsignedInteger('icon_id')->nullable();
             $table->foreign('icon_id')->references('id')
-                  ->on('icons')->onDelete('cascade');
+                  ->on('icons')->onDelete('SET NULL');
             $table->unsignedInteger('safe_id');
             $table->foreign('safe_id')->references('id')
                   ->on('safes')->onDelete('cascade');

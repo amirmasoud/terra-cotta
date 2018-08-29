@@ -53,6 +53,7 @@
   "created_at": "Created at",
   "updated_at": "Updated at",
   "color": "Color",
+  "prefix": "Prefix",
   "icon_id": "Icon",
   "safe_id": "Safe",
   "type_id": "Type",

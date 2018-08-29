@@ -15,9 +15,9 @@
                 "type": "text"
             },
             {
-                "name": "markup",
-                "label": "markup",
-                "type": "textarea"
+                "name": "prefix",
+                "label": "prefix",
+                "type": "text"
             }
         ]
     },

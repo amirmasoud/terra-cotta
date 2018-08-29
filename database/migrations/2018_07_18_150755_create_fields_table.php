@@ -19,7 +19,7 @@ class CreateFieldsTable extends Migration
             $table->string('value')->nullable();
             $table->unsignedInteger('icon_id')->nullable();
             $table->foreign('icon_id')->references('id')
-                  ->on('icons')->onDelete('cascade');
+                  ->on('icons')->onDelete('SET NULL');
             $table->unsignedInteger('type_id');
             $table->foreign('type_id')->references('id')
                   ->on('types')->onDelete('cascade');

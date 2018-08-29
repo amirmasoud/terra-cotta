@@ -87,7 +87,8 @@ export default {
      * @return {void}
      */
     async fillResourceName () {
-      if (this.form[this.name]) {
+      console.log(this.name)
+      if (this.form[this.name] || typeof this.form[this.name] === 'undefined') {
         const { data } = await axios.get(this.source + this.form[this.name])
         this.initialDisplay = data.name
       }

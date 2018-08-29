@@ -18,7 +18,7 @@
 
           <li v-for="category in categories" :key="category.id" class="nav-item">
             <router-link :to="{ name: 'safes.browse', query: { 'category': category.id } }" class="nav-link" active-class="active" exact>
-              <fa :icon="category.icon ? category.icon.class : 'circle'" fixed-width/>
+              <fa :icon="category.icon ? [category.icon.prefix, category.icon.class] : 'circle'" fixed-width/>
               {{ category.name }}
             </router-link>
           </li>
