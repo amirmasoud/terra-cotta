@@ -17,9 +17,11 @@ class PermissionsTableSeeder extends Seeder
         foreach ($resources as $resource) {
             Permission::create(['name' => "browse {$resource}"]);
             Permission::create(['name' => "create {$resource}"]);
-            Permission::create(['name' => "read {$resource}"]);
-            Permission::create(['name' => "edit {$resource}"]);
+            Permission::create(['name' => "view {$resource}"]);
+            Permission::create(['name' => "update {$resource}"]);
             Permission::create(['name' => "delete {$resource}"]);
+            Permission::create(['name' => "restore {$resource}"]);
+            Permission::create(['name' => "force delete {$resource}"]);
         }
     }
 }

@@ -19,6 +19,10 @@ class TypeTest extends TestCase
         parent::setUp();
 
         $this->user = factory(User::class)->create();
+        \Artisan::call('db:seed', ['--class' => 'RolesTableSeeder']);
+        \Artisan::call('db:seed', ['--class' => 'PermissionsTableSeeder']);
+        \Artisan::call('db:seed', ['--class' => 'RoleHasPermissionTableSeeder']);
+        $this->user->assignRole('admin');
 
         $this->type = factory(Type::class)->create();
     }

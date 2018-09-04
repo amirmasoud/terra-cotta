@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Settings\Icon;
+namespace App\Http\Requests\User;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -24,9 +24,8 @@ class CreateRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'   => 'required|max:255',
-            'class'  => 'required|max:255',
-            'prefix' => 'required|max:255'
+            'name'  => 'required',
+            'email' => 'required|email|unique:users,email',
         ];
     }
 }

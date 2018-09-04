@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Settings\Icon;
+namespace App\Http\Requests\User;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateRequest extends FormRequest
+class SearchRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class CreateRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return false;
     }
 
     /**
@@ -24,9 +24,7 @@ class CreateRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'   => 'required|max:255',
-            'class'  => 'required|max:255',
-            'prefix' => 'required|max:255'
+            'q' => 'required'
         ];
     }
 }

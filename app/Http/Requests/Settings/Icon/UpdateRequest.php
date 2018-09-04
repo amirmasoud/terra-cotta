@@ -26,7 +26,7 @@ class UpdateRequest extends FormRequest
         return [
             'name'   => 'required|max:255',
             'class'  => 'required|max:255',
-            'markup' => 'required|max:255'
+            'prefix' => 'required|max:255'
         ];
     }
 }

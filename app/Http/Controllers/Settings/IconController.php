@@ -29,6 +29,7 @@ class IconController extends Controller
      */
     public function __construct(Content $content)
     {
+        $this->authorizeResource(Icon::class);
         $this->content = $content;
         $this->content->model = Icon::with('categories', 'groups', 'fields');
     }
@@ -40,6 +41,7 @@ class IconController extends Controller
      */
     public function index()
     {
+        $this->authorize('browse', Icon::class);
         return new IconCollection($this->content->index());
     }
 
@@ -107,6 +109,7 @@ class IconController extends Controller
      */
     public function search(SearchRequest $request)
     {
+        $this->authorize('browse', Icon::class);
         return $this->content->search($request);
     }
 }

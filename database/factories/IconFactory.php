@@ -6,6 +6,6 @@ $factory->define(App\Icon::class, function (Faker $faker) {
     return [
         'name' => $faker->name,
         'class' => $faker->name,
-        'markup' => $faker->name,
+        'prefix' => $faker->name,
     ];
 });

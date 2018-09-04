@@ -4,11 +4,31 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+
 use App\Http\Resources\UserCollection;
 use App\Http\Resources\User as UserResource;
 
 class UserController extends Controller
 {
+    /**
+     * Content Service Provider
+     *
+     * @var \App\Contracts\Content
+     */
+    private $content;
+
+    /**
+     * Constructor of the class.
+     *
+     * @param \App\Contracts\Content $content
+     */
+    public function __construct(Content $content)
+    {
+        $this->authorizeResource(Category::class);
+        $this->content = $content;
+        $this->content->model = Category::with('icon');
+    }
+
     /**
      * Get current user.
      *
@@ -21,12 +41,81 @@ class UserController extends Controller
     }
 
     /**
-     * Get all users.
+     * Show paginated categories.
      *
-     * @return \App\Http\Resources\UserCollection
+     * @return \App\Http\ResourcesCategoryCollection
      */
-    public function all()
+    public function index(IndexRequest $request)
     {
-        return new UserCollection(User::paginate());
+        $this->authorize('browse', Category::class);
+        return new CategoryCollection($this->content->index($request));
+    }
+
+    /**
+     * Create new category.
+     *
+     * @param  \App\Http\Requests\Settings\Category\CreateRequest $request
+     * @return \App\Http\Resources\Category
+     */
+    public function store(CreateRequest $request)
+    {
+        return new CategoryResource($this->content->store($request));
+    }
+
+    /**
+     * Show an category.
+     *
+     * @param  \App\Category $category
+     * @return \App\Http\Resources\Category
+     */
+    public function show(Category $category)
+    {
+        return new CategoryResource($this->content->show($category)->load('icon'));
+    }
+
+    /**
+     * Show single category for edit.
+     *
+     * @param  \App\Category $category
+     * @return \App\Http\Resources\Category
+     */
+    public function edit(Category $category)
+    {
+        return new CategoryResource($this->content->edit($category)->load('icon'));
+    }
+
+    /**
+     * Update an category.
+     *
+     * @param  \App\Http\Requests\Settings\Category\UpdateRequest $request
+     * @param  \App\Category $category
+     * @return Boolean
+     */
+    public function update(UpdateRequest $request, Category $category)
+    {
+        return $this->content->update($request, $category);
+    }
+
+    /**
+     * Destroy/delete an category.
+     *
+     * @param  \App\Category $category
+     * @return Boolean
+     */
+    public function destroy(Category $category)
+    {
+        return $this->content->destroy($category);
+    }
+
+    /**
+     * Search categories with name.
+     *
+     * @param  Request $request
+     * @return \App\Http\ResourcesCategoryCollection
+     */
+    public function search(SearchRequest $request)
+    {
+        $this->authorize('browse', Category::class);
+        return new CategoryCollection($this->content->search($request));
     }
 }

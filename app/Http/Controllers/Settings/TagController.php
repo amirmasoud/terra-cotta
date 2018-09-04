@@ -29,6 +29,7 @@ class TagController extends Controller
      */
     public function __construct(Content $content)
     {
+        $this->authorizeResource(Tag::class);
         $this->content = $content;
         $this->content->model = Tag::query();
     }
@@ -41,6 +42,7 @@ class TagController extends Controller
      */
     public function index(IndexRequest $request)
     {
+        $this->authorize('browse', Tag::class);
         return new TagCollection($this->content->index($request));
     }
 
@@ -108,6 +110,7 @@ class TagController extends Controller
      */
     public function search(SearchRequest $request)
     {
+        $this->authorize('browse', Tag::class);
         return new TagCollection($this->content->search($request));
     }
 }

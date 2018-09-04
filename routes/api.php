@@ -17,7 +17,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post('logout', 'Auth\LoginController@logout');
 
     Route::get('/user', 'UserController@user');
-    Route::get('/users', 'UserController@all');
+    Route::get('/users', 'UserController@all')->middleware('can:browse,App\User');
 
     Route::get('/home', 'HomeController@get');
 

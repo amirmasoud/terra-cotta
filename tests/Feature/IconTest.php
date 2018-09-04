@@ -19,6 +19,10 @@ class IconTest extends TestCase
         parent::setUp();
 
         $this->user = factory(User::class)->create();
+        \Artisan::call('db:seed', ['--class' => 'RolesTableSeeder']);
+        \Artisan::call('db:seed', ['--class' => 'PermissionsTableSeeder']);
+        \Artisan::call('db:seed', ['--class' => 'RoleHasPermissionTableSeeder']);
+        $this->user->assignRole('admin');
 
         $this->icon = factory(Icon::class)->create();
     }
@@ -54,14 +58,14 @@ class IconTest extends TestCase
             ->postJson('/api/settings/icons', [
                 'name' => 'icon_name',
                 'class' => 'icon icon_name',
-                'markup' => '<i class="icon icon_name"></i>'
+                'prefix' => 'fas'
             ])
             ->assertSuccessful();
 
         $this->assertDatabaseHas('icons', [
             'name' => 'icon_name',
             'class' => 'icon icon_name',
-            'markup' => '<i class="icon icon_name"></i>'
+            'prefix' => 'fas'
         ]);
     }
 
@@ -80,14 +84,14 @@ class IconTest extends TestCase
             ->patchJson('/api/settings/icons/' . $this->icon->id, [
                 'name' => 'updated_icon_name',
                 'class' => 'updated_icon updated_icon_name',
-                'markup' => '<i class="updated_icon updated_icon_name"></i>'
+                'prefix' => 'fas'
             ])
             ->assertSuccessful();
 
         $this->assertDatabaseHas('icons', [
             'name' => 'updated_icon_name',
             'class' => 'updated_icon updated_icon_name',
-            'markup' => '<i class="updated_icon updated_icon_name"></i>'
+            'prefix' => 'fas'
         ]);
     }
 

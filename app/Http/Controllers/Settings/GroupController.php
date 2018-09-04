@@ -28,6 +28,7 @@ class GroupController extends Controller
      */
     public function __construct(Content $content)
     {
+        $this->authorizeResource(Group::class);
         $this->content = $content;
         $this->content->model = Group::with('icon', 'safe', 'fields');
     }
@@ -39,6 +40,7 @@ class GroupController extends Controller
      */
     public function index()
     {
+        $this->authorize('browse', Group::class);
         return new GroupCollection($this->content->index());
     }
 
@@ -106,6 +108,7 @@ class GroupController extends Controller
      */
     public function search(SearchRequest $request)
     {
+        $this->authorize('browse', Group::class);
         return $this->content->search($request);
     }
 }

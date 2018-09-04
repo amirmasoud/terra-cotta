@@ -29,6 +29,7 @@ class SafeController extends Controller
      */
     public function __construct(Content $content)
     {
+        $this->authorizeResource(Safe::class);
         $this->content = $content;
         $this->content->model = Safe::with('categories', 'tags', 'groups',
             'groups.fields', 'groups.fields.type', 'categories.icon');
@@ -41,6 +42,7 @@ class SafeController extends Controller
      */
     public function index(IndexRequest $request)
     {
+        $this->authorize('browse', Safe::class);
         return new SafeCollection($this->content->index($request));
     }
 
@@ -215,6 +217,7 @@ class SafeController extends Controller
      */
     public function search(SearchRequest $request)
     {
+        $this->authorize('browse', Safe::class);
         return new SafeCollection($this->content->search($request));
     }
 }

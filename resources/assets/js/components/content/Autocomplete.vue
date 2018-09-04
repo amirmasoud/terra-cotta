@@ -42,6 +42,8 @@ export default {
     inputClass: { type: String, default: 'form-control' },
     name: { type: String },
     form: { type: Object },
+    key: { type: String },
+    data: { type: Object }
   },
 
   data () {
@@ -87,10 +89,9 @@ export default {
      * @return {void}
      */
     async fillResourceName () {
-      console.log(this.name)
       if (this.form[this.name] || typeof this.form[this.name] === 'undefined') {
-        const { data } = await axios.get(this.source + this.form[this.name])
-        this.initialDisplay = data.name
+        console.log(this.form)
+        this.initialDisplay = this.data.name
       }
     },
   }

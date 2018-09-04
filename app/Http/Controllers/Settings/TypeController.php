@@ -28,6 +28,7 @@ class TypeController extends Controller
      */
     public function __construct(Content $content)
     {
+        $this->authorizeResource(Type::class);
         $this->content = $content;
         $this->content->model = Type::query();
     }
@@ -39,6 +40,7 @@ class TypeController extends Controller
      */
     public function index()
     {
+        $this->authorize('browse', Type::class);
         return new TypeCollection($this->content->index());
     }
 
@@ -106,6 +108,7 @@ class TypeController extends Controller
      */
     public function search(SearchRequest $request)
     {
+        $this->authorize('browse', Type::class);
         return new TypeCollection($this->content->search($request));
     }
 }

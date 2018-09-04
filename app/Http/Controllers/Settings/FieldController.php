@@ -27,6 +27,7 @@ class FieldController extends Controller
      */
     public function __construct(Content $content)
     {
+        $this->authorizeResource(Field::class);
         $this->content = $content;
         $this->content->model = Field::with('type', 'group', 'safe', 'icon');
     }
@@ -38,6 +39,7 @@ class FieldController extends Controller
      */
     public function index()
     {
+        $this->authorize('browse', Field::class);
         return new FieldCollection($this->content->index());
     }
 
@@ -94,6 +96,7 @@ class FieldController extends Controller
      */
     public function destroy(Field $field)
     {
+        $this->authorize('browse', Field::class);
         return $this->content->destroy($field);
     }
 }
