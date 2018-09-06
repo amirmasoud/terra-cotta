@@ -6,7 +6,7 @@
           <input v-model="group.name" class="form-control" type="text" :name="groups + '[' + index + '][name]'" aria-label="Text input with segmented dropdown button" :class="{ 'is-invalid': form.errors.has(groups + '.' + index + '.name') }" @focus="$event.target.select()">
           <input v-model="group.id" class="form-control" type="hidden" :name="groups + '[' + index + '][\'id\']'" aria-label="Text input with segmented dropdown button" @focus="$event.target.select()">
           <div class="input-group-append">
-            <button type="button" class="btn btn-outline-danger" @click="deleteGroup(index)" style="border-radius: 0 4px 4px 0;"><fa icon="minus-circle" fixed-width /></button>
+            <button type="button" class="btn btn-outline-danger" @click="deleteGroup(index)"><fa icon="minus-circle" fixed-width /></button>
           </div>
           <div class="help-block invalid-feedback d-block" v-if="form.errors.has(groups + '.' + index + '.name')" v-html="form.errors.get(groups + '.' + index + '.name')"/>
         </div>
@@ -18,15 +18,26 @@
           <div class="help-block invalid-feedback d-block" v-if="form.errors.has(groups + '.' + index + '.' + fields + '.' + findex + '.label')" v-html="form.errors.get(groups + '.' + index + '.' + fields + '.' + findex + '.label')"/>
         </div>
         <div class="input-group col-md-7 mb-1">
-          <input v-model="field.value" type="text" class="form-control" aria-label="Text input with segmented dropdown button" :name="groups + '[' + index + '][\'fields\'][' + findex + '][\'value\']'" :class="{ 'is-invalid': form.errors.has(groups + '.' + index + '.' + fields + '.' + findex + '.value') }" @focus="$event.target.select()">
-          <div class="input-group-append">
+          <div class="input-group-prepend" v-if="field.type.name == 'password'">
+            <button class="btn btn-outline-secondary" type="button" @click.prevent="visibility = !visibility"><fa :icon="visibility ? 'eye' : 'eye-slash'" fixed-width /></button>
+          </div>
+          <component :is="field.type.name | capitalize"
+            :field="field"
+            :form="form"
+            aria-label="Text input with segmented dropdown button"
+            :name="groups + '[' + index + '][\'fields\'][' + findex + '][\'value\']'"
+            :class="{ 'is-invalid': form.errors.has(groups + '.' + index + '.' + fields + '.' + findex + '.value') }"
+            :visibility="visibility"
+          ></component>
+          <has-error :form="form" :field="groups + '[' + index + '][\'fields\'][' + findex + '][\'value\']'"/>
+          <div class="input-group-append" style="max-height: 2.375rem">
             <button type="button" class="btn btn-outline-danger" @click="deleteField(findex, index)"><fa icon="minus" fixed-width /></button>
-            <button type="button" class="btn btn-outline-secondary dropdown-toggle px-2" :class="{'dropdown-loading': !types}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="border-radius: 0 4px 4px 0;">
+            <button type="button" class="btn btn-outline-secondary dropdown-toggle px-2" :class="{'dropdown-loading': !types}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <span class="sr-only">Toggle Dropdown</span>
               <fa v-if="!types" icon="spinner" size="lg" fixed-width spin />
             </button>
             <div class="dropdown-menu" v-if="types">
-              <a class="dropdown-item" href="#" v-for="type in types" @click.prevent="fieldType(index, findex, type.id)">{{ type.name }}</a>
+              <a class="dropdown-item" href="#" v-for="type in types" @click.prevent="fieldType(index, findex, type)">{{ type.name }}</a>
             </div>
           </div>
           <div class="help-block invalid-feedback d-block" v-if="form.errors.has('groups.' + index + '.fields.' + findex + '.value')" v-html="form.errors.get(groups + '.' + index + '.' + fields + '.' + findex + '.value')"/>
@@ -51,6 +62,9 @@
 </template>
 <script>
 import axios from 'axios'
+import FText from '~/components/field/Text'
+import FTextarea from '~/components/field/Textarea'
+import FPassword from '~/components/field/Password'
 
 export default {
   scrollToTop: true,
@@ -63,9 +77,16 @@ export default {
     fields: { type: String, default: 'fields' },
   },
 
+  components: {
+    FText,
+    FTextarea,
+    FPassword
+  },
+
   data () {
     return {
-      types: null
+      types: null,
+      visibility: false
     }
   },
 
@@ -77,8 +98,9 @@ export default {
         type: ''
       })
     },
-    fieldType (groupIndex, fieldIndex, typeId) {
-      this.form[this.groups][groupIndex].fields[fieldIndex].type = typeId
+    fieldType (groupIndex, fieldIndex, type) {
+      this.form[this.groups][groupIndex].fields[fieldIndex].type.id = type.id
+      this.form[this.groups][groupIndex].fields[fieldIndex].type.name = type.name
     },
     deleteField (fieldIndex, groupIndex) {
       this.form[this.groups][groupIndex].fields.splice(fieldIndex,1)
@@ -102,5 +124,12 @@ export default {
     this.fetchTypes()
   },
 
+  filters: {
+    capitalize: function (value) {
+      if (!value) return 'FText'
+      value = value.toString()
+      return 'F' + value.charAt(0).toUpperCase() + value.slice(1)
+    }
+  }
 }
 </script>
