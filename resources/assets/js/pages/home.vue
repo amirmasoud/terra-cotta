@@ -31,16 +31,18 @@
       </b-link>
     </b-col>
     <b-col sm="6" md="3">
-      <card :loading="loading">
-        <b-row v-if="statistics">
-          <b-col cols="6" sm="4">
-            <fa class="h2 text-secondary" icon="users" fixed-width />
-          </b-col>
-          <b-col cols="6" sm="8">
-            <p><strong>{{ statistics.users_count }}</strong> <small class="text-secondary">{{ $t('users') }}</small></p>
-          </b-col>
-        </b-row>
-      </card>
+      <b-link :to="{ name: 'content.browse', params: { content: 'users' } }">
+        <card :loading="loading">
+          <b-row v-if="statistics">
+            <b-col cols="6" sm="4">
+              <fa class="h2 text-secondary" icon="users" fixed-width />
+            </b-col>
+            <b-col cols="6" sm="8">
+              <p><strong>{{ statistics.users_count }}</strong> <small class="text-secondary">{{ $t('users') }}</small></p>
+            </b-col>
+          </b-row>
+        </card>
+      </b-link>
     </b-col>
     <b-col sm="6" md="3">
       <b-link :to="{ name: 'content.browse', params: { content: 'tags' } }">
