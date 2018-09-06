@@ -142,7 +142,6 @@ export default {
      * @return {void}
      */
     onChangePage (page) {
-      console.log(this.$route.params.content)
       this.$refs.vuetable.changePage(page)
     },
 

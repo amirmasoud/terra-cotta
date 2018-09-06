@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\User;
 
+use App\User;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateRequest extends FormRequest
@@ -13,7 +14,7 @@ class UpdateRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -25,7 +26,8 @@ class UpdateRequest extends FormRequest
     {
         return [
             'name'  => 'required',
-            'email' => 'required|email|unique:users,email,' . $user->id,
+            'email' => 'required|email|unique:users,email,' . request()->route()->user->id,
+            'password' => 'nullable|min:6'
         ];
     }
 }

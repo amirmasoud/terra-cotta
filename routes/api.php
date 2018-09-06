@@ -17,9 +17,22 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post('logout', 'Auth\LoginController@logout');
 
     Route::get('/user', 'UserController@user');
-    Route::get('/users', 'UserController@all')->middleware('can:browse,App\User');
-
     Route::get('/home', 'HomeController@get');
+
+    Route::get('settings/users/search', 'Settings\UserController@search')
+        ->name('users.search');
+    Route::resource('settings/users', 'Settings\UserController')->except([
+        'create'
+    ]);
+
+    Route::get('settings/permissions', 'Settings\PermissionController@index')
+        ->name('permissions.index');
+
+    Route::get('settings/roles/search', 'Settings\RoleController@search')
+        ->name('roles.search');
+    Route::resource('settings/roles', 'Settings\RoleController')->except([
+        'create'
+    ]);
 
     Route::patch('settings/profile', 'Settings\ProfileController@update');
     Route::patch('settings/password', 'Settings\PasswordController@update');

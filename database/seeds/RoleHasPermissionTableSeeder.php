@@ -26,8 +26,6 @@ class RoleHasPermissionTableSeeder extends Seeder
         }
 
         $admin = Role::whereName('admin')->first();
-        $resources = ['users', 'icons', 'tags', 'categories', 'types', 'safes',
-                    'groups', 'fields', 'roles', 'permissions'];
         $admin->givePermissionTo(Permission::all());
     }
 }

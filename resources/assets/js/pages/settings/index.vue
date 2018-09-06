@@ -64,6 +64,11 @@ export default {
     system () {
       return [
         {
+          icon: 'users',
+          name: this.$t('users'),
+          content: 'users'
+        },
+        {
           icon: 'circle',
           name: this.$t('icons'),
           content: 'icons'
@@ -92,6 +97,11 @@ export default {
           icon: 'file-alt',
           name: this.$t('fields'),
           content: 'fields'
+        },
+        {
+          icon: 'adjust',
+          name: this.$t('roles'),
+          content: 'roles'
         }
       ]
     }

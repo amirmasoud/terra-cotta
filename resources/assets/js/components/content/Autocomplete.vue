@@ -42,7 +42,6 @@ export default {
     inputClass: { type: String, default: 'form-control' },
     name: { type: String },
     form: { type: Object },
-    key: { type: String },
     data: { type: Object }
   },
 
@@ -89,9 +88,9 @@ export default {
      * @return {void}
      */
     async fillResourceName () {
-      if (this.form[this.name] || typeof this.form[this.name] === 'undefined') {
-        console.log(this.form)
-        this.initialDisplay = this.data.name
+      if ((this.form[this.name] || typeof this.form[this.name] === 'undefined') && this.data) {
+        this.initialDisplay = this.data[this.resultsDisplay]
+        this.form[this.name] = this.data.id
       }
     },
   }

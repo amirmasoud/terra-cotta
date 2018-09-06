@@ -4,6 +4,7 @@
     <card :title="$t('update_' + config('singular'))" :loading="loading">
       <content-form :form="form"
         :fields="config('form')"
+        :data="data"
         v-if="formReady"
       ></content-form>
     </card>

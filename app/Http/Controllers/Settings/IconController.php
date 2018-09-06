@@ -53,7 +53,7 @@ class IconController extends Controller
      */
     public function store(CreateRequest $request)
     {
-        $this->content->store($request);
+        return new IconResource($this->content->store($request));
     }
 
     /**
@@ -64,7 +64,7 @@ class IconController extends Controller
      */
     public function show(Icon $icon)
     {
-        return $this->content->show($icon);
+        return new IconResource($this->content->show($icon));
     }
 
     /**
@@ -75,7 +75,7 @@ class IconController extends Controller
      */
     public function edit(Icon $icon)
     {
-        return $this->content->edit($icon);
+        return new IconResource($this->content->edit($icon));
     }
 
     /**
@@ -110,6 +110,6 @@ class IconController extends Controller
     public function search(SearchRequest $request)
     {
         $this->authorize('browse', Icon::class);
-        return $this->content->search($request);
+        return new IconCollection($this->content->search($request));
     }
 }

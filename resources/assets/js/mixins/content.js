@@ -11,7 +11,8 @@ export const content = {
       domain: 'content',
       loading: true,
       form: new Form({}),
-      resource: null
+      resource: null,
+      data: null
     }
   },
 
@@ -52,6 +53,7 @@ export const content = {
      */
     async fillResource () {
       const { data } = await axios.get(this.api + this.$route.params.resource + '/edit')
+      this.data = data.data
       this.form.keys().forEach(key => {
         this.form[key] = data.data[key]
       })

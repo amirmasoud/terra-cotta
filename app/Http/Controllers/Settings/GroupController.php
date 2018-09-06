@@ -52,7 +52,7 @@ class GroupController extends Controller
      */
     public function store(CreateRequest $request)
     {
-        return $this->content->store($request);
+        return new GroupResource($this->content->store($request));
     }
 
     /**
@@ -63,7 +63,7 @@ class GroupController extends Controller
      */
     public function show(Group $group)
     {
-        return $this->content->show($group);
+        return new GroupResource($this->content->show($group)->load('icon', 'safe'));
     }
 
     /**
@@ -74,7 +74,7 @@ class GroupController extends Controller
      */
     public function edit(Group $group)
     {
-        return $this->content->edit($group);
+        return new GroupResource($this->content->edit($group)->load('icon', 'safe'));
     }
 
     /**
@@ -109,6 +109,6 @@ class GroupController extends Controller
     public function search(SearchRequest $request)
     {
         $this->authorize('browse', Group::class);
-        return $this->content->search($request);
+        return new GroupCollection($this->content->search($request));
     }
 }

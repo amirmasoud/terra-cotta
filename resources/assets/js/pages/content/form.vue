@@ -7,6 +7,7 @@
       :form="form"
       :source="f.source"
       :placeholder="f.placeholder"
+      :data="data ? (f.attr ? data[f.attr] : null) : null"
     >{{ $t(f.label) }}</component>
 
     <c-submit
@@ -17,9 +18,12 @@
 <script>
 import CText from '~/components/content/Text'
 import CTags from '~/components/content/Tags'
+import CRole from '~/components/content/Role'
 import CColor from '~/components/content/Color'
+import CPassword from '~/components/content/Password'
 import CTextarea from '~/components/content/Textarea'
 import CGroupField from '~/components/content/GroupField'
+import CPermission from '~/components/content/Permission'
 import CAutocomplete from '~/components/content/Autocomplete'
 
 import { helper } from '~/mixins/helper'
@@ -32,15 +36,19 @@ export default {
   components: {
     CText,
     CTags,
+    CRole,
     CColor,
+    CPassword,
     CTextarea,
     CGroupField,
+    CPermission,
     CAutocomplete
   },
 
   props: {
     form: { type: Object },
-    fields: { type: Array }
+    fields: { type: Array },
+    data: { type: Object }
   },
 
   computed: {
