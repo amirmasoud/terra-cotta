@@ -99,8 +99,15 @@ export default {
       })
     },
     fieldType (groupIndex, fieldIndex, type) {
-      this.form[this.groups][groupIndex].fields[fieldIndex].type.id = type.id
-      this.form[this.groups][groupIndex].fields[fieldIndex].type.name = type.name
+      this.form[this.groups] = this.form[this.groups] || []
+      this.form[this.groups][groupIndex] = this.form[this.groups][groupIndex] || {}
+      this.form[this.groups][groupIndex].fields = this.form[this.groups][groupIndex].fields || []
+      this.form[this.groups][groupIndex].fields[fieldIndex] = this.form[this.groups][groupIndex].fields[fieldIndex] || {}
+      this.form[this.groups][groupIndex].fields[fieldIndex].type = this.form[this.groups][groupIndex].fields[fieldIndex].type || {}
+
+      this.$set(this.form[this.groups][groupIndex].fields[fieldIndex].type, 'id', type.id)
+      this.$set(this.form[this.groups][groupIndex].fields[fieldIndex].type, 'name', type.name)
+      console.log(this.form)
     },
     deleteField (fieldIndex, groupIndex) {
       this.form[this.groups][groupIndex].fields.splice(fieldIndex,1)
