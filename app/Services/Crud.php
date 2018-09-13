@@ -79,7 +79,7 @@ class Crud extends Content implements ContentInterface
      */
     public function show($model)
     {
-        if (! is_integer($model)) {
+        if (!is_integer($model)) {
             return $model;
         } else {
             return $this->model->find($model);

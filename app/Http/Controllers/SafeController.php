@@ -61,7 +61,7 @@ class SafeController extends Controller
             foreach ($request->categories as $categoryName) {
                 if (Category::whereName($categoryName)->exists()) {
                     $category = Category::whereName($categoryName)
-                                 ->first();
+                                    ->first();
                 } else {
                     $category = Category::create(['name' => $categoryName]);
                 }
@@ -74,7 +74,7 @@ class SafeController extends Controller
             foreach ($request->tags as $tagName) {
                 if (Tag::whereName($tagName)->exists()) {
                     $tag = Tag::whereName($tagName)
-                                 ->first();
+                                    ->first();
                 } else {
                     $tag = Tag::create(['name' => $tagName, 'color' => '#ffffff']);
                 }
@@ -100,7 +100,7 @@ class SafeController extends Controller
         return new SafeResource(
             $this->content->show($safe)
                 ->load('categories', 'tags', 'groups', 'groups.fields',
-                       'groups.fields.type', 'categories.icon')
+                        'groups.fields.type', 'categories.icon')
         );
     }
 
@@ -115,7 +115,7 @@ class SafeController extends Controller
         return new SafeResource(
             $this->content->show($safe)
                 ->load('categories', 'tags', 'groups', 'groups.fields',
-                       'groups.fields.type', 'categories.icon')
+                        'groups.fields.type', 'categories.icon')
         );
     }
 
@@ -130,7 +130,7 @@ class SafeController extends Controller
         return new SafeResource(
             $this->content->show($safe)
                 ->load('categories', 'tags', 'groups', 'groups.fields',
-                       'groups.fields.type', 'categories.icon')
+                        'groups.fields.type', 'categories.icon')
         );
     }
 
@@ -167,8 +167,8 @@ class SafeController extends Controller
             foreach ($request->tags as $tagName) {
                 if (Tag::whereName($tagName)->exists()) {
                     $tags[] = Tag::whereName($tagName)
-                                 ->first()
-                                 ->id;
+                                    ->first()
+                                    ->id;
                 } else {
                     $tag = Tag::create(['name' => $tagName, 'color' => '#ffffff']);
                     $tags[] = $tag->id;
