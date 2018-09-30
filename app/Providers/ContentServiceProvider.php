@@ -25,7 +25,7 @@ class ContentServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton(Content::class, function ($app) {
+        $this->app->singleton(Content::class, function($app) {
             return new crud();
         });
     }

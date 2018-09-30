@@ -79,7 +79,7 @@ class Content
      */
     private function relationshipFilter(&$query, $request, $param, $attr): Builder
     {
-        $query->whereHas($attr['relationship'], function ($q) use ($param, $attr, $request) {
+        $query->whereHas($attr['relationship'], function($q) use ($param, $attr, $request) {
             $q->where($attr['column'], $request->query($param));
         });
     }
@@ -95,7 +95,7 @@ class Content
      */
     private function simpleFilter(&$query, $request, $param, $attr): Builder
     {
-        $query->when($request->query($param), function ($query) use ($param, $attr, $request) {
+        $query->when($request->query($param), function($query) use ($param, $attr, $request) {
             $query->where($attr['column'], $request->query($param));
         });
     }
@@ -111,7 +111,7 @@ class Content
      */
     private function applyFilter(&$query, $request, $param, $attr)
     {
-        $query->when($request->query($param), function ($query) use ($param, $attr, $request) {
+        $query->when($request->query($param), function($query) use ($param, $attr, $request) {
             if (array_key_exists('relationship', $attr)) {
                 $this->relationshipFilter($query, $request, $param, $attr);
             } else {
@@ -130,7 +130,7 @@ class Content
     protected function sort($query, $request): Builder
     {
         foreach (config('content.map.order') as $sort) {
-            $query->when($request->query($sort), function ($query) use ($sort, $request) {
+            $query->when($request->query($sort), function($query) use ($sort, $request) {
                 $sort = explode('|', $request->query($sort));
                 $query->orderBy($sort[0], $sort[1]);
             });

@@ -90,7 +90,7 @@ class Role extends Model implements RoleContract
 
         $role = static::where('name', $name)->where('guard_name', $guardName)->first();
 
-        if (! $role) {
+        if (!$role) {
             throw RoleDoesNotExist::named($name);
         }
 
@@ -103,7 +103,7 @@ class Role extends Model implements RoleContract
 
         $role = static::where('id', $id)->where('guard_name', $guardName)->first();
 
-        if (! $role) {
+        if (!$role) {
             throw RoleDoesNotExist::withId($id);
         }
 
@@ -124,7 +124,7 @@ class Role extends Model implements RoleContract
 
         $role = static::where('name', $name)->where('guard_name', $guardName)->first();
 
-        if (! $role) {
+        if (!$role) {
             return static::create(['name' => $name, 'guard_name' => $guardName]);
         }
 
@@ -152,7 +152,7 @@ class Role extends Model implements RoleContract
             $permission = $permissionClass->findById($permission, $this->getDefaultGuardName());
         }
 
-        if (! $this->getGuardNames()->contains($permission->guard_name)) {
+        if (!$this->getGuardNames()->contains($permission->guard_name)) {
             throw GuardDoesNotMatch::create($permission->guard_name, $this->getGuardNames());
         }
 
