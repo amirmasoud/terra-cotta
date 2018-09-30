@@ -5,6 +5,7 @@ namespace App;
 use Spatie\Permission\Traits\HasRoles;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Notifications\ResetPassword as ResetPasswordNotification;
 
@@ -46,9 +47,9 @@ class User extends Authenticatable implements JWTSubject
      *
      * @return string
      */
-    public function getPhotoUrlAttribute()
+    public function getPhotoUrlAttribute(): string
     {
-        return 'https://www.gravatar.com/avatar/'.md5(strtolower($this->email)).'.jpg?s=200&d=mm';
+        return 'https://www.gravatar.com/avatar/' . md5(strtolower($this->email)) . '.jpg?s=200&d=mm';
     }
 
     /**
@@ -56,7 +57,7 @@ class User extends Authenticatable implements JWTSubject
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function oauthProviders()
+    public function oauthProviders(): hasMany
     {
         return $this->hasMany(OAuthProvider::class);
     }
@@ -67,7 +68,7 @@ class User extends Authenticatable implements JWTSubject
      * @param  string  $token
      * @return void
      */
-    public function sendPasswordResetNotification($token)
+    public function sendPasswordResetNotification($token): void
     {
         $this->notify(new ResetPasswordNotification($token));
     }
@@ -75,7 +76,7 @@ class User extends Authenticatable implements JWTSubject
     /**
      * @return int
      */
-    public function getJWTIdentifier()
+    public function getJWTIdentifier(): int
     {
         return $this->getKey();
     }
@@ -83,7 +84,7 @@ class User extends Authenticatable implements JWTSubject
     /**
      * @return array
      */
-    public function getJWTCustomClaims()
+    public function getJWTCustomClaims(): array
     {
         return [];
     }

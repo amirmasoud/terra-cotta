@@ -13,6 +13,9 @@ use Spatie\Permission\Traits\RefreshesPermissionCache;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
+/**
+ * Overwrite of original class Spatie\Permission\Models\Role
+ */
 class Role extends Model implements RoleContract
 {
     use HasPermissions;
