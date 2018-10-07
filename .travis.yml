@@ -19,6 +19,7 @@ matrix:
 
       script:
         - phpunit
+        - php artisan dusk
 
       services:
         - mysql
