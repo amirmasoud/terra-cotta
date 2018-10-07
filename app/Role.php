@@ -20,6 +20,9 @@ class Role extends Model implements RoleContract
 {
     use HasPermissions, RefreshesPermissionCache;
 
+    /**
+     * @var array
+     */
     public $guarded = ['id'];
 
     /**

@@ -29,9 +29,9 @@ class Type extends Model
     /**
      * Return default type model.
      *
-     * @return \App\Type
+     * @return \App\Type|null
      */
-    public static function default(): Type
+    public static function default()
     {
         return self::orderBy('created_at', 'asc')->first();
     }
