@@ -9,6 +9,14 @@ import '~/components'
 
 Vue.config.productionTip = false
 
+Vue.mixin({
+  methods: {
+    can (permission) {
+      return (this.$store.getters['auth/user'].permissions || []).find(o => o.name === permission) !== undefined
+    }
+  }
+})
+
 /* eslint-disable no-new */
 new Vue({
   i18n,
