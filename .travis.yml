@@ -28,13 +28,15 @@ matrix:
 
   include:
     - language: php
+    - sudo: required
+    - dist: trusty
 
       php:
         - 7.1
         - 7.2
 
       before_script:
-        - cp .env.travis .env
+        - cp .env.travis .env.dusk.local
         - composer self-update
         - composer install --prefer-source --no-interaction --dev
         - php artisan key:generate
