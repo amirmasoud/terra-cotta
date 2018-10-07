@@ -3,103 +3,109 @@
 namespace Tests\Feature;
 
 use App\Tag;
-use App\User;
 use Tests\TestCase;
+use Tests\Traits\Resource;
+use Tests\Interfaces\Resource as ResourceInterface;
 
-class TagTest extends TestCase
+class TagTest extends TestCase implements ResourceInterface
 {
-    /** @var \App\User */
-    protected $user;
+    use Resource;
 
     /** @var \App\Tag */
     protected $tag;
+
+    /**
+     * Single JSON response structure.
+     */
+    public const SINGLE_STRUCTURE = [
+        'data' => [
+            'id', 'name', 'color'
+        ]
+    ];
+
+    /**
+     * Base API URL.
+     */
+    public const BASE_URL = '/api/settings/tags/';
+
+    /**
+     * Table to check (non)existance of data after create, update and delete.
+     */
+    public const TABLE = 'tags';
 
     public function setUp()
     {
         parent::setUp();
 
-        $this->user = factory(User::class)->create();
-        \Artisan::call('db:seed', ['--class' => 'RolesTableSeeder']);
-        \Artisan::call('db:seed', ['--class' => 'PermissionsTableSeeder']);
-        \Artisan::call('db:seed', ['--class' => 'RoleHasPermissionTableSeeder']);
-        $this->user->assignRole('admin');
-
         $this->tag = factory(Tag::class)->create();
     }
 
-    /** @test */
-    public function search_tag()
+    /**
+     * @group tags
+     */
+    public function testSearchTags()
     {
-        $this->actingAs($this->user)
-            ->getJson('/api/settings/tags/search?q=tag_name')
-            ->assertSuccessful();
+        $this->search(self::BASE_URL . 'search?q=tag_name');
     }
 
-    /** @test */
-    public function get_tags()
+    /**
+     * @group tags
+     */
+    public function testPaginatedTags()
     {
-        $this->actingAs($this->user)
-            ->getJson('/api/settings/tags')
-            ->assertSuccessful();
+        $this->paginated(self::BASE_URL);
     }
 
-    /** @test */
-    public function get_tag()
+    /**
+     * @group tags
+     */
+    public function testSingleTag()
     {
-        $this->actingAs($this->user)
-            ->getJson('/api/settings/tags/' . $this->tag->id)
-            ->assertSuccessful();
+        $this->single(self::BASE_URL . $this->tag->id);
     }
 
-    /** @test */
-    public function create_tag()
+    /**
+     * @group tags
+     */
+    public function testCreateTag()
     {
-        $this->actingAs($this->user)
-            ->postJson('/api/settings/tags', [
-                'name' => 'tag_name',
-                'color' => '#FFF'
-            ])
-            ->assertSuccessful();
-
-        $this->assertDatabaseHas('tags', [
+        $data = [
             'name' => 'tag_name',
             'color' => '#FFF'
-        ]);
+        ];
+        $this->create(self::BASE_URL, $data, self::TABLE);
     }
 
-    /** @test */
-    public function edit_tag()
+    /**
+     * @group tags
+     */
+    public function testEditTag()
     {
-        $this->actingAs($this->user)
-            ->getJson('/api/settings/tags/' . $this->tag->id . '/edit')
-            ->assertSuccessful();
+        $this->edit(self::BASE_URL . $this->tag->id . '/edit');
     }
 
-    /** @test */
-    public function update_tag()
+    /**
+     * @group tags
+     */
+    public function testUpdateTag()
     {
-        $this->actingAs($this->user)
-            ->patchJson('/api/settings/tags/' . $this->tag->id, [
-                'name' => 'updated_tag_name',
-                'color' => '#000',
-            ])
-            ->assertSuccessful();
+        $data = [
+            'name' => 'update_tag_name',
+            'color' => '#000'
+        ];
 
-        $this->assertDatabaseHas('tags', [
-            'name' => 'updated_tag_name',
-            'color' => '#000',
-        ]);
+        $this->update(self::BASE_URL . $this->tag->id, $data, self::TABLE);
     }
 
-    /** @test */
-    public function delete_tag()
+    /**
+     * @group tags
+     */
+    public function testDestroyTag()
     {
-        $this->actingAs($this->user)
-            ->deleteJson('/api/settings/tags/' . $this->tag->id)
-            ->assertSuccessful();
-
-        $this->assertDatabaseMissing('tags', [
+        $data = [
             'id' => $this->tag->id
-        ]);
+        ];
+
+        $this->destroy(self::BASE_URL . $this->tag->id, $data, self::TABLE);
     }
 }

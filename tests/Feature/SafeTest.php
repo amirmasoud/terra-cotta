@@ -8,11 +8,12 @@ use App\Safe;
 use App\User;
 use App\Category;
 use Tests\TestCase;
+use Tests\Traits\Resource;
+use Tests\Interfaces\Resource as ResourceInterface;
 
-class SafeTest extends TestCase
+class SafeTest extends TestCase implements ResourceInterface
 {
-    /** @var \App\User */
-    protected $user;
+    use Resource;
 
     /** @var \App\Safe */
     protected $safe;
@@ -30,275 +31,173 @@ class SafeTest extends TestCase
     {
         parent::setUp();
 
-        $this->user = factory(User::class)->create();
-        \Artisan::call('db:seed', ['--class' => 'RolesTableSeeder']);
-        \Artisan::call('db:seed', ['--class' => 'PermissionsTableSeeder']);
-        \Artisan::call('db:seed', ['--class' => 'RoleHasPermissionTableSeeder']);
-        $this->user->assignRole('admin');
-
         $this->safe = factory(Safe::class)->create();
-
         $this->category = factory(Category::class)->create();
-
         $this->tag = factory(Tag::class)->create();
-
         $this->type = factory(Type::class)->create();
     }
 
-    /** @test */
-    public function search_safe()
+    /**
+     * Single JSON response structure.
+     */
+    public const SINGLE_STRUCTURE = [
+        'data' => [
+            'id', 'name', 'categories', 'tags', 'groups'
+        ]
+    ];
+
+    /**
+     * Base API URL.
+     */
+    public const BASE_URL = '/api/safes/';
+
+    /**
+     * Table to check (non)existance of data after create, update and delete.
+     */
+    public const TABLE = 'safes';
+
+    /**
+     * @group safes
+     */
+    public function testSearchSafes()
     {
-        $this->actingAs($this->user)
-            ->getJson('/api/safes/search?q=safe_name')
-            ->assertSuccessful();
+        $this->search(self::BASE_URL . 'search?q=safe_name');
     }
 
-    /** @test */
-    public function get_safes()
+    /**
+     * @group safes
+     */
+    public function testPaginatedSafes()
     {
-        $this->actingAs($this->user)
-            ->getJson('/api/safes')
-            ->assertSuccessful();
+        $this->paginated(self::BASE_URL);
     }
 
-    /** @test */
-    public function get_safe()
+    /**
+     * @group safes
+     */
+    public function testSingleSafe()
     {
-        $this->actingAs($this->user)
-            ->getJson('/api/safes/' . $this->safe->id)
-            ->assertSuccessful();
+        $this->single(self::BASE_URL . $this->category->id);
     }
 
-    /** @test */
-    public function create_safe()
+    /**
+     * @group safes
+     */
+    public function testCreateSafeWithTakenCategory()
     {
-        $this->actingAs($this->user)
-            ->postJson('/api/safes', [
-                'name' => 'safe_name',
-                'categories' => [$this->category->name]
-            ])
-            ->assertSuccessful();
-
-        $this->assertDatabaseHas('safes', [
+        $data = [
             'name' => 'safe_name',
-        ]);
+            'categories' => [$this->category->name]
+        ];
+        $this->create(self::BASE_URL, $data, self::TABLE);
+    }
 
-        $this->actingAs($this->user)
-            ->postJson('/api/safes', [
-                'name' => 'safe_name',
-                'categories' => ['New Category']
-            ])
-            ->assertSuccessful();
-
-        $this->assertDatabaseHas('safes', [
+    /**
+     * @group safes
+     */
+    public function testCreateSafeWithNewCategory()
+    {
+        $data = [
             'name' => 'safe_name',
-        ]);
+            'categories' => ['New Category']
+        ];
+        $this->create(self::BASE_URL, $data, self::TABLE);
+    }
 
-        $this->actingAs($this->user)
-            ->postJson('/api/safes', [
-                'name' => 'safe_name_with_tags',
-                'categories' => [$this->category->name],
-                'tags' => [$this->tag->name]
-            ])
-            ->assertSuccessful();
-
-        $this->assertDatabaseHas('safes', [
-            'name' => 'safe_name_with_tags',
-        ]);
-
-        $this->actingAs($this->user)
-            ->postJson('/api/safes', [
-                'name' => 'safe_name_with_create_tags',
-                'categories' => [$this->category->name],
-                'tags' => ['New Tag']
-            ])
-            ->assertSuccessful();
-
-        $this->assertDatabaseHas('safes', [
+    /**
+     * @group safes
+     */
+    public function testCreateSafeWithTakenCategoryAndNewTag()
+    {
+        $data = [
             'name' => 'safe_name_with_create_tags',
-        ]);
+            'categories' => [$this->category->name],
+            'tags' => ['New Tag']
+        ];
 
-        $this->actingAs($this->user)
-            ->postJson('/api/safes', [
-                'name' => 'safe_name_with_tags_and_groups',
-                'categories' => [$this->category->name],
-                'tags' => [$this->tag->name],
-                'groups' => [['name' => 'group 1'], ['name' => 'group 2']]
-            ])
-            ->assertSuccessful();
+        $this->create(self::BASE_URL, $data, self::TABLE);
+    }
 
-        $this->assertDatabaseHas('safes', [
+    /**
+     * @group safes
+     */
+    public function testCreateSafeWithTakenCategoryAndTagAndNewGroups()
+    {
+        $data = [
             'name' => 'safe_name_with_tags_and_groups',
-        ]);
+            'categories' => [$this->category->name],
+            'tags' => [$this->tag->name],
+            'groups' => [['name' => 'group 1'], ['name' => 'group 2']]
+        ];
 
-        $this->actingAs($this->user)
-            ->postJson('/api/safes', [
-                'name' => 'safe_name_with_tags_and_groups_and_fields',
-                'categories' => [$this->category->name],
-                'tags' => [$this->tag->name],
-                'groups' => [
-                    [
-                        'name' => 'group 1',
-                        'fields' => [
-                            [
-                                'label' => 'Label 1 - group 1',
-                                'value' => 'Value 1 - group 1',
-                                'type' => $this->type->id
-                            ]
+        $this->create(self::BASE_URL, $data, self::TABLE);
+    }
+
+    /**
+     * @group safes
+     */
+    public function testCreateSafeWithTakenCategoryAndTagAndNewGroupsAndFields()
+    {
+        $data = [
+            'name' => 'safe_name_with_tags_and_groups_and_fields',
+            'categories' => [$this->category->name],
+            'tags' => [$this->tag->name],
+            'groups' => [
+                [
+                    'name' => 'group 1',
+                    'fields' => [
+                        [
+                            'label' => 'Label 1 - group 1',
+                            'value' => 'Value 1 - group 1',
+                            'type' => $this->type->id
                         ]
-                    ],
-                    [
-                        'name' => 'group 2',
-                        'fields' => [
-                            [
-                                'label' => 'Label 1 - group 1',
-                                'value' => 'Value 1 - group 1',
-                            ]
+                    ]
+                ],
+                [
+                    'name' => 'group 2',
+                    'fields' => [
+                        [
+                            'label' => 'Label 1 - group 1',
+                            'value' => 'Value 1 - group 1',
                         ]
                     ]
                 ]
-            ])
-            ->assertSuccessful();
+            ]
+        ];
 
-        $this->assertDatabaseHas('safes', [
-            'name' => 'safe_name_with_tags_and_groups_and_fields',
-        ]);
+        $this->create(self::BASE_URL, $data, self::TABLE);
     }
 
-    /** @test */
-    public function get_safes_by_category_id()
+    /**
+     * @group safes
+     */
+    public function testEditSafe()
     {
-        $this->actingAs($this->user)
-            ->getJson('/api/safes/?category=' . $this->category->id)
-            ->assertSuccessful();
+        $this->edit(self::BASE_URL . $this->safe->id . '/edit');
     }
 
-    /** @test */
-    public function edit_safe()
+    /**
+     * @group safes
+     */
+    public function testUpdateSafe()
     {
-        $this->actingAs($this->user)
-            ->getJson('/api/safes/' . $this->safe->id . '/edit')
-            ->assertSuccessful();
-    }
-
-    /** @test */
-    public function update_safe()
-    {
-        $category = factory(Category::class)->create();
-
-        $this->actingAs($this->user)
-            ->patchJson('/api/safes/' . $this->safe->id, [
-                'name' => 'updated_safe_name',
-                'categories' => [$category->name]
-            ])
-            ->assertSuccessful();
-
-        $this->assertDatabaseHas('safes', [
+        $data = [
             'name' => 'updated_safe_name',
-        ]);
+            'categories' => [$this->category->name]
+        ];
 
-        $this->actingAs($this->user)
-            ->patchJson('/api/safes/' . $this->safe->id, [
-                'name' => 'safe_name',
-                'categories' => [$this->category->name]
-            ])
-            ->assertSuccessful();
-
-        $this->assertDatabaseHas('safes', [
-            'name' => 'safe_name',
-        ]);
-
-        $this->actingAs($this->user)
-            ->patchJson('/api/safes/' . $this->safe->id, [
-                'name' => 'safe_name',
-                'categories' => ['New Category']
-            ])
-            ->assertSuccessful();
-
-        $this->assertDatabaseHas('safes', [
-            'name' => 'safe_name',
-        ]);
-
-        $this->actingAs($this->user)
-            ->patchJson('/api/safes/' . $this->safe->id, [
-                'name' => 'safe_name_with_tags',
-                'categories' => [$this->category->name],
-                'tags' => [$this->tag->name]
-            ])
-            ->assertSuccessful();
-
-        $this->assertDatabaseHas('safes', [
-            'name' => 'safe_name_with_tags',
-        ]);
-
-        $this->actingAs($this->user)
-            ->patchJson('/api/safes/' . $this->safe->id, [
-                'name' => 'safe_name_with_create_tags',
-                'categories' => [$this->category->name],
-                'tags' => ['New Tag']
-            ])
-            ->assertSuccessful();
-
-        $this->assertDatabaseHas('safes', [
-            'name' => 'safe_name_with_create_tags',
-        ]);
-
-        $this->actingAs($this->user)
-            ->patchJson('/api/safes/' . $this->safe->id, [
-                'name' => 'safe_name_with_tags_and_groups',
-                'categories' => [$this->category->name],
-                'tags' => [$this->tag->name],
-                'groups' => [['name' => 'group 1'], ['name' => 'group 2']]
-            ])
-            ->assertSuccessful();
-
-        $this->assertDatabaseHas('safes', [
-            'name' => 'safe_name_with_tags_and_groups',
-        ]);
-
-        $this->actingAs($this->user)
-            ->patchJson('/api/safes/' . $this->safe->id, [
-                'name' => 'safe_name_with_tags_and_groups_and_fields',
-                'categories' => [$this->category->name],
-                'tags' => [$this->tag->name],
-                'groups' => [
-                    [
-                        'name' => 'group 1',
-                        'fields' => [
-                            [
-                                'label' => 'Label 1 - group 1',
-                                'value' => 'Value 1 - group 1',
-                                'type' => $this->type->id
-                            ]
-                        ]
-                    ],
-                    [
-                        'name' => 'group 2',
-                        'fields' => [
-                            [
-                                'label' => 'Label 1 - group 1',
-                                'value' => 'Value 1 - group 1',
-                            ]
-                        ]
-                    ]
-                ]
-            ])
-            ->assertSuccessful();
-
-        $this->assertDatabaseHas('safes', [
-            'name' => 'safe_name_with_tags_and_groups_and_fields',
-        ]);
+        $this->update(self::BASE_URL . $this->safe->id, $data, self::TABLE);
     }
 
-    /** @test */
-    public function delete_safe()
+    /**
+     * @group safes
+     */
+    public function testDestroySafe()
     {
-        $this->actingAs($this->user)
-            ->deleteJson('/api/safes/' . $this->safe->id)
-            ->assertSuccessful();
-
-        $this->assertDatabaseMissing('safes', [
+        $data = [
             'id' => $this->safe->id
-        ]);
+        ];
+
+        $this->destroy(self::BASE_URL . $this->safe->id, $data, self::TABLE);
     }
 }

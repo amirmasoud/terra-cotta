@@ -2,16 +2,16 @@
 
 namespace Tests\Feature;
 
-use App\User;
-use App\Icon;
 use App\Safe;
+use App\Icon;
 use App\Group;
 use Tests\TestCase;
+use Tests\Traits\Resource;
+use Tests\Interfaces\Resource as ResourceInterface;
 
-class GroupTest extends TestCase
+class GroupTest extends TestCase implements ResourceInterface
 {
-    /** @var \App\User */
-    protected $user;
+    use Resource;
 
     /** @var \App\Group */
     protected $group;
@@ -22,103 +22,103 @@ class GroupTest extends TestCase
     /** @var \App\Safe */
     protected $safe;
 
+    /**
+     * Single JSON response structure.
+     */
+    public const SINGLE_STRUCTURE = [
+        'data' => [
+            'id', 'name', 'icon', 'safe'
+        ]
+    ];
+
+    /**
+     * Base API URL.
+     */
+    public const BASE_URL = '/api/settings/groups/';
+
+    /**
+     * Table to check (non)existance of data after create, update and delete.
+     */
+    public const TABLE = 'groups';
+
     public function setUp()
     {
         parent::setUp();
 
-        $this->user = factory(User::class)->create();
-        \Artisan::call('db:seed', ['--class' => 'RolesTableSeeder']);
-        \Artisan::call('db:seed', ['--class' => 'PermissionsTableSeeder']);
-        \Artisan::call('db:seed', ['--class' => 'RoleHasPermissionTableSeeder']);
-        $this->user->assignRole('admin');
-
         $this->group = factory(Group::class)->create();
-
         $this->icon = factory(Icon::class)->create();
-
         $this->safe = factory(Safe::class)->create();
     }
 
-    /** @test */
-    public function search_group()
+    /**
+     * @group groups
+     */
+    public function testSearchCategories()
     {
-        $this->actingAs($this->user)
-            ->getJson('/api/settings/groups/search?q=group_name')
-            ->assertSuccessful();
+        $this->search(self::BASE_URL . 'search?q=group_name');
     }
 
-    /** @test */
-    public function get_groups()
+    /**
+     * @group groups
+     */
+    public function testPaginatedCategories()
     {
-        $this->actingAs($this->user)
-            ->getJson('/api/settings/groups')
-            ->assertSuccessful();
+        $this->paginated(self::BASE_URL);
     }
 
-    /** @test */
-    public function get_group()
+    /**
+     * @group groups
+     */
+    public function testSingleGroup()
     {
-        $this->actingAs($this->user)
-            ->getJson('/api/settings/groups/' . $this->group->id)
-            ->assertSuccessful();
+        $this->single(self::BASE_URL . $this->group->id);
     }
 
-    /** @test */
-    public function create_group()
+    /**
+     * @group groups
+     */
+    public function testCreateGroup()
     {
-        $this->actingAs($this->user)
-            ->postJson('/api/settings/groups', [
-                'name' => 'group_name',
-                'icon_id' => $this->icon->id,
-                'safe_id' => $this->safe->id,
-            ])
-            ->assertSuccessful();
-
-        $this->assertDatabaseHas('groups', [
+        $data = [
             'name' => 'group_name',
-            'icon_id' => $this->icon->id,
-            'safe_id' => $this->safe->id,
-        ]);
+            'icon_id' => factory(Icon::class)->create()->id,
+            'safe_id' => factory(Safe::class)->create()->id,
+        ];
+        $this->create(self::BASE_URL, $data, self::TABLE);
     }
 
-    /** @test */
-    public function edit_group()
+    /**
+     * @group groups
+     */
+    public function testEditGroup()
     {
-        $this->actingAs($this->user)
-            ->getJson('/api/settings/groups/' . $this->group->id . '/edit')
-            ->assertSuccessful();
+        $this->edit(self::BASE_URL . $this->group->id . '/edit');
     }
 
-    /** @test */
-    public function update_group()
+    /**
+     * @group groups
+     */
+    public function testUpdateGroup()
     {
-        $icon = factory(Icon::class)->create();
-        $safe = factory(Safe::class)->create();
-
-        $this->actingAs($this->user)
-            ->patchJson('/api/settings/groups/' . $this->group->id, [
-                'name' => 'updated_group_name',
-                'icon_id' => $icon->id,
-                'safe_id' => $safe->id,
-            ])
-            ->assertSuccessful();
-
-        $this->assertDatabaseHas('groups', [
+        $data = [
             'name' => 'updated_group_name',
-            'icon_id' => $icon->id,
-            'safe_id' => $safe->id,
-        ]);
+            'icon_id' => factory(Icon::class)->create()->id,
+            'safe_id' => factory(Safe::class)->create()->id,
+        ];
+
+        $this->update(self::BASE_URL . $this->group->id, $data, self::TABLE);
     }
 
-    /** @test */
-    public function delete_group()
+    /**
+     * @group groups
+     */
+    public function testDestroyGroup()
     {
-        $this->actingAs($this->user)
-            ->deleteJson('/api/settings/groups/' . $this->group->id)
-            ->assertSuccessful();
-
-        $this->assertDatabaseMissing('groups', [
+        $data = [
             'id' => $this->group->id
-        ]);
+        ];
+
+        $this->destroy(self::BASE_URL . $this->group->id, $data, self::TABLE);
     }
 }
+

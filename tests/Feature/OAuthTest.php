@@ -29,8 +29,10 @@ class OAuthTest extends TestCase
         });
     }
 
-    /** @test */
-    public function redirect_to_provider()
+    /**
+     * @group auth
+     */
+    public function testRedirectToProvider()
     {
         $this->mockSocialite('github');
 
@@ -39,8 +41,10 @@ class OAuthTest extends TestCase
             ->assertJson(['url' => 'https://url-to-provider']);
     }
 
-    /** @test */
-    public function create_user_and_return_token()
+    /**
+     * @group auth
+     */
+    public function testCreateUserAndReturnIt()
     {
         $this->mockSocialite('github', [
             'id' => '123',
@@ -62,7 +66,7 @@ class OAuthTest extends TestCase
         ]);
 
         $this->assertDatabaseHas('oauth_providers', [
-            'user_id' => User::first()->id,
+            'user_id' => User::whereEmail('test@example.com')->first()->id,
             'provider' => 'github',
             'provider_user_id' => '123',
             'access_token' => 'access-token',
@@ -70,8 +74,10 @@ class OAuthTest extends TestCase
         ]);
     }
 
-    /** @test */
-    public function update_user_and_return_token()
+    /**
+     * @group auth
+     */
+    public function testUpdateUserAndReturnIt()
     {
         $user = factory(User::class)->create(['email' => 'test@example.com']);
         $user->oauthProviders()->create([
@@ -97,8 +103,10 @@ class OAuthTest extends TestCase
         ]);
     }
 
-    /** @test */
-    public function can_not_create_user_if_email_is_taken()
+    /**
+     * @group auth
+     */
+    public function testCannotCreateUserIfEmailTaken()
     {
         factory(User::class)->create(['email' => 'test@example.com']);
 

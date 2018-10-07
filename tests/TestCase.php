@@ -7,6 +7,13 @@ use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 
 abstract class TestCase extends BaseTestCase
 {
-    use RefreshDatabase;
-    use CreatesApplication;
+    use RefreshDatabase, CreatesApplication;
+
+    public function setUp()
+    {
+        parent::setUp();
+        $this->afterApplicationCreated(function() {
+            $this->seedDatabase();
+        });
+    }
 }

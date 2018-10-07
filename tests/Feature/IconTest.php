@@ -2,108 +2,115 @@
 
 namespace Tests\Feature;
 
-use App\User;
 use App\Icon;
 use Tests\TestCase;
+use Tests\Traits\Resource;
+use Tests\Interfaces\Resource as ResourceInterface;
 
-class IconTest extends TestCase
+class IconTest extends TestCase implements ResourceInterface
 {
-    /** @var \App\User */
-    protected $user;
+    use Resource;
 
-    /** @var \App\Icon */
+    /**
+     * @var \App\Icon
+     */
     protected $icon;
+
+    /**
+     * Single JSON response structure.
+     */
+    public const SINGLE_STRUCTURE = [
+        'data' => [
+            'id', 'name', 'class', 'prefix'
+        ]
+    ];
+
+    /**
+     * Base API URL.
+     */
+    public const BASE_URL = '/api/settings/icons/';
+
+    /**
+     * Table to check (non)existance of data after create, update and delete.
+     */
+    public const TABLE = 'icons';
 
     public function setUp()
     {
         parent::setUp();
 
-        $this->user = factory(User::class)->create();
-        \Artisan::call('db:seed', ['--class' => 'RolesTableSeeder']);
-        \Artisan::call('db:seed', ['--class' => 'PermissionsTableSeeder']);
-        \Artisan::call('db:seed', ['--class' => 'RoleHasPermissionTableSeeder']);
-        $this->user->assignRole('admin');
-
         $this->icon = factory(Icon::class)->create();
     }
 
-    /** @test */
-    public function search_icon()
+    /**
+     * @group icons
+     */
+    public function testSearchCategories()
     {
-        $this->actingAs($this->user)
-            ->getJson('/api/settings/icons/search?q=icon_name')
-            ->assertSuccessful();
+        $this->search(self::BASE_URL . 'search?q=icon_name');
     }
 
-    /** @test */
-    public function get_icons()
+    /**
+     * @group icons
+     */
+    public function testPaginatedCategories()
     {
-        $this->actingAs($this->user)
-            ->getJson('/api/settings/icons')
-            ->assertSuccessful();
+        $this->paginated(self::BASE_URL);
     }
 
-    /** @test */
-    public function get_icon()
+    /**
+     * @group icons
+     */
+    public function testSingleIcon()
     {
-        $this->actingAs($this->user)
-            ->getJson('/api/settings/icons/' . $this->icon->id)
-            ->assertSuccessful();
+        $this->single(self::BASE_URL . $this->icon->id);
     }
 
-    /** @test */
-    public function create_icon()
+    /**
+     * @group icons
+     */
+    public function testCreateIcon()
     {
-        $this->actingAs($this->user)
-            ->postJson('/api/settings/icons', [
-                'name' => 'icon_name',
-                'class' => 'icon icon_name',
-                'prefix' => 'fas'
-            ])
-            ->assertSuccessful();
-
-        $this->assertDatabaseHas('icons', [
+        $data = [
             'name' => 'icon_name',
             'class' => 'icon icon_name',
             'prefix' => 'fas'
-        ]);
+        ];
+        $this->create(self::BASE_URL, $data, self::TABLE);
     }
 
-    /** @test */
-    public function edit_icon()
+    /**
+     * @group icons
+     */
+    public function testEditIcon()
     {
-        $this->actingAs($this->user)
-            ->getJson('/api/settings/icons/' . $this->icon->id . '/edit')
-            ->assertSuccessful();
+        $this->edit(self::BASE_URL . $this->icon->id . '/edit');
     }
 
-    /** @test */
-    public function update_icon()
+    /**
+     * @group icons
+     */
+    public function testUpdateIcon()
     {
-        $this->actingAs($this->user)
-            ->patchJson('/api/settings/icons/' . $this->icon->id, [
-                'name' => 'updated_icon_name',
-                'class' => 'updated_icon updated_icon_name',
-                'prefix' => 'fas'
-            ])
-            ->assertSuccessful();
+        $data = [
+            'name' => 'update_icon_name',
+            'class' => 'update-icon icon_name',
+            'prefix' => 'update-fas'
+        ];
 
-        $this->assertDatabaseHas('icons', [
-            'name' => 'updated_icon_name',
-            'class' => 'updated_icon updated_icon_name',
-            'prefix' => 'fas'
-        ]);
+        $this->update(self::BASE_URL . $this->icon->id, $data, self::TABLE);
     }
 
-    /** @test */
-    public function delete_icon()
+    /**
+     * @group icons
+     */
+    public function testDestroyIcon()
     {
-        $this->actingAs($this->user)
-            ->deleteJson('/api/settings/icons/' . $this->icon->id)
-            ->assertSuccessful();
-
-        $this->assertDatabaseMissing('icons', [
+        $data = [
             'id' => $this->icon->id
-        ]);
+        ];
+
+        $this->destroy(self::BASE_URL . $this->icon->id, $data, self::TABLE);
     }
 }
+

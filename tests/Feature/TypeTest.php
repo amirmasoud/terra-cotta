@@ -3,99 +3,107 @@
 namespace Tests\Feature;
 
 use App\Type;
-use App\User;
 use Tests\TestCase;
+use Tests\Traits\Resource;
+use Tests\Interfaces\Resource as ResourceInterface;
 
-class TypeTest extends TestCase
+class TypeTest extends TestCase implements ResourceInterface
 {
-    /** @var \App\User */
-    protected $user;
+    use Resource;
 
     /** @var \App\Type */
     protected $type;
+
+    /**
+     * Single JSON response structure.
+     */
+    public const SINGLE_STRUCTURE = [
+        'data' => [
+            'id', 'name'
+        ]
+    ];
+
+    /**
+     * Base API URL.
+     */
+    public const BASE_URL = '/api/settings/types/';
+
+    /**
+     * Table to check (non)existance of data after create, update and delete.
+     */
+    public const TABLE = 'types';
 
     public function setUp()
     {
         parent::setUp();
 
-        $this->user = factory(User::class)->create();
-        \Artisan::call('db:seed', ['--class' => 'RolesTableSeeder']);
-        \Artisan::call('db:seed', ['--class' => 'PermissionsTableSeeder']);
-        \Artisan::call('db:seed', ['--class' => 'RoleHasPermissionTableSeeder']);
-        $this->user->assignRole('admin');
-
         $this->type = factory(Type::class)->create();
     }
 
-    /** @test */
-    public function search_type()
+    /**
+     * @group types
+     */
+    public function testSearchTypes()
     {
-        $this->actingAs($this->user)
-            ->getJson('/api/settings/types/search?q=type_name')
-            ->assertSuccessful();
+        $this->search(self::BASE_URL . 'search?q=type_name');
     }
 
-    /** @test */
-    public function get_types()
+    /**
+     * @group types
+     */
+    public function testPaginatedTypes()
     {
-        $this->actingAs($this->user)
-            ->getJson('/api/settings/types')
-            ->assertSuccessful();
+        $this->paginated(self::BASE_URL);
     }
 
-    /** @test */
-    public function get_type()
+    /**
+     * @group types
+     */
+    public function testSingleType()
     {
-        $this->actingAs($this->user)
-            ->getJson('/api/settings/types/' . $this->type->id)
-            ->assertSuccessful();
+        $this->single(self::BASE_URL . $this->type->id);
     }
 
-    /** @test */
-    public function create_type()
+    /**
+     * @group types
+     */
+    public function testCreateType()
     {
-        $this->actingAs($this->user)
-            ->postJson('/api/settings/types', [
-                'name' => 'type_name',
-            ])
-            ->assertSuccessful();
-
-        $this->assertDatabaseHas('types', [
-            'name' => 'type_name',
-        ]);
+        $data = [
+            'name' => 'type_name'
+        ];
+        $this->create(self::BASE_URL, $data, self::TABLE);
     }
 
-    /** @test */
-    public function edit_type()
+    /**
+     * @group types
+     */
+    public function testEditType()
     {
-        $this->actingAs($this->user)
-            ->getJson('/api/settings/types/' . $this->type->id . '/edit')
-            ->assertSuccessful();
+        $this->edit(self::BASE_URL . $this->type->id . '/edit');
     }
 
-    /** @test */
-    public function update_type()
+    /**
+     * @group types
+     */
+    public function testUpdateType()
     {
-        $this->actingAs($this->user)
-            ->patchJson('/api/settings/types/' . $this->type->id, [
-                'name' => 'updated_type_name',
-            ])
-            ->assertSuccessful();
+        $data = [
+            'name' => 'update_type_name'
+        ];
 
-        $this->assertDatabaseHas('types', [
-            'name' => 'updated_type_name',
-        ]);
+        $this->update(self::BASE_URL . $this->type->id, $data, self::TABLE);
     }
 
-    /** @test */
-    public function delete_type()
+    /**
+     * @group types
+     */
+    public function testDestroyType()
     {
-        $this->actingAs($this->user)
-            ->deleteJson('/api/settings/types/' . $this->type->id)
-            ->assertSuccessful();
-
-        $this->assertDatabaseMissing('types', [
+        $data = [
             'id' => $this->type->id
-        ]);
+        ];
+
+        $this->destroy(self::BASE_URL . $this->type->id, $data, self::TABLE);
     }
 }

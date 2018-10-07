@@ -2,112 +2,119 @@
 
 namespace Tests\Feature;
 
-use App\User;
 use App\Icon;
 use App\Category;
 use Tests\TestCase;
+use Tests\Traits\Resource;
+use Tests\Interfaces\Resource as ResourceInterface;
 
-class CategoryTest extends TestCase
+class CategoryTest extends TestCase implements ResourceInterface
 {
-    /** @var \App\User */
-    protected $user;
+    use Resource;
 
-    /** @var \App\Icon */
+    /**
+     * @var \App\Category
+     */
     protected $category;
 
-    /** @var \App\Icon */
+    /**
+     * @var \App\Icon
+     */
     protected $icon;
+
+    /**
+     * Single JSON response structure.
+     */
+    public const SINGLE_STRUCTURE = [
+        'data' => [
+            'id', 'name', 'icon'
+        ]
+    ];
+
+    /**
+     * Base API URL.
+     */
+    public const BASE_URL = '/api/settings/categories/';
+
+    /**
+     * Table to check (non)existance of data after create, update and delete.
+     */
+    public const TABLE = 'categories';
 
     public function setUp()
     {
         parent::setUp();
 
-        $this->user = factory(User::class)->create();
-        \Artisan::call('db:seed', ['--class' => 'RolesTableSeeder']);
-        \Artisan::call('db:seed', ['--class' => 'PermissionsTableSeeder']);
-        \Artisan::call('db:seed', ['--class' => 'RoleHasPermissionTableSeeder']);
-        $this->user->assignRole('admin');
-
         $this->category = factory(Category::class)->create();
-
         $this->icon = factory(Icon::class)->create();
     }
 
-    /** @test */
-    public function search_category()
+    /**
+     * @group categories
+     */
+    public function testSearchCategories()
     {
-        $this->actingAs($this->user)
-            ->getJson('/api/settings/categories/search?q=category_name')
-            ->assertSuccessful();
+        $this->search(self::BASE_URL . 'search?q=category_name');
     }
 
-    /** @test */
-    public function get_categories()
+    /**
+     * @group categories
+     */
+    public function testPaginatedCategories()
     {
-        $this->actingAs($this->user)
-            ->getJson('/api/settings/categories')
-            ->assertSuccessful();
+        $this->paginated(self::BASE_URL);
     }
 
-    /** @test */
-    public function get_category()
+    /**
+     * @group categories
+     */
+    public function testSingleCategory()
     {
-        $this->actingAs($this->user)
-            ->getJson('/api/settings/categories/' . $this->category->id)
-            ->assertSuccessful();
+        $this->single(self::BASE_URL . $this->category->id);
     }
 
-    /** @test */
-    public function create_category()
+    /**
+     * @group categories
+     */
+    public function testCreateCategory()
     {
-        $this->actingAs($this->user)
-            ->postJson('/api/settings/categories', [
-                'name' => 'category_name',
-                'icon_id' => $this->icon->id
-            ])
-            ->assertSuccessful();
-
-        $this->assertDatabaseHas('categories', [
+        $data = [
             'name' => 'category_name',
             'icon_id' => $this->icon->id
-        ]);
+        ];
+        $this->create(self::BASE_URL, $data, self::TABLE);
     }
 
-    /** @test */
-    public function edit_category()
+    /**
+     * @group categories
+     */
+    public function testEditCategory()
     {
-        $this->actingAs($this->user)
-            ->getJson('/api/settings/categories/' . $this->category->id . '/edit')
-            ->assertSuccessful();
+        $this->edit(self::BASE_URL . $this->category->id . '/edit');
     }
 
-    /** @test */
-    public function update_category()
+    /**
+     * @group categories
+     */
+    public function testUpdateCategory()
     {
-        $icon = factory(Icon::class)->create();
-
-        $this->actingAs($this->user)
-            ->patchJson('/api/settings/categories/' . $this->category->id, [
-                'name' => 'updated_category_name',
-                'icon_id' => $icon->id
-            ])
-            ->assertSuccessful();
-
-        $this->assertDatabaseHas('categories', [
+        $data = [
             'name' => 'updated_category_name',
-            'icon_id' => $icon->id
-        ]);
+            'icon_id' => factory(Icon::class)->create()->id
+        ];
+
+        $this->update(self::BASE_URL . $this->category->id, $data, self::TABLE);
     }
 
-    /** @test */
-    public function delete_category()
+    /**
+     * @group categories
+     */
+    public function testDestroyCategory()
     {
-        $this->actingAs($this->user)
-            ->deleteJson('/api/settings/categories/' . $this->category->id)
-            ->assertSuccessful();
-
-        $this->assertDatabaseMissing('categories', [
+        $data = [
             'id' => $this->category->id
-        ]);
+        ];
+
+        $this->destroy(self::BASE_URL . $this->category->id, $data, self::TABLE);
     }
 }

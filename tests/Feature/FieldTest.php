@@ -2,141 +2,125 @@
 
 namespace Tests\Feature;
 
-use App\User;
 use App\Icon;
 use App\Type;
 use App\Safe;
 use App\Group;
 use App\Field;
 use Tests\TestCase;
+use Tests\Traits\Resource;
+use Tests\Interfaces\Resource as ResourceInterface;
 
-class FieldTest extends TestCase
+class FieldTest extends TestCase implements ResourceInterface
 {
-    /** @var \App\User */
-    protected $user;
+    use Resource;
 
-    /** @var \App\Icon */
+    /**
+     * @var \App\Field
+     */
+    protected $field;
+
+    /**
+     * @var \App\Icon
+     */
     protected $icon;
 
-    /** @var \App\Type */
-    protected $type;
+    /**
+     * Single JSON response structure.
+     */
+    public const SINGLE_STRUCTURE = [
+        'data' => [
+            'id', 'label', 'value', 'type', 'group', 'safe', 'icon'
+        ]
+    ];
 
-    /** @var \App\Safe */
-    protected $safe;
+    /**
+     * Base API URL.
+     */
+    public const BASE_URL = '/api/settings/fields/';
 
-    /** @var \App\Group */
-    protected $group;
-
-    /** @var \App\Field */
-    protected $field;
+    /**
+     * Table to check (non)existance of data after create, update and delete.
+     */
+    public const TABLE = 'fields';
 
     public function setUp()
     {
         parent::setUp();
 
-        $this->user = factory(User::class)->create();
-        \Artisan::call('db:seed', ['--class' => 'RolesTableSeeder']);
-        \Artisan::call('db:seed', ['--class' => 'PermissionsTableSeeder']);
-        \Artisan::call('db:seed', ['--class' => 'RoleHasPermissionTableSeeder']);
-        $this->user->assignRole('admin');
-
         $this->icon = factory(Icon::class)->create();
-
         $this->type = factory(Type::class)->create();
-
         $this->safe = factory(Safe::class)->create();
-
         $this->group = factory(Group::class)->create();
-
         $this->field = factory(Field::class)->create();
     }
 
-    /** @test */
-    public function get_fields()
+    /**
+     * @group fields
+     */
+    public function testPaginatedFields()
     {
-        $this->actingAs($this->user)
-            ->getJson('/api/settings/fields')
-            ->assertSuccessful();
+        $this->paginated(self::BASE_URL);
     }
 
-    /** @test */
-    public function get_field()
+    /**
+     * @group fields
+     */
+    public function testSingleField()
     {
-        $this->actingAs($this->user)
-            ->getJson('/api/settings/fields/' . $this->field->id)
-            ->assertSuccessful();
+        $this->single(self::BASE_URL . $this->field->id);
     }
 
-    /** @test */
-    public function create_field()
+    /**
+     * @group fields
+     */
+    public function testCreateField()
     {
-        $this->actingAs($this->user)
-            ->postJson('/api/settings/fields', [
-                'label' => 'field_label',
-                'value' => 'field_value',
-                'icon_id' => $this->icon->id,
-                'type_id' => $this->type->id,
-                'safe_id' => $this->safe->id,
-                'group_id' => $this->group->id,
-            ])
-            ->assertSuccessful();
-
-        $this->assertDatabaseHas('fields', [
+        $data = [
             'label' => 'field_label',
             'value' => 'field_value',
             'icon_id' => $this->icon->id,
             'type_id' => $this->type->id,
             'safe_id' => $this->safe->id,
             'group_id' => $this->group->id,
-        ]);
+        ];
+        $this->create(self::BASE_URL, $data, self::TABLE);
     }
 
-    /** @test */
-    public function edit_field()
+    /**
+     * @group fields
+     */
+    public function testEditField()
     {
-        $this->actingAs($this->user)
-            ->getJson('/api/settings/fields/' . $this->field->id . '/edit')
-            ->assertSuccessful();
+        $this->edit(self::BASE_URL . $this->field->id . '/edit');
     }
 
-    /** @test */
-    public function update_field()
+    /**
+     * @group fields
+     */
+    public function testUpdateField()
     {
-        $icon = factory(Icon::class)->create();
-        $type = factory(Type::class)->create();
-        $safe = factory(Safe::class)->create();
-        $group = factory(Group::class)->create();
+        $data = [
+            'label' => 'updated_field_label',
+            'value' => 'updated_field_value',
+            'icon_id' => $this->icon->id,
+            'type_id' => $this->type->id,
+            'safe_id' => $this->safe->id,
+            'group_id' => $this->group->id,
+        ];
 
-        $this->actingAs($this->user)
-            ->patchJson('/api/settings/fields/' . $this->field->id, [
-                'label' => 'field_label_updated',
-                'value' => 'field_value_updated',
-                'icon_id' => $icon->id,
-                'type_id' => $type->id,
-                'safe_id' => $safe->id,
-                'group_id' => $group->id,
-            ])
-            ->assertSuccessful();
-
-        $this->assertDatabaseHas('fields', [
-            'label' => 'field_label_updated',
-            'value' => 'field_value_updated',
-            'icon_id' => $icon->id,
-            'type_id' => $type->id,
-            'safe_id' => $safe->id,
-            'group_id' => $group->id,
-        ]);
+        $this->update(self::BASE_URL . $this->field->id, $data, self::TABLE);
     }
 
-    /** @test */
-    public function delete_field()
+    /**
+     * @group fields
+     */
+    public function testDestroyField()
     {
-        $this->actingAs($this->user)
-            ->deleteJson('/api/settings/fields/' . $this->field->id)
-            ->assertSuccessful();
-
-        $this->assertDatabaseMissing('fields', [
+        $data = [
             'id' => $this->field->id
-        ]);
+        ];
+
+        $this->destroy(self::BASE_URL . $this->field->id, $data, self::TABLE);
     }
 }

@@ -8,22 +8,10 @@ use Illuminate\Support\Facades\Hash;
 
 class SettingsTest extends TestCase
 {
-    /** @var \App\User */
-    protected $user;
-
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->user = factory(User::class)->create();
-        \Artisan::call('db:seed', ['--class' => 'RolesTableSeeder']);
-        \Artisan::call('db:seed', ['--class' => 'PermissionsTableSeeder']);
-        \Artisan::call('db:seed', ['--class' => 'RoleHasPermissionTableSeeder']);
-        $this->user->assignRole('admin');
-    }
-
-    /** @test */
-    public function update_profile_info()
+    /**
+     * @group users
+     */
+    public function testUpdateUserProfile()
     {
         $this->actingAs($this->user)
             ->patchJson('/api/settings/profile', [
@@ -40,8 +28,10 @@ class SettingsTest extends TestCase
         ]);
     }
 
-    /** @test */
-    public function update_password()
+    /**
+     * @group users
+     */
+    public function testUpdatePassword()
     {
         $this->actingAs($this->user)
             ->patchJson('/api/settings/password', [
