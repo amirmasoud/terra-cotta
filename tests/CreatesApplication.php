@@ -2,9 +2,7 @@
 
 namespace Tests;
 
-use App\User;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Foundation\Application;
 use Illuminate\Contracts\Console\Kernel;
 
 trait CreatesApplication
@@ -34,24 +32,5 @@ trait CreatesApplication
         Hash::setRounds(4);
 
         return $app;
-    }
-
-    /**
-     * Create admin user and run seeders.
-     *
-     * @return void
-     */
-    public function seedDatabase(): void
-    {
-        $this->artisan->call('migrate');
-
-        // $this->artisan->call('db:seed', ['--class' => 'RolesTableSeeder']);
-        // $this->artisan->call('db:seed', ['--class' => 'PermissionsTableSeeder']);
-        // $this->artisan->call('db:seed', ['--class' => 'RoleHasPermissionTableSeeder']);
-        $this->artisan->call('db:seed');
-
-        $this->user = factory(User::class)->create();
-
-        $this->user->assignRole('admin');
     }
 }

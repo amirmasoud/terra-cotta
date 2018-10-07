@@ -42,7 +42,7 @@ class SafeTest extends DuskTestCase
     }
 
     /**
-     * @group  safes-test
+     * @group  safes
      * @test
      * @return void
      */

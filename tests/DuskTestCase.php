@@ -2,6 +2,7 @@
 
 namespace Tests;
 
+use App\User;
 use Laravel\Dusk\Page;
 use Laravel\Dusk\Browser;
 use Tests\Browser\Interfaces\Constants;
@@ -28,7 +29,13 @@ abstract class DuskTestCase extends BaseTestCase implements Constants
         parent::setUp();
 
         $this->afterApplicationCreated(function() {
-            $this->seedDatabase();
+            $this->artisan->call('migrate');
+
+            $this->artisan->call('db:seed');
+
+            $this->user = factory(User::class)->create();
+
+            $this->user->assignRole('admin');
         });
     }
 
