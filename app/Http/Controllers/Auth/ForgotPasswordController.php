@@ -35,6 +35,7 @@ class ForgotPasswordController extends Controller
     /**
      * Get the response for a failed password reset link.
      *
+     * @scrutinizer ignore-unused
      * @param  \Illuminate\Http\Request $request
      * @param  string  $response
      * @return \Illuminate\Http\JsonResponse
