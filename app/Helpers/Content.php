@@ -75,9 +75,9 @@ class Content
      * @param  \Illuminate\Http\Request $request
      * @param  string $param
      * @param  array $attr
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @return \Illuminate\Database\Eloquent\Builder|null
      */
-    private function relationshipFilter(&$query, $request, $param, $attr): Builder
+    private function relationshipFilter(&$query, $request, $param, $attr)
     {
         $query->whereHas($attr['relationship'], function($q) use ($param, $attr, $request) {
             $q->where($attr['column'], $request->query($param));
