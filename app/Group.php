@@ -2,10 +2,9 @@
 
 namespace App;
 
-use App\Icon;
-use App\Safe;
-use App\Field;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\hasMany;
+use Illuminate\Database\Eloquent\Relations\belongsTo;
 
 class Group extends Model
 {
@@ -21,9 +20,9 @@ class Group extends Model
     /**
      * A group belong to an icon.
      *
-     * @return BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\belongsTo
      */
-    public function icon()
+    public function icon(): belongsTo
     {
         return $this->belongsTo(Icon::class);
     }
@@ -31,9 +30,9 @@ class Group extends Model
     /**
      * A field has many groups.
      *
-     * @return hasMany
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
      */
-    public function fields()
+    public function fields(): hasMany
     {
         return $this->hasMany(Field::class);
     }
@@ -41,9 +40,9 @@ class Group extends Model
     /**
      * A group belongs to a safe.
      *
-     * @return belongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\belongsTo
      */
-    public function safe()
+    public function safe(): belongsTo
     {
         return $this->belongsTo(Safe::class);
     }

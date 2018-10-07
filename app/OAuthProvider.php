@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use \Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class OAuthProvider extends Model
 {
@@ -30,9 +31,11 @@ class OAuthProvider extends Model
     ];
 
     /**
+     * An OAuth belongs to a user.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }

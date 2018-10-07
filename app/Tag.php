@@ -2,8 +2,8 @@
 
 namespace App;
 
-use App\Tag;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\belongsToMany;
 
 class Tag extends Model
 {
@@ -28,9 +28,9 @@ class Tag extends Model
     /**
      * A tag belongs to a safe.
      *
-     * @return belonsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
      */
-    public function safes()
+    public function safes(): belongsToMany
     {
         return $this->belongsToMany(Safe::class)->withTimestamps();
     }

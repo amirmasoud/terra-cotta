@@ -18,13 +18,22 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  */
 class Role extends Model implements RoleContract
 {
-    use HasPermissions;
-    use RefreshesPermissionCache;
+    use HasPermissions, RefreshesPermissionCache;
 
     public $guarded = ['id'];
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     public $fillable = ['name', 'guard_name'];
 
+    /**
+     * Role constructor.
+     *
+     * @param array $attributes
+     */
     public function __construct(array $attributes = [])
     {
         $attributes['guard_name'] = $attributes['guard_name'] ?? config('auth.defaults.guard');
@@ -34,6 +43,12 @@ class Role extends Model implements RoleContract
         $this->setTable(config('permission.table_names.roles'));
     }
 
+    /**
+     * Create a new role.
+     *
+     * @param array $attributes
+     * @return \Illuminate\Database\Eloquent\Builder|Model
+     */
     public static function create(array $attributes = [])
     {
         $attributes['guard_name'] = $attributes['guard_name'] ?? Guard::getDefaultName(static::class);
@@ -51,6 +66,8 @@ class Role extends Model implements RoleContract
 
     /**
      * A role may be given various permissions.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function permissions(): BelongsToMany
     {
@@ -62,6 +79,8 @@ class Role extends Model implements RoleContract
 
     /**
      * A role belongs to some users of the model associated with its guard.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
      */
     public function users(): MorphToMany
     {
@@ -97,6 +116,13 @@ class Role extends Model implements RoleContract
         return $role;
     }
 
+    /**
+     * Fina a role by ID.
+     *
+     * @param int $id
+     * @param null $guardName
+     * @return \Spatie\Permission\Contracts\Role
+     */
     public static function findById(int $id, $guardName = null): RoleContract
     {
         $guardName = $guardName ?? Guard::getDefaultName(static::class);

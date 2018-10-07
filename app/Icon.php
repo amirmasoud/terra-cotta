@@ -2,10 +2,8 @@
 
 namespace App;
 
-use App\Group;
-use App\Field;
-use App\Category;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\hasMany;
 
 class Icon extends Model
 {
@@ -21,9 +19,9 @@ class Icon extends Model
     /**
      * An icon has many categories.
      *
-     * @return hasMany
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
      */
-    public function categories()
+    public function categories(): hasMany
     {
         return $this->hasMany(Category::class);
     }
@@ -31,9 +29,9 @@ class Icon extends Model
     /**
      * An icon has many groups.
      *
-     * @return hasMany
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
      */
-    public function groups()
+    public function groups(): hasMany
     {
         return $this->hasMany(Group::class);
     }
@@ -41,9 +39,9 @@ class Icon extends Model
     /**
      * An icon has many fields.
      *
-     * @return hasMany
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
      */
-    public function fields()
+    public function fields(): hasMany
     {
         return $this->hasMany(Field::class);
     }

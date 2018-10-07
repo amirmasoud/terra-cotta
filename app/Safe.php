@@ -2,11 +2,9 @@
 
 namespace App;
 
-use App\Tag;
-use App\Field;
-use App\Group;
-use App\Category;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\hasMany;
+use Illuminate\Database\Eloquent\Relations\belongsToMany;
 
 class Safe extends Model
 {
@@ -29,9 +27,9 @@ class Safe extends Model
     /**
      * A safe has many fields.
      *
-     * @return hasMany
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
      */
-    public function fields()
+    public function fields(): hasMany
     {
         return $this->hasMany(Field::class);
     }
@@ -39,9 +37,9 @@ class Safe extends Model
     /**
      * A safe has many groups.
      *
-     * @return hasMany
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
      */
-    public function groups()
+    public function groups(): hasMany
     {
         return $this->hasMany(Group::class);
     }
@@ -49,9 +47,9 @@ class Safe extends Model
     /**
      * A safe belongs to many categories.
      *
-     * @return belongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
      */
-    public function categories()
+    public function categories(): belongsToMany
     {
         return $this->belongsToMany(Category::class)->withTimestamps();
     }
@@ -59,9 +57,9 @@ class Safe extends Model
     /**
      * A safe belongs to many tags.
      *
-     * @return belongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
      */
-    public function tags()
+    public function tags(): belongsToMany
     {
         return $this->belongsToMany(Tag::class)->withTimestamps();
     }

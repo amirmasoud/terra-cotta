@@ -2,8 +2,8 @@
 
 namespace App;
 
-use App\Field;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\hasMany;
 
 class Type extends Model
 {
@@ -19,9 +19,9 @@ class Type extends Model
     /**
      * An type has many fields.
      *
-     * @return hasMany
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
      */
-    public function fields()
+    public function fields(): hasMany
     {
         return $this->hasMany(Field::class);
     }
@@ -31,7 +31,7 @@ class Type extends Model
      *
      * @return \App\Type
      */
-    public static function default()
+    public static function default(): Type
     {
         return self::orderBy('created_at', 'asc')->first();
     }

@@ -2,9 +2,8 @@
 
 namespace App;
 
-use App\Icon;
-use App\Safe;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\belongsTo;
 
 class Category extends Model
 {
@@ -29,9 +28,9 @@ class Category extends Model
     /**
      * A category belongs to an icon.
      *
-     * @return \App\Icon
+     * @return \Illuminate\Database\Eloquent\Relations\belongsTo
      */
-    public function icon()
+    public function icon(): belongsTo
     {
         return $this->belongsTo(Icon::class);
     }
@@ -39,9 +38,9 @@ class Category extends Model
     /**
      * A category belongs to many safe.
      *
-     * @return belonsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\belongsTo
      */
-    public function safes()
+    public function safes(): belongsTo
     {
         return $this->belongsToMany(Safe::class)->withTimestamps();
     }

@@ -2,11 +2,8 @@
 
 namespace App;
 
-use App\Icon;
-use App\Type;
-use App\Safe;
-use App\Group;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\belongsTo;
 
 class Field extends Model
 {
@@ -22,9 +19,9 @@ class Field extends Model
     /**
      * A field belongs to an icon.
      *
-     * @return \App\Icon
+     * @return \Illuminate\Database\Eloquent\Relations\belongsTo
      */
-    public function icon()
+    public function icon(): belongsTo
     {
         return $this->belongsTo(Icon::class);
     }
@@ -32,9 +29,9 @@ class Field extends Model
     /**
      * A field belongs to a type.
      *
-     * @return \App\Type
+     * @return \Illuminate\Database\Eloquent\Relations\belongsTo
      */
-    public function type()
+    public function type(): belongsTo
     {
         return $this->belongsTo(Type::class);
     }
@@ -42,9 +39,9 @@ class Field extends Model
     /**
      * A field belongs to a group.
      *
-     * @return \App\Group
+     * @return \Illuminate\Database\Eloquent\Relations\belongsTo
      */
-    public function group()
+    public function group(): belongsTo
     {
         return $this->belongsTo(Group::class);
     }
@@ -52,9 +49,9 @@ class Field extends Model
     /**
      * A field belongs to a safe.
      *
-     * @return belongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\belongsTo
      */
-    public function safe()
+    public function safe(): belongsTo
     {
         return $this->belongsTo(Safe::class);
     }

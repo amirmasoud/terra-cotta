@@ -29,9 +29,9 @@ class OAuthController extends Controller
      * Redirect the user to the provider authentication page.
      *
      * @param  string $provider
-     * @return \Illuminate\Http\RedirectResponse
+     * @return array
      */
-    public function redirectToProvider($provider)
+    public function redirectToProvider($provider): array
     {
         return [
             'url' => Socialite::driver($provider)->stateless()->redirect()->getTargetUrl(),

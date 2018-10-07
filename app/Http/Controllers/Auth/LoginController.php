@@ -3,12 +3,34 @@
 namespace App\Http\Controllers\Auth;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends Controller
 {
     use AuthenticatesUsers;
+
+    /**
+     * Get the post register / login redirect path.
+     *
+     * @var string
+     */
+    protected $redirectTo = '/home';
+
+    /**
+     * Get the maximum number of attempts to allow.
+     *
+     * @var integer
+     */
+    protected $maxAttempts = 3;
+
+    /**
+     * Get the number of minutes to throttle for.
+     *
+     * @var integer
+     */
+    protected $decayMinutes = 1;
 
     /**
      * Create a new controller instance.
@@ -26,7 +48,7 @@ class LoginController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return bool
      */
-    protected function attemptLogin(Request $request)
+    protected function attemptLogin(Request $request): bool
     {
         $token = $this->guard()->attempt($this->credentials($request));
 
@@ -43,9 +65,9 @@ class LoginController extends Controller
      * Send the response after the user was authenticated.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return array
      */
-    protected function sendLoginResponse(Request $request)
+    protected function sendLoginResponse(Request $request): array
     {
         $this->clearLoginAttempts($request);
 
@@ -63,9 +85,9 @@ class LoginController extends Controller
      * Log the user out of the application.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return void
      */
-    public function logout(Request $request)
+    public function logout(Request $request): void
     {
         $this->guard()->logout();
     }

@@ -28,54 +28,17 @@ class CreateRequest extends FormRequest
             'categories' => 'required',
             'tags'       => 'nullable',
         ];
-        if (array_key_exists('groups', request())) {
+        if (!is_null(request()->groups)) {
             foreach (request()['groups'] as $gkey => $group) {
                 $rules['groups.' . $gkey . '.name'] = 'required';
-                if ($group['fields']) {
+                if (array_key_exists('fields', $group)) {
                     foreach ($group['fields'] as $fkey => $field) {
                         $rules['groups.' . $gkey . '.fields.' . $fkey . '.label'] = 'required';
-                        $rules['groups.' . $gkey . '.fields.' . $fkey . '.value'] = 'required' . $this->smartRules($field['label'], $field['type']);
+                        $rules['groups.' . $gkey . '.fields.' . $fkey . '.value'] = 'required';
                     }
                 }
             }
         }
         return $rules;
-    }
-
-    /**
-     * Guess additional rules from label and type
-     *
-     * @return string
-     */
-    private function smartRules($label, $type)
-    {
-        $label = strtolower($label);
-        $rules = [];
-
-        switch ($label) {
-            case 'ip':
-                $rules[] = 'ip';
-                break;
-
-            case 'mail':
-            case 'email':
-            case 'e-mail':
-                $rules[] = 'email';
-                break;
-
-            case 'url':
-                $rules[] = 'url';
-                break;
-
-            default:
-                //
-                break;
-        }
-
-        if (empty($rules)) {
-            return '';
-        } else {
-            return '|' . implode('|', $rules);
-        }
     }
 }
