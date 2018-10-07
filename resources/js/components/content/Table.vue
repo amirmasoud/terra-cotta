@@ -11,10 +11,16 @@
       <template slot="actions" slot-scope="props">
         <slot name="actions">
           <div class="custom-actions">
-            <!-- <b-link :to="{ path: (props.rowData.id).toString() }" append><fa icon="eye"></fa></b-link> -->
-            <b-link :to="{ path: props.rowData.id + '/edit' }" append><fa icon="edit"></fa></b-link>
             <b-link
-              @click="confirmDelete(props.rowData.id, props.rowIndex)"><fa icon="trash"></fa></b-link>
+              v-if="can('update ' + plural)"
+              :to="{ path: props.rowData.id + '/edit' }" append>
+              <fa icon="edit"></fa>
+            </b-link>
+            <b-link
+              v-if="can('delete ' + plural)"
+              @click="confirmDelete(props.rowData.id, props.rowIndex)">
+              <fa icon="trash"></fa>
+            </b-link>
           </div>
         </slot>
       </template>

@@ -13,6 +13,28 @@ Vue.mixin({
   methods: {
     can (permission) {
       return (this.$store.getters['auth/user'].permissions || []).find(o => o.name === permission) !== undefined
+    },
+
+    cannot (permission) {
+      return (this.$store.getters['auth/user'].permissions || []).find(o => o.name === permission) === undefined
+    },
+
+    hasAny (...permissions) {
+      for (let permission of permissions) {
+        if (this.can(permission)) {
+          return true
+        }
+      }
+      return false
+    },
+
+    hasNone (...permissions) {
+      for (let permission of permissions) {
+        if (this.can(permission)) {
+          return false
+        }
+      }
+      return true
     }
   }
 })

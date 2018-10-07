@@ -7,7 +7,7 @@
     </b-col>
 
     <b-col cols="12" md="3" order-sm="1">
-      <card :title="$t('categories')" class="safes-card" :loading="loadingCategories">
+      <card :title="$t('categories')" class="safes-card" :loading="loadingCategories" v-if="can('browse categories')">
         <ul class="nav flex-column nav-pills" v-if="categories">
           <li class="nav-item">
             <router-link :to="{ name: 'safes.browse' }" class="nav-link" active-class="active" exact>
@@ -25,7 +25,7 @@
         </ul>
       </card>
 
-      <card :title="$t('tags')" class="safes-card" :loading="loadingTags">
+      <card :title="$t('tags')" class="safes-card" :loading="loadingTags" v-if="can('browse tags')">
         <ul class="nav flex-column nav-pills" v-if="tags">
           <li class="nav-item">
             <router-link :to="{ name: 'safes.browse' }" class="nav-link" active-class="active" exact>
@@ -34,7 +34,7 @@
             </router-link>
           </li>
 
-          <li v-for="tag in tags" :key="tag.id" class="nav-item">
+          <li v-for="tag in tags" :key="tag.id" class="nav-item" v-if="can('browse tags')">
             <router-link :to="{ name: 'safes.browse', query: { 'tag': tag.id } }" class="nav-link" active-class="active" exact>
               <fa icon="circle" fixed-width :style="{color: tag.color}" class="text-shadow" />
               {{ tag.name }}
@@ -62,8 +62,13 @@ export default {
   },
 
   created: function () {
-    this.fetchCategories()
-    this.fetchTags()
+    if (this.can('browse categories')) {
+      this.fetchCategories()
+    }
+
+    if (this.can('browse tags')) {
+      this.fetchTags()
+    }
   },
 
   methods: {
