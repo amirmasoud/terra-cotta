@@ -25,4 +25,52 @@ class Home extends Page
         $browser->clickLink('Logout')
             ->pause(300);
     }
+
+    /**
+     * Click on categories link.
+     *
+     * @param  \Laravel\Dusk\Browser $browser
+     * @return void
+     */
+    public function clickCategories($browser)
+    {
+        $browser->click('.col-md-6:last-child')
+                ->pause(300);
+    }
+
+    /**
+     * Click on tags link.
+     *
+     * @param  \Laravel\Dusk\Browser $browser
+     * @return void
+     */
+    public function clickTags($browser)
+    {
+        $browser->click('.col-sm-6.col-md-3:nth-child(4n)')
+                ->pause(300);
+    }
+
+    /**
+     * Click on users link.
+     *
+     * @param  \Laravel\Dusk\Browser $browser
+     * @return void
+     */
+    public function clickUsers($browser)
+    {
+        $browser->click('.col-sm-6.col-md-3:nth-child(3n)')
+                ->pause(300);
+    }
+
+    /**
+     * Click on safes link.
+     *
+     * @param  \Laravel\Dusk\Browser $browser
+     * @return void
+     */
+    public function clickSafes($browser)
+    {
+        $browser->click('.col-sm-6.col-md-3:first-child')
+                ->pause(300);
+    }
 }

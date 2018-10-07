@@ -16,28 +16,39 @@ class RegisterTest extends DuskTestCase
         static::closeAll();
     }
 
-    /** @test */
+    /**
+     * @group  register
+     * @test
+     * @return void
+     */
     public function register_with_valid_data()
     {
         $this->browse(function ($browser) {
             $browser->visit(new Register)
+                ->pause(300)
                 ->submit([
                     'name' => 'Test User',
                     'email' => 'test@test.app',
                     'password' => 'secret',
                     'password_confirmation' => 'secret',
                 ])
+                ->pause(300)
                 ->assertPageIs(Home::class);
         });
     }
 
-    /** @test */
+    /**
+     * @group  register
+     * @test
+     * @return void
+     */
     public function can_not_register_with_the_same_twice()
     {
         $user = factory(User::class)->create();
 
         $this->browse(function ($browser) use ($user) {
             $browser->visit(new Register)
+                ->pause(300)
                 ->submit([
                     'name' => 'Test User',
                     'email' => $user->email,

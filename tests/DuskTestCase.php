@@ -4,6 +4,7 @@ namespace Tests;
 
 use Laravel\Dusk\Page;
 use Laravel\Dusk\Browser;
+use Tests\Browser\Interfaces\Constants;
 use Laravel\Dusk\TestCase as BaseTestCase;
 use Facebook\WebDriver\Chrome\ChromeOptions;
 use Facebook\WebDriver\Remote\RemoteWebDriver;
@@ -18,10 +19,18 @@ Browser::macro('assertPageIs', function ($page) {
     return $this->assertPathIs($page->url());
 });
 
-abstract class DuskTestCase extends BaseTestCase
+abstract class DuskTestCase extends BaseTestCase implements Constants
 {
-    use DatabaseMigrations;
-    use CreatesApplication;
+    use CreatesApplication, DatabaseMigrations;
+
+    protected function setUp()
+    {
+        parent::setUp();
+
+        $this->afterApplicationCreated(function() {
+            $this->seedDatabase();
+        });
+    }
 
     /**
      * Prepare for Dusk test execution.

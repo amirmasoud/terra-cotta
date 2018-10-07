@@ -16,35 +16,51 @@ class LoginTest extends DuskTestCase
         static::closeAll();
     }
 
-    /** @test */
+    /**
+     * @group  login
+     * @test
+     * @return void
+     */
     public function login_with_valid_credentials()
     {
         $user = factory(User::class)->create();
 
         $this->browse(function ($browser) use ($user) {
             $browser->visit(new Login)
+                ->pause(300)
                 ->submit($user->email, 'secret')
-                ->assertPageIs(Home::class);
+                ->assertPageIs(Home::class)
+                ->pause(300);
         });
     }
 
-    /** @test */
+    /**
+     * @group  login
+     * @test
+     * @return void
+     */
     public function login_with_invalid_credentials()
     {
         $this->browse(function ($browser) {
             $browser->visit(new Login)
+                ->pause(300)
                 ->submit('test@test.app', 'secret')
                 ->assertSee('These credentials do not match our records.');
         });
     }
 
-    /** @test */
+    /**
+     * @group  login
+     * @test
+     * @return void
+     */
     public function log_out_the_user()
     {
         $user = factory(User::class)->create();
 
         $this->browse(function ($browser) use ($user) {
             $browser->visit(new Login)
+                ->pause(300)
                 ->submit($user->email, 'secret')
                 ->on(new Home)
                 ->clickLogout()
