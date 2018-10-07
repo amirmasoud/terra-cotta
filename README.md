@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/negarinapp/passwords.svg?branch=master)](https://travis-ci.org/negarinapp/passwords)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/negarinapp/passwords/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/negarinapp/passwords/?branch=master)
 
 # passwords
 Save your sensitive data on your own server with your own privacy
