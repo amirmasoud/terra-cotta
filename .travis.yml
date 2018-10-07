@@ -19,6 +19,37 @@ matrix:
 
       script:
         - phpunit
+
+      services:
+        - mysql
+
+      notifications:
+        email: false
+
+  include:
+    - language: php
+
+      php:
+        - 7.1
+        - 7.2
+
+      before_script:
+        - cp .env.travis .env
+        - composer self-update
+        - composer install --prefer-source --no-interaction --dev
+        - php artisan key:generate
+        - php artisan jwt:secret
+        - php artisan migrate
+        - export DISPLAY=:99.0
+        - sh -e /etc/init.d/xvfb start
+        - ./vendor/laravel/dusk/bin/chromedriver-linux &
+        - cp .env.testing .env
+        - php artisan serve &
+
+      before_install:
+        - mysql -e 'CREATE DATABASE passwords;'
+
+      script:
         - php artisan dusk
 
       services:
