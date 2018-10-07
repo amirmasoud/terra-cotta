@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
 use Illuminate\Http\Request;
 use App\Http\Resources\User as UserResource;
 
@@ -16,6 +15,6 @@ class UserController extends Controller
      */
     public function user(Request $request)
     {
-        return new UserResource($request->user());
+        return new UserResource($request->user()->load('roles'));
     }
 }
