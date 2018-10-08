@@ -6,14 +6,13 @@ use App\Tag;
 use App\Type;
 use App\Safe;
 use App\Field;
-use App\Group;
 use App\Category;
 use App\Contracts\Content;
-use App\Http\Controllers\Controller;
 use App\Http\Requests\Safe\IndexRequest;
 use App\Http\Requests\Safe\CreateRequest;
 use App\Http\Requests\Safe\UpdateRequest;
 use App\Http\Requests\Safe\SearchRequest;
+use Facades\App\Repositories\SafeRepository;
 
 use App\Http\Resources\SafeCollection;
 use App\Http\Resources\Safe as SafeResource;
@@ -21,6 +20,8 @@ use App\Http\Resources\Safe as SafeResource;
 class SafeController extends Controller
 {
     private $content;
+
+    private $load = ['categories', 'tags', 'groups', 'groups.fields', 'groups.fields.type', 'categories.icon'];
 
     /**
      * Constructor of the class.
@@ -31,14 +32,15 @@ class SafeController extends Controller
     {
         $this->authorizeResource(Safe::class);
         $this->content = $content;
-        $this->content->model = Safe::with('categories', 'tags', 'groups',
-            'groups.fields', 'groups.fields.type', 'categories.icon');
+        $this->content->model = Safe::with($this->load);
     }
 
     /**
      * Show paginated safes.
      *
-     * @return JSON
+     * @param  \App\Http\Requests\Safe\IndexRequest $request
+     * @return \App\Http\Resources\SafeCollection
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function index(IndexRequest $request)
     {
@@ -50,88 +52,44 @@ class SafeController extends Controller
      * Create new safe.
      *
      * @param  \App\Http\Requests\Safe\CreateRequest $request
-     * @return JSON
+     * @return \App\Http\Resources\Safe
      */
     public function store(CreateRequest $request)
     {
         $safe = $this->content->store($request);
 
         // Attach categories
-        if ($request->categories) {
-            foreach ($request->categories as $categoryName) {
-                if (Category::whereName($categoryName)->exists()) {
-                    $category = Category::whereName($categoryName)
-                                    ->first();
-                } else {
-                    $category = Category::create(['name' => $categoryName]);
-                }
-                $safe->categories()->attach($category->id);
-            }
-        }
+        SafeRepository::attachCategories($request, $safe);
 
         // Attach tags
-        if ($request->tags) {
-            foreach ($request->tags as $tagName) {
-                if (Tag::whereName($tagName)->exists()) {
-                    $tag = Tag::whereName($tagName)
-                                    ->first();
-                } else {
-                    $tag = Tag::create(['name' => $tagName, 'color' => '#ffffff']);
-                }
-                $safe->tags()->attach($tag->id);
-            }
-        }
+        SafeRepository::attachTags($request, $safe);
 
         // Create and save groups and fields
-        if ($request->groups) {
-            foreach ($request->groups as $g) {
-                $group = $safe->groups()->create($g);
-                if (array_key_exists('fields', $g)) {
-                    foreach ($g['fields'] as $f) {
-                        $field = new Field($f);
-                        $field->type_id = $f['type']['id'] ?? Type::default()->id;
-                        $field->group_id = $group->id;
-                        $safe->fields()->save($field);
-                    }
-                }
-            }
-        }
+        SafeRepository::attachGroupsAndFields($request, $safe);
 
-        return new SafeResource(
-            $this->content->show($safe)
-                ->load('categories', 'tags', 'groups', 'groups.fields',
-                        'groups.fields.type', 'categories.icon')
-        );
+        return new SafeResource($this->content->show($safe)->load($this->load));
     }
 
     /**
      * Show an safe.
      *
      * @param  \App\Safe $safe
-     * @return JSON
+     * @return \App\Http\Resources\Safe
      */
     public function show(Safe $safe)
     {
-        return new SafeResource(
-            $this->content->show($safe)
-                ->load('categories', 'tags', 'groups', 'groups.fields',
-                        'groups.fields.type', 'categories.icon')
-        );
+        return new SafeResource($this->content->show($safe)->load($this->load));
     }
 
     /**
      * Show single safe for edit.
      *
      * @param  \App\Safe $safe
-     * @return JSON
+     * @return \App\Http\Resources\Safe
      */
     public function edit(Safe $safe)
     {
-        return new SafeResource(
-            $this->content->show($safe)
-                ->load('categories', 'tags', 'groups', 'groups.fields',
-                        'groups.fields.type', 'categories.icon')
-        );
+        return new SafeResource($this->content->show($safe)->load($this->load));
     }
 
     /**
@@ -139,61 +97,20 @@ class SafeController extends Controller
      *
      * @param  \App\Http\Requests\Safe\UpdateRequest $request
      * @param  \App\Safe $safe
-     * @return JSON
+     * @return \Illuminate\Http\Response
      */
     public function update(UpdateRequest $request, Safe $safe)
     {
         $safe->update($request->all());
 
         // Sync categories
-        if ($request->categories) {
-            $categories = [];
-            foreach ($request->categories as $categoryName) {
-                if (Category::whereName($categoryName)->exists()) {
-                    $categories[] = Category::whereName($categoryName)
-                                            ->first()
-                                            ->id;
-                } else {
-                    $category = Category::create(['name' => $categoryName]);
-                    $categories[] = $category->id;
-                }
-            }
-            $safe->categories()->sync($categories);
-        }
+        SafeRepository::syncCategories($request, $safe);
 
         // Attach tags
-        if ($request->tags) {
-            $tags = [];
-            foreach ($request->tags as $tagName) {
-                if (Tag::whereName($tagName)->exists()) {
-                    $tags[] = Tag::whereName($tagName)
-                                    ->first()
-                                    ->id;
-                } else {
-                    $tag = Tag::create(['name' => $tagName, 'color' => '#ffffff']);
-                    $tags[] = $tag->id;
-                }
-            }
-            $safe->tags()->sync($tags);
-        }
+        SafeRepository::syncTags($request, $safe);
 
-        // Create and save groups and fields
-        // @TODO: Find difference instead of deleting
-        $safe->groups()->delete();
-        $safe->fields()->delete();
-        if ($request->groups) {
-            foreach ($request->groups as $g) {
-                $group = $safe->groups()->create($g);
-                if (array_key_exists('fields', $g)) {
-                    foreach ($g['fields'] as $f) {
-                        $field = new Field($f);
-                        $field->type_id = $f['type']['id'] ?? Type::default()->id;
-                        $field->group_id = $group->id;
-                        $safe->fields()->save($field);
-                    }
-                }
-            }
-        }
+        // Sync groups and fields
+        SafeRepository::syncGroupsAndFields($request, $safe);
 
         return response(null, 204);
     }
@@ -202,7 +119,7 @@ class SafeController extends Controller
      * Destroy/delete an safe.
      *
      * @param  \App\Safe $safe
-     * @return JSON
+     * @return \Illuminate\Http\Response
      */
     public function destroy(Safe $safe)
     {
@@ -212,8 +129,9 @@ class SafeController extends Controller
     /**
      * Search safes with name.
      *
-     * @param  Request $request
-     * @return JSON
+     * @param  SearchRequest $request
+     * @return SafeCollection
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function search(SearchRequest $request)
     {
