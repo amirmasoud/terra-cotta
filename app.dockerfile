@@ -47,8 +47,6 @@ RUN chown -R www-data:www-data \
         /var/www/storage \
         /var/www/bootstrap/cache
 
-RUN a2enmod rewrite
-
 COPY .env.example .env
 
 RUN cd /var/www \
