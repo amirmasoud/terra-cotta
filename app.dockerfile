@@ -1,8 +1,20 @@
 FROM php:7.2.12-fpm
 
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh \
-    && apt-get update && apt-get install -y libmcrypt-dev \
+    && apt-get update && apt-get install -y libmcrypt-dev libicu-dev libpq-dev \
     mysql-client libmagickwand-dev curl --no-install-recommends \
+    && rm -r /var/lib/apt/lists/* \
+    && docker-php-ext-configure pdo_mysql --with-pdo-mysql=mysqlnd \
+    && docker-php-ext-install \
+        intl \
+        mbstring \
+        mcrypt \
+        pcntl \
+        pdo_mysql \
+        pdo_pgsql \
+        pgsql \
+        zip \
+        opcache\
     && pecl install imagick \
     && docker-php-ext-enable imagick \
     && docker-php-ext-install pdo_mysql \
@@ -20,11 +32,7 @@ COPY database /var/www/database
 COPY . /var/www
 
 ENV COMPOSER_ALLOW_SUPERUSER=1
-RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
-    && php composer-setup.php \
-    && php -r "unlink('composer-setup.php');" \
-    && php composer.phar install --no-dev --no-scripts \
-    && rm composer.phar
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer
 
 RUN curl --silent -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.2/install.sh | bash
 
@@ -44,7 +52,8 @@ RUN a2enmod rewrite
 
 COPY .env.example .env
 
-RUN composer install \
+RUN cd /var/www \
+    && composer install \
     && npm install \
     && npm run production \
     && php artisan key:generate \
