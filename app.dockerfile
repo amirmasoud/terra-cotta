@@ -47,7 +47,7 @@ RUN chown -R www-data:www-data \
         /var/www/storage \
         /var/www/bootstrap/cache
 
-COPY .env.example .env
+COPY /var/www/.env.example /var/www/.env
 
 RUN cd /var/www \
     && composer install \
