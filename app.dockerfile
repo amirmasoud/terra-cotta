@@ -8,7 +8,6 @@ RUN rm /bin/sh && ln -s /bin/bash /bin/sh \
     && docker-php-ext-install \
         intl \
         mbstring \
-        mcrypt \
         pcntl \
         pdo_mysql \
         pdo_pgsql \
