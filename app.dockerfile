@@ -55,4 +55,5 @@ RUN cd /var/www \
     && npm run production \
     && php artisan key:generate \
     && php artisan jwt:secret \
-    && php artisan migrate --seed
+    && php artisan migrate --seed \
+    && php artisan add:admin admin@admin.com 123456
