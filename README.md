@@ -9,6 +9,9 @@ Save your sensitive data on your own server with your own privacy
 ## Install with Docker
 
 ```
+# Clone the repository
+git clone https://github.com/negarinapp/passwords.git
+
 # Run the app
 docker-compose up -d
 
