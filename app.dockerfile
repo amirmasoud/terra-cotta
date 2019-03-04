@@ -2,7 +2,7 @@ FROM php:7.2.12-fpm
 
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh \
     && apt-get update && apt-get install -y libmcrypt-dev libicu-dev libpq-dev \
-    mysql-client libmagickwand-dev curl --no-install-recommends \
+    mysql-client libmagickwand-dev curl zip unzip --no-install-recommends \
     && rm -r /var/lib/apt/lists/* \
     && docker-php-ext-configure pdo_mysql --with-pdo-mysql=mysqlnd \
     && docker-php-ext-install \
