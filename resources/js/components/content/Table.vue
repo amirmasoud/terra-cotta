@@ -12,12 +12,10 @@
         <slot name="actions">
           <div class="custom-actions">
             <b-link
-              v-if="can('update ' + plural)"
               :to="{ path: props.rowData.id + '/edit' }" append>
               <fa icon="edit"></fa>
             </b-link>
             <b-link
-              v-if="can('delete ' + plural)"
               @click="confirmDelete(props.rowData.id, props.rowIndex)">
               <fa icon="trash"></fa>
             </b-link>
@@ -41,7 +39,7 @@
 </template>
 <script>
 import axios from 'axios'
-import swal from 'sweetalert2'
+import Swal from 'sweetalert2'
 import { mapGetters } from 'vuex'
 import Vuetable from 'vuetable-2/src/components/Vuetable'
 import VuetablePagination from '../vuetable/VuetablePagination'
@@ -112,7 +110,7 @@ export default {
      * @return {void}
      */
     confirmDelete(resourceId, index) {
-      swal({
+      Swal.fire({
         title: this.$t('are_you_sure'),
         text: this.$t('delete_confirm_description'),
         type: 'warning',
@@ -123,7 +121,7 @@ export default {
       }).then((result) => {
         if (result.value) {
           this.destroy(resourceId, index)
-          swal(
+          Swal.fire(
             this.$t('deleted!'),
             this.$t(this.singular + '_deleted'),
             'success'

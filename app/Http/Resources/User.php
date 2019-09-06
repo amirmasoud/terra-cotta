@@ -20,9 +20,7 @@ class User extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'email' => $this->email,
-            'photo_url' => $this->photo_url,
-            'roles' => RoleResource::collection($this->whenLoaded('roles')),
-            'permissions' => PermissionResource::collection($request->user()->getAllPermissions()),
+            'photo_url' => $this->photo_url
         ];
     }
 }

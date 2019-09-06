@@ -15,6 +15,6 @@ class UserController extends Controller
      */
     public function user(Request $request)
     {
-        return new UserResource($request->user()->load('roles'));
+        return new UserResource($request->user());
     }
 }
