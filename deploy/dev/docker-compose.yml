@@ -1,0 +1,72 @@
+version: "3"
+
+services:
+  backend:
+    image: backend:${BACKEND_TAG}
+    build:
+      context: ../../backend
+      args:
+        FPM_VERSION: ${FPM_VERSION}
+        BACKEND_PORT: ${BACKEND_PORT}
+      dockerfile: ../deploy/dev/backend/Dockerfile
+    container_name: terra-cotta-backend
+    restart: on-failure
+    ports:
+      - ${BACKEND_PORT}:${BACKEND_PORT}
+    working_dir: /var/www/backend
+    depends_on:
+      - database
+      - cache
+    volumes:
+      - ../../backend:/var/www/backend
+      - ./backend/php/php.ini:/usr/local/etc/php/conf.d/php.ini
+      - ./backend/php/opcache.ini:/usr/local/etc/php/conf.d/opcache.ini
+    networks:
+      - backend-network
+
+  database:
+    image: postgres:${PGSQL_VERSION}
+    container_name: terra-cotta-database
+    restart: on-failure
+    ports:
+      - 5432:5432
+    volumes:
+      - ./database/data:/var/lib/postgresql/data
+    networks:
+      - backend-network
+
+  proxy:
+    image: nginx:${NGINX_VERSION}
+    container_name: terra-cotta-proxy
+    ports:
+      - 80:80
+      - 443:443
+    restart: on-failure
+    volumes:
+      - ./nginx/certs/:/etc/ssl/certs/
+      - ./nginx/conf.d/:/etc/nginx/conf.d/
+      - ./nginx/log/:/var/log/nginx/
+    depends_on:
+      - backend
+    networks:
+      - backend-network
+
+  cache:
+    image: redis:${REDIS_VERSION}
+    container_name: terra-cotta-cache
+    command: ["redis-server"]
+    restart: unless-stopped
+    ports:
+      - 6379:6379
+    volumes:
+      - redis-data:/data
+    networks:
+      - backend-network
+
+networks:
+  backend-network:
+    driver: bridge
+
+volumes:
+  data:
+  redis-data:
