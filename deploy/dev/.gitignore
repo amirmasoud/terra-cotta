@@ -1,0 +1,2 @@
+.env
+/nginx/log/*.log
