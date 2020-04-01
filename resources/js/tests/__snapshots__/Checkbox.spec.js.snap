@@ -1,8 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`Checkbox renders correctly 1`] = `
-<div class="custom-control custom-checkbox d-flex">
-  <input name="checkbox" id="checkbox" type="checkbox" class="custom-control-input">
-  <label for="checkbox" class="custom-control-label my-auto"></label>
-</div>
-`;
