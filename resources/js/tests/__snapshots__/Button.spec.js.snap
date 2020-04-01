@@ -1,5 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`Button renders correctly 1`] = `<button type="button" disabled="disabled" class="btn btn-block btn-lg btn-loading btn-secondary"></button>`;
-
-exports[`Button renders correctly 2`] = `<button type="button" class="btn btn-block btn-lg btn-secondary"></button>`;
