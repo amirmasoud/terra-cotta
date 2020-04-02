@@ -2,7 +2,7 @@ version: "3"
 
 services:
   backend:
-    image: backend:${BACKEND_TAG}
+    image: terra-cotta/backend:${BACKEND_TAG}
     build:
       context: ../../backend
       args:
@@ -18,7 +18,7 @@ services:
       - database
       - cache
     volumes:
-      - ../../backend:/var/www/backend
+      - ../../laravel-7:/var/www/backend
       - ./backend/php/php.ini:/usr/local/etc/php/conf.d/php.ini
       - ./backend/php/opcache.ini:/usr/local/etc/php/conf.d/opcache.ini
     networks:
