@@ -1,9 +1,9 @@
 <template>
   <div>
-    <div class="relative pb-5/6">
+    <div class="relative z-10 pb-5/6">
       <img class="absolute h-full w-full object-cover rounded-lg shadow-md" :src="property.imageUrl" :alt="property.imageAlt">
     </div>
-    <div class="relative px-4 -mt-16">
+    <div class="relative z-10 px-4 -mt-16">
       <div class="bg-white p-6 rounded-lg shadow-lg">
         <div class="flex items-baseline">
           <span class="inline-block bg-teal-200 text-teal-800 text-xs px-2 rounded-full uppercase font-semibold tracking-wide">New</span>
