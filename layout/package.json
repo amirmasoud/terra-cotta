@@ -1,0 +1,25 @@
+{
+  "name": "terra-cotta",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amirmasoud/terra-cotta.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/amirmasoud/terra-cotta/issues"
+  },
+  "homepage": "https://github.com/amirmasoud/terra-cotta#readme",
+  "dependencies": {
+    "autoprefixer": "^9.7.6",
+    "postcss-cli": "^7.1.0",
+    "tailwindcss": "^1.2.0"
+  }
+}
