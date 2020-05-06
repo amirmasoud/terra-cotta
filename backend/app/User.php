@@ -2,18 +2,14 @@
 
 namespace App;
 
-use Spatie\Permission\Traits\HasRoles;
-use Tymon\JWTAuth\Contracts\JWTSubject;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use App\Notifications\ResetPassword as ResetPasswordNotification;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable implements JWTSubject
+class User extends Authenticatable
 {
-    use Notifiable, HasRoles;
-
-    Protected $guard_name = 'api';
+    use HasApiTokens, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -34,58 +30,11 @@ class User extends Authenticatable implements JWTSubject
     ];
 
     /**
-     * The accessors to append to the model's array form.
+     * The attributes that should be cast to native types.
      *
      * @var array
      */
-    protected $appends = [
-        'photo_url',
+    protected $casts = [
+        'email_verified_at' => 'datetime',
     ];
-
-    /**
-     * Get the profile photo URL attribute.
-     *
-     * @return string
-     */
-    public function getPhotoUrlAttribute(): string
-    {
-        return 'https://www.gravatar.com/avatar/' . md5(strtolower($this->email)) . '.jpg?s=200&d=mm';
-    }
-
-    /**
-     * Get the oauth providers.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function oauthProviders(): hasMany
-    {
-        return $this->hasMany(OAuthProvider::class);
-    }
-
-    /**
-     * Send the password reset notification.
-     *
-     * @param  string  $token
-     * @return void
-     */
-    public function sendPasswordResetNotification($token): void
-    {
-        $this->notify(new ResetPasswordNotification($token));
-    }
-
-    /**
-     * @return int
-     */
-    public function getJWTIdentifier(): int
-    {
-        return $this->getKey();
-    }
-
-    /**
-     * @return array
-     */
-    public function getJWTCustomClaims(): array
-    {
-        return [];
-    }
 }

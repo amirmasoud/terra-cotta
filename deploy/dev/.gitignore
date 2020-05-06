@@ -1,3 +1,0 @@
-.env
-/nginx/log/*.log
-/database/data/
