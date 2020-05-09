@@ -146,44 +146,24 @@
       <!-- :class="{ 'sm:ml-64': isOpen }" -->
       <div class="h-(screen-16) overflow-scroll ml-0">
         <div class="flex flex-wrap py-8 max-w-screen-lg mx-auto">
-          <empty-svg class="-mt-48 p-8 sm:p-56 sm:-mt-48" />
-          <div class="w-full -mt-40 sm:-mt-48">
+          <empty-svg class="h-64 mt-8" />
+          <div class="w-full mt-8">
             <p class="text-center uppercase font-medium">
               Ready to put your first key in the safe?
             </p>
           </div>
-          <div class="w-full px-2 sm:w-1/4 -mt-24 sm:-mt-32 mx-auto">
+          <div class="w-full px-2 sm:w-1/4 mt-4 mx-auto">
             <a
               class="flex uppercase tracking-wide text-green-500 text-xs font-bold mb-2 appearance-none border-none bg-green-700 text-green-200 rounded leading-tight"
               href="#"
               ><div class="bg-green-800 p-2 rounded-tl rounded-bl shadow-lg ">
                 <plus-svg class="text-green-200" />
               </div>
-              <div class="p-2 mt-1 text-green-100">Let's go!</div></a
+              <div class="p-2 mt-1 text-green-100">START HERE</div></a
             >
           </div>
           <h1 class="w-full p-2 font-semibold uppercase">Safes</h1>
           <safe-card v-for="(safe, index) in safes" :key="index" class="w-full p-2" :safe="safe" />
-          <!-- <PropertyCard
-          class="w-full h-auto sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 p-4"
-          :property="property"
-        />
-        <PropertyCard
-          class="w-full h-auto sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 p-4"
-          :property="property"
-        />
-        <PropertyCard
-          class="w-full h-auto sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 p-4"
-          :property="property"
-        />
-        <PropertyCard
-          class="w-full h-auto sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 p-4"
-          :property="property"
-        />
-        <PropertyCard
-          class="w-full h-auto sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 p-4"
-          :property="property"
-        /> -->
         </div>
       </div>
     </div>
@@ -192,7 +172,6 @@
 
 <script>
 import Navbar from './components/Navbar'
-// import PropertyCard from "./components/PropertyCard";
 import SafeCard from './components/SafeCard'
 import CategorySvg from './components/svg/Category'
 import FieldSvg from './components/svg/Field'
@@ -208,7 +187,6 @@ export default {
   name: 'app',
   components: {
     Navbar,
-    // PropertyCard,
     'safe-card': SafeCard,
     'category-svg': CategorySvg,
     'field-svg': FieldSvg,
