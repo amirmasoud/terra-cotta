@@ -4,7 +4,7 @@
       <Navbar />
     </div>
     <div class="">
-      <div class="absolute w-64 p-2 bg-gray-900 hidden overflow-scroll h-(screen-16) lg:block">
+      <div v-if="isOpen" class="absolute p-2 bg-gray-900 hidden overflow-scroll h-(screen-16) lg:block animate w-64">
         <span class="block uppercase tracking-wide text-gray-500 text-xs font-bold"> Settings</span>
         <div class="mt-2 block">
           <a
@@ -131,15 +131,16 @@
           </div>
         </div>
       </div>
-      <div class="ml-64 h-(screen-16) overflow-scroll">
+      <!-- :class="{ 'sm:ml-64': isOpen }" -->
+      <div class="h-(screen-16) overflow-scroll ml-0">
         <div class="flex flex-wrap py-8 max-w-screen-lg mx-auto">
-          <empty-svg class="p-56 -mt-48" />
-          <div class="w-full -mt-48">
+          <empty-svg class="-mt-64 p-8 sm:p-56 sm:-mt-48" />
+          <div class="w-full -mt-64 sm:-mt-48">
             <p class="text-center uppercase font-medium">
               Ready to put your first key in the safe?
             </p>
           </div>
-          <div class="w-1/4 -mt-32 mx-auto">
+          <div class="w-full px-2 sm:w-1/4 -mt-48 sm:-mt-32 mx-auto">
             <a
               class="flex uppercase tracking-wide text-green-500 text-xs font-bold mb-2 appearance-none border-none bg-green-700 text-green-200 rounded leading-tight"
               href="#"
@@ -209,7 +210,13 @@ export default {
     'empty-svg': EmptySvg,
     'plus-svg': PlusSvg,
   },
+  mounted() {
+    this.$root.$on('is-open', isOpen => {
+      this.isOpen = isOpen
+    })
+  },
   data: () => ({
+    isOpen: true,
     priceRangeSelect: {
       label: 'Price Range',
       options: [

@@ -1,50 +1,32 @@
 <template>
-  <header class="bg-white sm:flex sm:justify-between sm:items-center">
-    <div class="w-full bg-gray-900 sm:w-64 flex items-center justify-between px-4 py-3 sm:px-4 sm:py-3">
+  <header class="bg-white py-1 sm:flex sm:justify-between sm:items-center">
+    <div class="w-full bg-gray-900 flex items-center justify-between px-4 py-3 sm:px-4 sm:py-3 sm:w-64 hidden">
       <div>
         <h1 class="text-2xl font-bold text-white">
           <key-svg class="inline mr-2 text-indigo-400" />
-          <span class="text-indigo-400">terra</span>cotta
+          <span class="text-indigo-400 delay-300">terra</span>cotta
         </h1>
       </div>
-      <div class="sm:hidden">
-        <button
-          @click="isOpen = !isOpen"
-          type="button"
-          class="block text-gray-500 hover:text-white focus:text-white focus:outline-none"
-        >
-          <svg class="h-6 w-6 fill-current" viewBox="0 0 24 24">
-            <path
-              v-if="isOpen"
-              fill-rule="evenodd"
-              d="M18.278 16.864a1 1 0 0 1-1.414 1.414l-4.829-4.828-4.828 4.828a1 1 0 0 1-1.414-1.414l4.828-4.829-4.828-4.828a1 1 0 0 1 1.414-1.414l4.829 4.828 4.828-4.828a1 1 0 1 1 1.414 1.414l-4.828 4.829 4.828 4.828z"
-            />
-            <path
-              v-if="!isOpen"
-              fill-rule="evenodd"
-              d="M4 5h16a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2z"
-            />
-          </svg>
-        </button>
-      </div>
     </div>
-    <nav :class="isOpen ? 'block' : 'hidden'" class="sm:block sm:px-4 sm:py-1 w-full -ml-64 ml-64">
-      <div class="ml-64 flex">
-        <menu-svg class="text-gray-400 w-6 self-center" />
+    <nav class="sm:block ml-0 sm:px-4 sm:py-1 w-full">
+      <div class="flex items-center ml-1">
+        <button type="button" class="text-gray-400 hover:text-gray-600">
+          <menu-svg class="w-6" />
+        </button>
         <div
-          class="w-full relative max-w-screen-lg uppercase tracking-wide text-gray-500 text-xs font-bold appearance-none border-none text-gray-200 mx-auto px-2"
+          class="w-full ml-1 relative max-w-screen-lg uppercase tracking-wide text-gray-500 text-xs font-bold appearance-none border-none text-gray-200 mx-auto pr-2"
         >
           <input
             type="search"
-            class="ml-4 w-full py-2 pl-2 pr-10 bg-gray-200 text-gray-500 border border-transparent focus:bg-white focus:border-gray-300 tracking-wide text-xs font-bold rounded"
+            class="w-full py-2 pl-2 pr-6 bg-gray-200 text-gray-500 border border-transparent focus:bg-white focus:border-gray-300 tracking-wide text-xs font-bold rounded"
             placeholder="SEARCH"
           />
-          <button class="absolute right-0 -mt-1 -mr-1 p-2">
+          <button class="absolute right-0 -mt-1 mr-1 p-2">
             <search-svg class="text-gray-400" />
           </button>
         </div>
-        <div class="px-2 pt-2 pb-4 sm:flex sm:p-0">
-          <AccountDropdown class="hidden sm:block sm:ml-6" />
+        <div class="mr-1">
+          <AccountDropdown class="" />
         </div>
         <!-- <div class="px-4 py-5 border-t border-gray-800 sm:hidden">
           <div class="flex items-center">
@@ -81,7 +63,7 @@ export default {
   },
   data() {
     return {
-      isOpen: false,
+      isOpen: true,
     }
   },
 }
