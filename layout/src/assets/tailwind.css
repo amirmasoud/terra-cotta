@@ -1,11 +1,15 @@
 @tailwind base;
 @tailwind components;
 .h-\(screen-16\) {
-    height: calc(100vh - 3.5rem) !important;
+  height: calc(100vh - 3.5rem) !important;
 }
 
 .heroicon-ui {
-    @apply fill-current;
+  @apply fill-current;
+}
+
+.animate {
+  @apply transition-all duration-300 ease-linear;
 }
 
 @tailwind utilities;

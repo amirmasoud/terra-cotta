@@ -7,23 +7,6 @@
       <div
         class="absolute w-64 p-2 bg-gray-900 hidden overflow-scroll h-(screen-16) lg:block"
       >
-        <div class="mt-2 mb-6 block">
-          <div
-            class="flex uppercase tracking-wide text-gray-500 text-xs font-bold appearance-none w-full border-none bg-gray-700 text-gray-200 rounded shadow"
-          >
-            <input
-              type="search"
-              class="w-full hover:shadow-inner focus:bg-gray-900 transition-all duration-300 ease-linear rounded m-1 p-2 bg-gray-800 shadow tracking-wide text-gray-500 text-xs font-bold"
-              placeholder="SEARCH"
-            />
-            <button
-              class="bg-gray-800 hover:bg-gray-900 hover:shadow-inner transition-all duration-300 ease-linear rounded mt-1 mb-1 mr-1 p-2 shadow"
-            >
-              <search-svg class="text-gray-300" />
-            </button>
-          </div>
-        </div>
-
         <span
           class="block uppercase tracking-wide text-gray-500 text-xs font-bold"
         >
@@ -240,7 +223,7 @@
 
 <script>
 import Navbar from "./components/Navbar";
-import PropertyCard from "./components/PropertyCard";
+// import PropertyCard from "./components/PropertyCard";
 import SafeCard from "./components/SafeCard";
 import CategorySvg from "./components/svg/Category";
 import FieldSvg from "./components/svg/Field";
@@ -250,14 +233,13 @@ import SafeSvg from "./components/svg/Safe";
 import TagSvg from "./components/svg/Tag";
 import TypeSvg from "./components/svg/Type";
 import UserSvg from "./components/svg/User";
-import SearchSvg from "./components/svg/Search";
 import EmptySvg from "./components/svg/Empty";
 import PlusSvg from "./components/svg/Plus";
 export default {
   name: "app",
   components: {
     Navbar,
-    PropertyCard,
+    // PropertyCard,
     "safe-card": SafeCard,
     "category-svg": CategorySvg,
     "field-svg": FieldSvg,
@@ -267,7 +249,6 @@ export default {
     "tag-svg": TagSvg,
     "type-svg": TypeSvg,
     "user-svg": UserSvg,
-    "search-svg": SearchSvg,
     "empty-svg": EmptySvg,
     "plus-svg": PlusSvg,
   },
