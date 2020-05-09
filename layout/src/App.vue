@@ -6,16 +6,14 @@
     <div class="">
       <button
         v-if="isOpen"
-        @click="
-          isOpen = false
-          $root.$emit('close-menu')
-        "
+        @click="closeMenu"
         tabindex="-1"
-        class="fixed inset-0 h-full w-full bg-black opacity-50 cursor-default"
+        class="fixed inset-0 w-full bg-black opacity-50 cursor-default"
       ></button>
       <div
-        class="transform animate absolute p-2 bg-gray-900 overflow-scroll h-(screen-16) lg:block w-64"
+        class="transform fixed mt-13 md:translate-x-0 animate px-2 pt-2 bg-gray-900 overflow-scroll h-(screen-12) lg:block w-64"
         :class="[isOpen ? 'translate-x-0' : '-translate-x-64']"
+        id="menu"
       >
         <span class="block uppercase tracking-wide text-gray-500 text-xs font-bold"> Settings</span>
         <div class="mt-2 block">
@@ -107,7 +105,7 @@
             </div>
           </div>
         </div>
-        <div class="mt-6 block">
+        <div class="my-6 block">
           <span class="block uppercase tracking-wide text-gray-500 text-xs font-bold">Categories</span>
           <div class="">
             <div>
@@ -144,7 +142,7 @@
         </div>
       </div>
       <!-- :class="{ 'sm:ml-64': isOpen }" -->
-      <div class="h-(screen-16) overflow-scroll ml-0">
+      <div class="overflow-scroll ml-0 md:ml-64">
         <div class="flex flex-wrap py-8 max-w-screen-lg mx-auto">
           <empty-svg class="h-64 mt-8" />
           <div class="w-full mt-8">
@@ -203,7 +201,20 @@ export default {
   created() {
     this.$root.$on('menu-is-open', isOpen => {
       this.isOpen = isOpen
+      if (isOpen) {
+        document.body.style.overflow = 'hidden'
+        document.querySelector('#menu').style.overflow = 'scroll'
+      } else {
+        document.body.style.overflow = 'auto'
+      }
     })
+  },
+  methods: {
+    closeMenu() {
+      this.isOpen = false
+      this.$root.$emit('close-menu')
+      document.body.style.overflow = 'auto'
+    },
   },
   data: () => ({
     isOpen: false,
@@ -262,6 +273,146 @@ export default {
         tag2: 'tag 2',
         name: 'Server #2',
         fields: [{ label: 'password', value: '****', type: 'password' }],
+      },
+      {
+        category: 'server',
+        tag1: 'tag 1',
+        tag2: 'tag 2',
+        name: 'Server #1',
+        fields: [
+          { label: 'username', value: 'root', type: 'text' },
+          { label: 'password', value: '****', type: 'password' },
+        ],
+      },
+      {
+        category: 'server',
+        tag1: 'tag 1',
+        tag2: 'tag 2',
+        name: 'Server #1',
+        fields: [
+          { label: 'username', value: 'root', type: 'text' },
+          { label: 'password', value: '****', type: 'password' },
+        ],
+      },
+      {
+        category: 'server',
+        tag1: 'tag 1',
+        tag2: 'tag 2',
+        name: 'Server #1',
+        fields: [
+          { label: 'username', value: 'root', type: 'text' },
+          { label: 'password', value: '****', type: 'password' },
+        ],
+      },
+      {
+        category: 'server',
+        tag1: 'tag 1',
+        tag2: 'tag 2',
+        name: 'Server #1',
+        fields: [
+          { label: 'username', value: 'root', type: 'text' },
+          { label: 'password', value: '****', type: 'password' },
+        ],
+      },
+      {
+        category: 'server',
+        tag1: 'tag 1',
+        tag2: 'tag 2',
+        name: 'Server #1',
+        fields: [
+          { label: 'username', value: 'root', type: 'text' },
+          { label: 'password', value: '****', type: 'password' },
+        ],
+      },
+      {
+        category: 'server',
+        tag1: 'tag 1',
+        tag2: 'tag 2',
+        name: 'Server #1',
+        fields: [
+          { label: 'username', value: 'root', type: 'text' },
+          { label: 'password', value: '****', type: 'password' },
+        ],
+      },
+      {
+        category: 'server',
+        tag1: 'tag 1',
+        tag2: 'tag 2',
+        name: 'Server #1',
+        fields: [
+          { label: 'username', value: 'root', type: 'text' },
+          { label: 'password', value: '****', type: 'password' },
+        ],
+      },
+      {
+        category: 'server',
+        tag1: 'tag 1',
+        tag2: 'tag 2',
+        name: 'Server #1',
+        fields: [
+          { label: 'username', value: 'root', type: 'text' },
+          { label: 'password', value: '****', type: 'password' },
+        ],
+      },
+      {
+        category: 'server',
+        tag1: 'tag 1',
+        tag2: 'tag 2',
+        name: 'Server #1',
+        fields: [
+          { label: 'username', value: 'root', type: 'text' },
+          { label: 'password', value: '****', type: 'password' },
+        ],
+      },
+      {
+        category: 'server',
+        tag1: 'tag 1',
+        tag2: 'tag 2',
+        name: 'Server #1',
+        fields: [
+          { label: 'username', value: 'root', type: 'text' },
+          { label: 'password', value: '****', type: 'password' },
+        ],
+      },
+      {
+        category: 'server',
+        tag1: 'tag 1',
+        tag2: 'tag 2',
+        name: 'Server #1',
+        fields: [
+          { label: 'username', value: 'root', type: 'text' },
+          { label: 'password', value: '****', type: 'password' },
+        ],
+      },
+      {
+        category: 'server',
+        tag1: 'tag 1',
+        tag2: 'tag 2',
+        name: 'Server #1',
+        fields: [
+          { label: 'username', value: 'root', type: 'text' },
+          { label: 'password', value: '****', type: 'password' },
+        ],
+      },
+      {
+        category: 'server',
+        tag1: 'tag 1',
+        tag2: 'tag 2',
+        name: 'Server #1',
+        fields: [
+          { label: 'username', value: 'root', type: 'text' },
+          { label: 'password', value: '****', type: 'password' },
+        ],
+      },
+      {
+        category: 'server',
+        tag1: 'tag 1',
+        tag2: 'tag 2',
+        name: 'Server #1',
+        fields: [
+          { label: 'username', value: 'root', type: 'text' },
+          { label: 'password', value: '****', type: 'password' },
+        ],
       },
       {
         category: 'server',

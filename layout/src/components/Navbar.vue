@@ -1,6 +1,6 @@
 <template>
-  <header class="bg-white sm:flex sm:justify-between sm:items-center border-b border-gray-300">
-    <div class="w-full bg-gray-900 flex items-center justify-between px-4 py-3 sm:px-4 sm:py-3 sm:w-64 hidden">
+  <header class="fixed w-full bg-white sm:flex sm:justify-between sm:items-center border-b border-gray-300">
+    <div class="hidden md:block md:w-64 md:px-2 md:py-2 w-full bg-gray-900">
       <div>
         <h1 class="text-2xl font-bold text-white">
           <key-svg class="inline mr-2 text-indigo-400" />
@@ -8,9 +8,9 @@
         </h1>
       </div>
     </div>
-    <nav class="py-2 w-full">
-      <div class="flex items-center ml-1">
-        <button type="button" @click="toggle" class="text-gray-400 sm:px-2 hover:text-gray-600">
+    <nav class="py-2 w-full md:-ml-64">
+      <div class="flex items-center ml-2 md:ml-64">
+        <button type="button" @click="toggle" class="block md:hidden text-gray-400 sm:px-2 hover:text-gray-600">
           <menu-svg v-if="!isOpen" class="w-6" />
           <close-svg v-else class="w-6 p-1 relative z-10 bg-red-700 text-white rounded-full" />
         </button>
@@ -19,14 +19,14 @@
         >
           <input
             type="search"
-            class="w-full ml-1 py-2 pl-2 pr-8 bg-gray-200 text-gray-500 border border-transparent focus:bg-white focus:border-gray-300 tracking-wide text-xs font-bold rounded outline-none focus:shadow-outline"
+            class="w-full ml-1 md:ml-2 py-2 pl-2 pr-8 bg-gray-200 text-gray-500 border border-transparent focus:bg-white focus:border-gray-300 tracking-wide text-xs font-bold rounded outline-none focus:shadow-outline"
             placeholder="SEARCH"
           />
           <button class="absolute right-0 top-0 mr-1 px-2 pb-2 pt-1 outline-none focus:shadow-outline">
             <search-svg class="text-gray-400" />
           </button>
         </div>
-        <div class="mr-1">
+        <div class="mr-2">
           <AccountDropdown class="sm:px-2" />
         </div>
         <!-- <div class="px-4 py-5 border-t border-gray-800 sm:hidden">
