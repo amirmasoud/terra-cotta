@@ -1,5 +1,5 @@
 <template>
-  <header class="bg-white sm:flex sm:justify-between sm:items-center shadow">
+  <header class="bg-white sm:flex sm:justify-between sm:items-center">
     <div class="w-full bg-gray-900 sm:w-64 flex items-center justify-between px-4 py-3 sm:px-4 sm:py-3">
       <div>
         <h1 class="text-2xl font-bold text-white">
@@ -28,25 +28,24 @@
         </button>
       </div>
     </div>
-    <nav :class="isOpen ? 'block' : 'hidden'" class="sm:block sm:px-4 sm:py-1 w-full -ml-64">
-      <div class="">
+    <nav :class="isOpen ? 'block' : 'hidden'" class="sm:block sm:px-4 sm:py-1 w-full -ml-64 ml-64">
+      <div class="ml-64 flex">
+        <menu-svg class="text-gray-400 w-6 self-center" />
         <div
-          class="ml-64 uppercase tracking-wide text-gray-500 text-xs font-bold appearance-none border-none text-gray-200"
+          class="w-full relative max-w-screen-lg uppercase tracking-wide text-gray-500 text-xs font-bold appearance-none border-none text-gray-200 mx-auto px-2"
         >
-          <div class="flex flex-wrap relative max-w-screen-lg mx-auto px-2">
-            <input
-              type="search"
-              class="w-full py-2 pl-2 pr-10 bg-gray-200 text-gray-500 border border-transparent focus:bg-white focus:border-gray-300 tracking-wide text-xs font-bold rounded"
-              placeholder="SEARCH"
-            />
-            <button class="absolute right-0 -mt-1 mr-3 p-2">
-              <search-svg class="text-gray-400" />
-            </button>
-          </div>
+          <input
+            type="search"
+            class="ml-4 w-full py-2 pl-2 pr-10 bg-gray-200 text-gray-500 border border-transparent focus:bg-white focus:border-gray-300 tracking-wide text-xs font-bold rounded"
+            placeholder="SEARCH"
+          />
+          <button class="absolute right-0 -mt-1 -mr-1 p-2">
+            <search-svg class="text-gray-400" />
+          </button>
         </div>
-        <!-- <div class="px-2 pt-2 pb-4 sm:flex sm:p-0">
+        <div class="px-2 pt-2 pb-4 sm:flex sm:p-0">
           <AccountDropdown class="hidden sm:block sm:ml-6" />
-        </div> -->
+        </div>
         <!-- <div class="px-4 py-5 border-t border-gray-800 sm:hidden">
           <div class="flex items-center">
             <img
@@ -71,12 +70,14 @@
 import AccountDropdown from './AccountDropdown'
 import KeySvg from './svg/Key'
 import SearchSvg from './svg/Search'
+import MenuSvg from './svg/Menu'
 
 export default {
   components: {
     AccountDropdown,
     'key-svg': KeySvg,
     'search-svg': SearchSvg,
+    'menu-svg': MenuSvg,
   },
   data() {
     return {
