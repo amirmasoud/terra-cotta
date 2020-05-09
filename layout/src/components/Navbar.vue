@@ -1,32 +1,33 @@
 <template>
-  <header class="bg-white py-1 sm:flex sm:justify-between sm:items-center">
+  <header class="bg-white sm:flex sm:justify-between sm:items-center border-b border-gray-300">
     <div class="w-full bg-gray-900 flex items-center justify-between px-4 py-3 sm:px-4 sm:py-3 sm:w-64 hidden">
       <div>
         <h1 class="text-2xl font-bold text-white">
           <key-svg class="inline mr-2 text-indigo-400" />
-          <span class="text-indigo-400 delay-300">terra</span>cotta
+          <span class="text-indigo-400">terra</span>cotta
         </h1>
       </div>
     </div>
-    <nav class="sm:block ml-0 sm:px-4 sm:py-1 w-full">
+    <nav class="py-2 w-full">
       <div class="flex items-center ml-1">
-        <button type="button" class="text-gray-400 hover:text-gray-600">
-          <menu-svg class="w-6" />
+        <button type="button" @click="toggle" class="text-gray-400 sm:px-2 hover:text-gray-600">
+          <menu-svg v-if="!isOpen" class="w-6" />
+          <close-svg v-else class="w-6 p-1 relative z-10 bg-red-700 text-white rounded-full" />
         </button>
         <div
-          class="w-full ml-1 relative max-w-screen-lg uppercase tracking-wide text-gray-500 text-xs font-bold appearance-none border-none text-gray-200 mx-auto pr-2"
+          class="w-full relative max-w-screen-lg uppercase tracking-wide text-gray-500 text-xs font-bold appearance-none border-none text-gray-200 mx-auto pr-2"
         >
           <input
             type="search"
-            class="w-full py-2 pl-2 pr-6 bg-gray-200 text-gray-500 border border-transparent focus:bg-white focus:border-gray-300 tracking-wide text-xs font-bold rounded"
+            class="w-full ml-1 py-2 pl-2 pr-8 bg-gray-200 text-gray-500 border border-transparent focus:bg-white focus:border-gray-300 tracking-wide text-xs font-bold rounded outline-none focus:shadow-outline"
             placeholder="SEARCH"
           />
-          <button class="absolute right-0 -mt-1 mr-1 p-2">
+          <button class="absolute right-0 top-0 mr-1 px-2 pb-2 pt-1 outline-none focus:shadow-outline">
             <search-svg class="text-gray-400" />
           </button>
         </div>
         <div class="mr-1">
-          <AccountDropdown class="" />
+          <AccountDropdown class="sm:px-2" />
         </div>
         <!-- <div class="px-4 py-5 border-t border-gray-800 sm:hidden">
           <div class="flex items-center">
@@ -53,6 +54,7 @@ import AccountDropdown from './AccountDropdown'
 import KeySvg from './svg/Key'
 import SearchSvg from './svg/Search'
 import MenuSvg from './svg/Menu'
+import CloseSvg from './svg/Close'
 
 export default {
   components: {
@@ -60,11 +62,23 @@ export default {
     'key-svg': KeySvg,
     'search-svg': SearchSvg,
     'menu-svg': MenuSvg,
+    'close-svg': CloseSvg,
   },
   data() {
     return {
-      isOpen: true,
+      isOpen: false,
     }
+  },
+  created() {
+    this.$root.$on('close-menu', () => {
+      this.isOpen = false
+    })
+  },
+  methods: {
+    toggle() {
+      this.isOpen = !this.isOpen
+      this.$root.$emit('menu-is-open', this.isOpen)
+    },
   },
 }
 </script>

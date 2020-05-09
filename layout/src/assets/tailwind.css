@@ -1,7 +1,11 @@
 @tailwind base;
 @tailwind components;
 .h-\(screen-16\) {
-  height: calc(100vh - 3.5rem) !important;
+  height: calc(100vh - 3.25rem) !important;
+}
+
+.w-\(screen-2\) {
+  width: calc(100vw - 0.5rem);
 }
 
 .heroicon-ui {
