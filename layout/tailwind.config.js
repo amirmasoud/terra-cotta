@@ -1,6 +1,9 @@
 module.exports = {
   theme: {
     extend: {
+      colors: {
+        'semi-75': 'rgba(0, 0, 0, 0.75)',
+      },
       spacing: {
         '1/2': '50%',
         '1/3': '33.333333%',

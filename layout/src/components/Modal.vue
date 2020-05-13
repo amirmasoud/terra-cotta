@@ -1,0 +1,155 @@
+<template>
+  <Transition name="fade">
+    <div
+      v-if="showing"
+      class="fixed inset-0 w-full max-h-screen flex items-center justify-center overflow-scroll px-2 shadow-lg bg-semi-75"
+      @click.self="close"
+    >
+      <div class="relative w-full max-w-2xl bg-white shadow-lg rounded-lg p-2">
+        <button
+          aria-label="close"
+          class="absolute bg-white w-8 h-8 pb-1 text-self-center rounded-full top-0 right-0 text-xl text-gray-500 -mt-10"
+          @click.prevent="close"
+        >
+          ×
+        </button>
+        <div class="flex flex-wrap mb-2">
+          <div class="flex flex-wrap w-full pr-1 mb-2">
+            <div class="flex flex-wrap w-full mt-4">
+              <div class="w-full mb-4">
+                <label class="block">
+                  <span class="text-gray-700">Name</span>
+                  <input type="text" class="form-input w-full input input-indigo" placeholder="Name" />
+                </label>
+              </div>
+              <div class="w-full mb-4">
+                <label class="block">
+                  <span class="text-gray-700">Categories</span>
+                  <v-select multiple class="w-full" :options="['foo', 'bar']" placeholder="Categories"></v-select>
+                </label>
+              </div>
+              <div class="w-full mb-4">
+                <label class="block">
+                  <span class="text-gray-700">Tags</span>
+                  <v-select multiple class="w-full" :options="['foo', 'bar']" placeholder="Tags"></v-select>
+                </label>
+              </div>
+            </div>
+            <div class="flex flex-wrap w-full mt-4">
+              <div class="w-2/3 pr-1 mb-2">
+                <input class="form-input w-full input input-indigo" type="text" placeholder="Label" />
+              </div>
+              <div class="flex flex-wrap w-1/3 px-1 mb-2">
+                <select class="form-select w-(full-6) block px-1 pb-1">
+                  <option>Text</option>
+                  <option>Password</option>
+                  <option>Textarea</option>
+                </select>
+                <button class="self-center text-gray-600 hover:text-red-600"><trash-svg class="w-6 h-6 pl-1" /></button>
+              </div>
+              <div class="w-full mb-2">
+                <input class="form-input w-full input input-indigo" type="text" placeholder="Value" />
+              </div>
+            </div>
+            <div class="flex flex-wrap w-full mt-4">
+              <div class="w-2/3 pr-1 mb-2">
+                <input class="form-input w-full input input-indigo" type="text" placeholder="Label" />
+              </div>
+              <div class="flex flex-wrap w-1/3 px-1 mb-2">
+                <select class="form-select w-(full-6) block px-1 pb-1">
+                  <option>Text</option>
+                  <option>Password</option>
+                  <option>Textarea</option>
+                </select>
+                <button class="self-center text-gray-600 hover:text-red-600"><trash-svg class="w-6 h-6 pl-1" /></button>
+              </div>
+              <div class="w-full mb-2">
+                <input class="form-input w-full input input-indigo" type="text" placeholder="Secret" />
+              </div>
+            </div>
+            <div class="flex flex-wrap w-full mt-4">
+              <div class="w-2/3 pr-1 mb-2">
+                <input class="form-input w-full input input-indigo" type="text" placeholder="Label" />
+              </div>
+              <div class="flex flex-wrap w-1/3 px-1 mb-2">
+                <select class="form-select w-(full-6) block px-1 pb-1">
+                  <option>Text</option>
+                  <option>Password</option>
+                  <option>Textarea</option>
+                </select>
+                <button class="self-center text-gray-600 hover:text-red-600"><trash-svg class="w-6 h-6 pl-1" /></button>
+              </div>
+              <div class="w-full mb-2">
+                <textarea class="form-textarea w-full input input-indigo" placeholder="Place notes..."></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="w-full flex flex-wrap mb-4">
+            <button
+              class="flex uppercase tracking-wide text-green-500 text-xs font-bold mb-2 appearance-none border-none bg-green-700 text-green-200 rounded leading-tight"
+            >
+              <div class="bg-green-800 p-0 rounded-tl rounded-bl shadow-lg ">
+                <plus-svg class="mt-1 text-green-200" />
+              </div>
+              <div class="m-2 text-green-100">New field</div>
+            </button>
+          </div>
+          <div class="w-full flex flex-wrap">
+            <button
+              class="uppercase tracking-wide text-indigo-500 text-xs font-bold appearance-none border-none bg-indigo-700 rounded leading-tight"
+            >
+              <div class="px-2 pt-1 pb-2 mt-1 text-indigo-100">Save</div>
+            </button>
+          </div>
+        </div>
+        <slot />
+      </div>
+    </div>
+  </Transition>
+</template>
+
+<script>
+import vSelect from 'vue-select'
+import TrashSvg from './svg/Trash'
+import PlusSvg from './svg/Plus'
+import 'vue-select/dist/vue-select.css'
+
+export default {
+  components: {
+    'v-select': vSelect,
+    'trash-svg': TrashSvg,
+    'plus-svg': PlusSvg,
+  },
+  props: {
+    showing: {
+      required: true,
+      type: Boolean,
+    },
+  },
+  watch: {
+    showing(value) {
+      if (value) {
+        return document.querySelector('body').classList.add('overflow-hidden')
+      }
+
+      document.querySelector('body').classList.remove('overflow-hidden')
+    },
+  },
+  methods: {
+    close() {
+      this.$emit('close')
+    },
+  },
+}
+</script>
+
+<style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: all 0.4s;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>

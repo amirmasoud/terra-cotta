@@ -1,7 +1,7 @@
 <template>
   <div id="app" class="antialiased text-gray-900">
     <div class="bg-gray-200">
-      <Navbar menu.sync="isOpen" />
+      <navbar menu.sync="isOpen" />
     </div>
     <div class="">
       <button
@@ -143,11 +143,8 @@
       </div>
       <!-- :class="{ 'sm:ml-64': isOpen }" -->
       <div class="overflow-scroll ml-0 md:ml-64">
-        <div class="flex flex-wrap h-40 pt-13 bg-gray-300 border border-gray-400">
-          <h1 class="flex w-full items-center py-2 px-2 text-xl font-semibold text-gray-600">
-            <user-svg class="text-gray-600 mr-2" /> Users
-          </h1>
-          <div class="flex w-full flex-wrap justify-between sm:justify-start items-center px-2">
+        <div class="flex flex-wrap h-32 pt-13 bg-gray-300 border border-gray-400">
+          <div class="flex w-full flex-wrap justify-between items-center px-2 max-w-screen-lg mx-auto">
             <button
               class="flex uppercase tracking-wide text-green-500 text-xs font-bold appearance-none border-none bg-green-700 text-green-200 rounded leading-tight"
               href="#"
@@ -155,7 +152,7 @@
               <div class="bg-green-800 p-1 rounded-tl rounded-bl shadow-lg ">
                 <plus-svg class="text-green-200" />
               </div>
-              <div class="p-2 mt-1 text-green-100">New</div>
+              <div class="p-2 mt-1 text-green-100">New user</div>
             </button>
             <input
               type="search"
@@ -167,14 +164,13 @@
         <div class="flex flex-wrap py-8 max-w-screen-lg mx-auto">
           <empty-svg class="h-64 mt-8" />
           <div class="w-full mt-8">
-            <p class="text-center uppercase font-medium">
+            <p class="text-center uppercase font-semibold">
               Ready to put your first key in the safe?
             </p>
           </div>
           <div class="w-full px-2 sm:w-1/4 mt-4 mx-auto">
             <button
               class="flex mx-auto uppercase tracking-wide text-green-500 text-xs font-bold mb-2 appearance-none border-none bg-green-700 text-green-200 rounded leading-tight"
-              href="#"
             >
               <div class="bg-green-800 p-2 rounded-tl rounded-bl shadow-lg ">
                 <plus-svg class="text-green-200" />
@@ -182,17 +178,29 @@
               <div class="p-2 mt-1 text-green-100">START HERE</div>
             </button>
           </div>
-          <h1 class="w-full p-2 font-semibold uppercase">Safes</h1>
-          <safe-card v-for="(safe, index) in safes" :key="index" class="w-full p-2" :safe="safe" />
+          <div class="w-full flex flex-wrap items-center justify-between">
+            <h1 class="p-2 font-semibold uppercase">Safes</h1>
+            <p class="px-2 text-gray-500 text-sm">12 results</p>
+          </div>
+          <safe-card
+            v-for="(safe, index) in safes"
+            :key="index"
+            @click.prevent="modalShowing = true"
+            @open="modalShowing = true"
+            class="w-full p-2"
+            :safe="safe"
+          />
         </div>
       </div>
     </div>
+    <modal :showing="modalShowing" @close="modalShowing = false"></modal>
   </div>
 </template>
 
 <script>
 import Navbar from './components/Navbar'
 import SafeCard from './components/SafeCard'
+import Modal from './components/Modal'
 import CategorySvg from './components/svg/Category'
 import FieldSvg from './components/svg/Field'
 import GroupSvg from './components/svg/Group'
@@ -206,7 +214,8 @@ import PlusSvg from './components/svg/Plus'
 export default {
   name: 'app',
   components: {
-    Navbar,
+    navbar: Navbar,
+    modal: Modal,
     'safe-card': SafeCard,
     'category-svg': CategorySvg,
     'field-svg': FieldSvg,
@@ -239,6 +248,7 @@ export default {
     },
   },
   data: () => ({
+    modalShowing: false,
     isOpen: false,
     priceRangeSelect: {
       label: 'Price Range',
