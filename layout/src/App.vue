@@ -143,6 +143,27 @@
       </div>
       <!-- :class="{ 'sm:ml-64': isOpen }" -->
       <div class="overflow-scroll ml-0 md:ml-64">
+        <div class="h-40 pt-13 bg-gray-300 border border-gray-400">
+          <h1 class="flex items-center py-2 px-2 text-xl font-semibold text-gray-600">
+            <user-svg class="text-gray-600 mr-2" /> Users
+          </h1>
+          <div class="flex flex-wrap justify-between sm:justify-start items-center px-2">
+            <button
+              class="flex uppercase tracking-wide text-green-500 text-xs font-bold appearance-none border-none bg-green-700 text-green-200 rounded leading-tight"
+              href="#"
+            >
+              <div class="bg-green-800 p-1 rounded-tl rounded-bl shadow-lg ">
+                <plus-svg class="text-green-200" />
+              </div>
+              <div class="p-2 mt-1 text-green-100">New</div>
+            </button>
+            <input
+              type="search"
+              class="bg-gray-200 p-2 rounded border border-gray-400 text-sm tracking-wide font-semibold shadow-inner sm:ml-4"
+              placeholder="SEARCH USERS"
+            />
+          </div>
+        </div>
         <div class="flex flex-wrap py-8 max-w-screen-lg mx-auto">
           <empty-svg class="h-64 mt-8" />
           <div class="w-full mt-8">
@@ -151,14 +172,15 @@
             </p>
           </div>
           <div class="w-full px-2 sm:w-1/4 mt-4 mx-auto">
-            <a
-              class="flex uppercase tracking-wide text-green-500 text-xs font-bold mb-2 appearance-none border-none bg-green-700 text-green-200 rounded leading-tight"
+            <button
+              class="flex mx-auto uppercase tracking-wide text-green-500 text-xs font-bold mb-2 appearance-none border-none bg-green-700 text-green-200 rounded leading-tight"
               href="#"
-              ><div class="bg-green-800 p-2 rounded-tl rounded-bl shadow-lg ">
+            >
+              <div class="bg-green-800 p-2 rounded-tl rounded-bl shadow-lg ">
                 <plus-svg class="text-green-200" />
               </div>
-              <div class="p-2 mt-1 text-green-100">START HERE</div></a
-            >
+              <div class="p-2 mt-1 text-green-100">START HERE</div>
+            </button>
           </div>
           <h1 class="w-full p-2 font-semibold uppercase">Safes</h1>
           <safe-card v-for="(safe, index) in safes" :key="index" class="w-full p-2" :safe="safe" />
