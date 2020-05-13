@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "serve": "vue-cli-service serve --port 3000",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
@@ -12,7 +12,8 @@
     "autoprefixer": "^9.7.6",
     "core-js": "^2.6.11",
     "tailwindcss": "^1.2.0",
-    "vue": "^2.6.11"
+    "vue": "^2.6.11",
+    "vue-select": "^3.10.3"
   },
   "devDependencies": {
     "@tailwindcss/custom-forms": "^0.2.1",

@@ -1,34 +1,21 @@
 <template>
   <div id="app" class="antialiased text-gray-900">
     <div class="bg-gray-200">
-      <Navbar />
+      <navbar menu.sync="isOpen" />
     </div>
     <div class="">
+      <button
+        v-if="isOpen"
+        @click="closeMenu"
+        tabindex="-1"
+        class="fixed inset-0 w-full bg-black opacity-50 cursor-default"
+      ></button>
       <div
-        class="absolute w-64 p-2 bg-gray-900 hidden overflow-scroll h-(screen-16) lg:block"
+        class="transform fixed mt-13 md:translate-x-0 animate px-2 pt-2 bg-gray-900 overflow-scroll h-(screen-12) lg:block w-64"
+        :class="[isOpen ? 'translate-x-0' : '-translate-x-64']"
+        id="menu"
       >
-        <div class="mt-2 mb-6 block">
-          <div
-            class="flex uppercase tracking-wide text-gray-500 text-xs font-bold appearance-none w-full border-none bg-gray-700 text-gray-200 rounded shadow"
-          >
-            <input
-              type="search"
-              class="w-full hover:shadow-inner focus:bg-gray-900 transition-all duration-300 ease-linear rounded m-1 p-2 bg-gray-800 shadow tracking-wide text-gray-500 text-xs font-bold"
-              placeholder="SEARCH"
-            />
-            <button
-              class="bg-gray-800 hover:bg-gray-900 hover:shadow-inner transition-all duration-300 ease-linear rounded mt-1 mb-1 mr-1 p-2 shadow"
-            >
-              <search-svg class="text-gray-300" />
-            </button>
-          </div>
-        </div>
-
-        <span
-          class="block uppercase tracking-wide text-gray-500 text-xs font-bold"
-        >
-          Settings</span
-        >
+        <span class="block uppercase tracking-wide text-gray-500 text-xs font-bold"> Settings</span>
         <div class="mt-2 block">
           <a
             class="flex uppercase tracking-wide text-gray-500 text-xs font-bold mb-2 appearance-none w-full border-none bg-gray-700 text-gray-200 rounded leading-tight"
@@ -96,193 +83,184 @@
           >
         </div>
         <div class="mt-6 block">
-          <span
-            class="block uppercase tracking-wide text-gray-500 text-xs font-bold"
-          >
-            Tags</span
-          >
+          <span class="block uppercase tracking-wide text-gray-500 text-xs font-bold"> Tags</span>
           <div class="mt-2">
             <div>
               <label class="inline-flex items-center">
-                <input
-                  type="checkbox"
-                  class="form-checkbox bg-indigo-800 text-indigo-500"
-                  checked
-                />
+                <input type="checkbox" class="form-checkbox bg-indigo-800 text-indigo-500" checked />
                 <span class="text-gray-200 ml-2">All</span>
               </label>
             </div>
             <div>
               <label class="inline-flex items-center mt-2">
-                <input
-                  type="checkbox"
-                  class="form-checkbox bg-gray-700 border-none text-indigo-500"
-                />
+                <input type="checkbox" class="form-checkbox bg-gray-700 border-none text-indigo-500" />
                 <span class="text-gray-200 ml-2">Important</span>
               </label>
             </div>
             <div>
               <label class="inline-flex items-center mt-2">
-                <input
-                  type="checkbox"
-                  class="form-checkbox bg-gray-700 border-none text-indigo-500"
-                />
+                <input type="checkbox" class="form-checkbox bg-gray-700 border-none text-indigo-500" />
                 <span class="text-gray-200 ml-2">Work</span>
               </label>
             </div>
           </div>
         </div>
-        <div class="mt-6 block">
-          <span
-            class="block uppercase tracking-wide text-gray-500 text-xs font-bold"
-            >Categories</span
-          >
+        <div class="my-6 block">
+          <span class="block uppercase tracking-wide text-gray-500 text-xs font-bold">Categories</span>
           <div class="">
             <div>
               <label class="inline-flex items-center mt-2">
-                <input
-                  type="checkbox"
-                  class="form-checkbox bg-indigo-800 text-indigo-500"
-                  checked
-                />
+                <input type="checkbox" class="form-checkbox bg-indigo-800 text-indigo-500" checked />
                 <span class="text-gray-200 ml-2">All</span>
               </label>
             </div>
             <div>
               <label class="inline-flex items-center mt-2">
-                <input
-                  type="checkbox"
-                  class="form-checkbox bg-gray-700 border-none text-indigo-500"
-                />
+                <input type="checkbox" class="form-checkbox bg-gray-700 border-none text-indigo-500" />
                 <span class="text-gray-200 ml-2">Servers</span>
               </label>
             </div>
             <div>
               <label class="inline-flex items-center mt-2">
-                <input
-                  type="checkbox"
-                  class="form-checkbox bg-gray-700 border-none text-indigo-500"
-                />
+                <input type="checkbox" class="form-checkbox bg-gray-700 border-none text-indigo-500" />
                 <span class="text-gray-200 ml-2">Databases</span>
               </label>
             </div>
             <div>
               <label class="inline-flex items-center mt-2">
-                <input
-                  type="checkbox"
-                  class="form-checkbox bg-gray-700 border-none text-indigo-500"
-                />
+                <input type="checkbox" class="form-checkbox bg-gray-700 border-none text-indigo-500" />
                 <span class="text-gray-200 ml-2">Logins</span>
               </label>
             </div>
             <div>
               <label class="inline-flex items-center mt-2">
-                <input
-                  type="checkbox"
-                  class="form-checkbox bg-gray-700 border-none text-indigo-500"
-                />
+                <input type="checkbox" class="form-checkbox bg-gray-700 border-none text-indigo-500" />
                 <span class="text-gray-200 ml-2">Credit Cards</span>
               </label>
             </div>
           </div>
         </div>
       </div>
-      <div class="ml-64 h-(screen-16) overflow-scroll">
+      <!-- :class="{ 'sm:ml-64': isOpen }" -->
+      <div class="overflow-scroll ml-0 md:ml-64">
+        <div class="flex flex-wrap h-32 pt-13 bg-gray-300 border border-gray-400">
+          <div class="flex w-full flex-wrap justify-between items-center px-2 max-w-screen-lg mx-auto">
+            <button
+              class="flex uppercase tracking-wide text-green-500 text-xs font-bold appearance-none border-none bg-green-700 text-green-200 rounded leading-tight"
+              href="#"
+            >
+              <div class="bg-green-800 p-1 rounded-tl rounded-bl shadow-lg ">
+                <plus-svg class="text-green-200" />
+              </div>
+              <div class="p-2 mt-1 text-green-100">New user</div>
+            </button>
+            <input
+              type="search"
+              class="bg-gray-200 p-2 rounded border border-gray-400 text-sm tracking-wide font-semibold shadow-inner sm:ml-4"
+              placeholder="SEARCH USERS"
+            />
+          </div>
+        </div>
         <div class="flex flex-wrap py-8 max-w-screen-lg mx-auto">
-          <empty-svg class="p-56 -mt-48" />
-          <div class="w-full -mt-48">
-            <p class="text-center uppercase font-medium">
+          <empty-svg class="h-64 mt-8" />
+          <div class="w-full mt-8">
+            <p class="text-center uppercase font-semibold">
               Ready to put your first key in the safe?
             </p>
           </div>
-          <div class="w-1/4 -mt-32 mx-auto">
-            <a
-              class="flex uppercase tracking-wide text-green-500 text-xs font-bold mb-2 appearance-none border-none bg-green-700 text-green-200 rounded leading-tight"
-              href="#"
-              ><div class="bg-green-800 p-2 rounded-tl rounded-bl shadow-lg ">
+          <div class="w-full px-2 sm:w-1/4 mt-4 mx-auto">
+            <button
+              class="flex mx-auto uppercase tracking-wide text-green-500 text-xs font-bold mb-2 appearance-none border-none bg-green-700 text-green-200 rounded leading-tight"
+            >
+              <div class="bg-green-800 p-2 rounded-tl rounded-bl shadow-lg ">
                 <plus-svg class="text-green-200" />
               </div>
-              <div class="p-2 mt-1 text-green-100">Let's go!</div></a
-            >
+              <div class="p-2 mt-1 text-green-100">START HERE</div>
+            </button>
           </div>
-          <h1 class="w-full p-2 font-semibold uppercase">Safes</h1>
+          <div class="w-full flex flex-wrap items-center justify-between">
+            <h1 class="p-2 font-semibold uppercase">Safes</h1>
+            <p class="px-2 text-gray-500 text-sm">12 results</p>
+          </div>
           <safe-card
             v-for="(safe, index) in safes"
             :key="index"
+            @click.prevent="modalShowing = true"
+            @open="modalShowing = true"
             class="w-full p-2"
             :safe="safe"
           />
-          <!-- <PropertyCard
-          class="w-full h-auto sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 p-4"
-          :property="property"
-        />
-        <PropertyCard
-          class="w-full h-auto sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 p-4"
-          :property="property"
-        />
-        <PropertyCard
-          class="w-full h-auto sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 p-4"
-          :property="property"
-        />
-        <PropertyCard
-          class="w-full h-auto sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 p-4"
-          :property="property"
-        />
-        <PropertyCard
-          class="w-full h-auto sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 p-4"
-          :property="property"
-        /> -->
         </div>
       </div>
     </div>
+    <modal :showing="modalShowing" @close="modalShowing = false"></modal>
   </div>
 </template>
 
 <script>
-import Navbar from "./components/Navbar";
-import PropertyCard from "./components/PropertyCard";
-import SafeCard from "./components/SafeCard";
-import CategorySvg from "./components/svg/Category";
-import FieldSvg from "./components/svg/Field";
-import GroupSvg from "./components/svg/Group";
-import IconSvg from "./components/svg/Icon";
-import SafeSvg from "./components/svg/Safe";
-import TagSvg from "./components/svg/Tag";
-import TypeSvg from "./components/svg/Type";
-import UserSvg from "./components/svg/User";
-import SearchSvg from "./components/svg/Search";
-import EmptySvg from "./components/svg/Empty";
-import PlusSvg from "./components/svg/Plus";
+import Navbar from './components/Navbar'
+import SafeCard from './components/SafeCard'
+import Modal from './components/Modal'
+import CategorySvg from './components/svg/Category'
+import FieldSvg from './components/svg/Field'
+import GroupSvg from './components/svg/Group'
+import IconSvg from './components/svg/Icon'
+import SafeSvg from './components/svg/Safe'
+import TagSvg from './components/svg/Tag'
+import TypeSvg from './components/svg/Type'
+import UserSvg from './components/svg/User'
+import EmptySvg from './components/svg/Empty'
+import PlusSvg from './components/svg/Plus'
 export default {
-  name: "app",
+  name: 'app',
   components: {
-    Navbar,
-    PropertyCard,
-    "safe-card": SafeCard,
-    "category-svg": CategorySvg,
-    "field-svg": FieldSvg,
-    "group-svg": GroupSvg,
-    "icon-svg": IconSvg,
-    "safe-svg": SafeSvg,
-    "tag-svg": TagSvg,
-    "type-svg": TypeSvg,
-    "user-svg": UserSvg,
-    "search-svg": SearchSvg,
-    "empty-svg": EmptySvg,
-    "plus-svg": PlusSvg,
+    navbar: Navbar,
+    modal: Modal,
+    'safe-card': SafeCard,
+    'category-svg': CategorySvg,
+    'field-svg': FieldSvg,
+    'group-svg': GroupSvg,
+    'icon-svg': IconSvg,
+    'safe-svg': SafeSvg,
+    'tag-svg': TagSvg,
+    'type-svg': TypeSvg,
+    'user-svg': UserSvg,
+    // "search-svg": SearchSvg,
+    'empty-svg': EmptySvg,
+    'plus-svg': PlusSvg,
+  },
+  created() {
+    this.$root.$on('menu-is-open', isOpen => {
+      this.isOpen = isOpen
+      if (isOpen) {
+        document.body.style.overflow = 'hidden'
+        document.querySelector('#menu').style.overflow = 'scroll'
+      } else {
+        document.body.style.overflow = 'auto'
+      }
+    })
+  },
+  methods: {
+    closeMenu() {
+      this.isOpen = false
+      this.$root.$emit('close-menu')
+      document.body.style.overflow = 'auto'
+    },
   },
   data: () => ({
+    modalShowing: false,
+    isOpen: false,
     priceRangeSelect: {
-      label: "Price Range",
+      label: 'Price Range',
       options: [
-        { name: "Up to $500 /wk", value: 500 },
-        { name: "Up to $1000 /wk", value: 1000 },
-        { name: "Up to $2000 /wk", value: 2000 },
-        { name: "Up to $4000 /wk", value: 4000 },
+        { name: 'Up to $500 /wk', value: 500 },
+        { name: 'Up to $1000 /wk', value: 1000 },
+        { name: 'Up to $2000 /wk', value: 2000 },
+        { name: 'Up to $4000 /wk', value: 4000 },
       ],
     },
     roomSelect: {
-      label: "Room",
+      label: 'Room',
       options: [
         { name: 1, value: 1 },
         { name: 2, value: 2 },
@@ -291,7 +269,7 @@ export default {
       ],
     },
     bathroomSelect: {
-      label: "Bathroom",
+      label: 'Bathroom',
       options: [
         { name: 1, value: 1 },
         { name: 2, value: 2 },
@@ -300,77 +278,217 @@ export default {
       ],
     },
     property: {
-      imageUrl: "img/colorado.jpg",
-      imageAlt: "Colorado",
+      imageUrl: 'img/colorado.jpg',
+      imageAlt: 'Colorado',
       beds: 3,
       baths: 2,
-      title: "Modern home in city center",
-      priceCents: "190000",
-      formattedPrice: "$1,900.00",
+      title: 'Modern home in city center',
+      priceCents: '190000',
+      formattedPrice: '$1,900.00',
       reviewCount: 34,
       rating: 3,
     },
     safes: [
       {
-        category: "server",
-        tag1: "tag 1",
-        tag2: "tag 2",
-        name: "Server #1",
+        category: 'server',
+        tag1: 'tag 1',
+        tag2: 'tag 2',
+        name: 'Server #1',
         fields: [
-          { label: "username", value: "root", type: "text" },
-          { label: "password", value: "****", type: "password" },
+          { label: 'username', value: 'root', type: 'text' },
+          { label: 'password', value: '****', type: 'password' },
         ],
       },
       {
-        category: "server",
-        tag1: "tag 1",
-        tag2: "tag 2",
-        name: "Server #2",
-        fields: [{ label: "password", value: "****", type: "password" }],
+        category: 'server',
+        tag1: 'tag 1',
+        tag2: 'tag 2',
+        name: 'Server #2',
+        fields: [{ label: 'password', value: '****', type: 'password' }],
       },
       {
-        category: "server",
-        tag1: "tag 1",
-        tag2: "tag 2",
-        name: "Server #1",
+        category: 'server',
+        tag1: 'tag 1',
+        tag2: 'tag 2',
+        name: 'Server #1',
         fields: [
-          { label: "username", value: "root", type: "text" },
-          { label: "password", value: "****", type: "password" },
+          { label: 'username', value: 'root', type: 'text' },
+          { label: 'password', value: '****', type: 'password' },
         ],
       },
       {
-        category: "server",
-        tag1: "tag 1",
-        tag2: "tag 2",
-        name: "Server #1",
+        category: 'server',
+        tag1: 'tag 1',
+        tag2: 'tag 2',
+        name: 'Server #1',
         fields: [
-          { label: "username", value: "root", type: "text" },
-          { label: "password", value: "****", type: "password" },
+          { label: 'username', value: 'root', type: 'text' },
+          { label: 'password', value: '****', type: 'password' },
         ],
       },
       {
-        category: "server",
-        tag1: "tag 1",
-        tag2: "tag 2",
-        name: "Server #1",
+        category: 'server',
+        tag1: 'tag 1',
+        tag2: 'tag 2',
+        name: 'Server #1',
         fields: [
-          { label: "username", value: "root", type: "text" },
-          { label: "password", value: "****", type: "password" },
+          { label: 'username', value: 'root', type: 'text' },
+          { label: 'password', value: '****', type: 'password' },
         ],
       },
       {
-        category: "server",
-        tag1: "tag 1",
-        tag2: "tag 2",
-        name: "Server #1",
+        category: 'server',
+        tag1: 'tag 1',
+        tag2: 'tag 2',
+        name: 'Server #1',
         fields: [
-          { label: "username", value: "root", type: "text" },
-          { label: "password", value: "****", type: "password" },
+          { label: 'username', value: 'root', type: 'text' },
+          { label: 'password', value: '****', type: 'password' },
+        ],
+      },
+      {
+        category: 'server',
+        tag1: 'tag 1',
+        tag2: 'tag 2',
+        name: 'Server #1',
+        fields: [
+          { label: 'username', value: 'root', type: 'text' },
+          { label: 'password', value: '****', type: 'password' },
+        ],
+      },
+      {
+        category: 'server',
+        tag1: 'tag 1',
+        tag2: 'tag 2',
+        name: 'Server #1',
+        fields: [
+          { label: 'username', value: 'root', type: 'text' },
+          { label: 'password', value: '****', type: 'password' },
+        ],
+      },
+      {
+        category: 'server',
+        tag1: 'tag 1',
+        tag2: 'tag 2',
+        name: 'Server #1',
+        fields: [
+          { label: 'username', value: 'root', type: 'text' },
+          { label: 'password', value: '****', type: 'password' },
+        ],
+      },
+      {
+        category: 'server',
+        tag1: 'tag 1',
+        tag2: 'tag 2',
+        name: 'Server #1',
+        fields: [
+          { label: 'username', value: 'root', type: 'text' },
+          { label: 'password', value: '****', type: 'password' },
+        ],
+      },
+      {
+        category: 'server',
+        tag1: 'tag 1',
+        tag2: 'tag 2',
+        name: 'Server #1',
+        fields: [
+          { label: 'username', value: 'root', type: 'text' },
+          { label: 'password', value: '****', type: 'password' },
+        ],
+      },
+      {
+        category: 'server',
+        tag1: 'tag 1',
+        tag2: 'tag 2',
+        name: 'Server #1',
+        fields: [
+          { label: 'username', value: 'root', type: 'text' },
+          { label: 'password', value: '****', type: 'password' },
+        ],
+      },
+      {
+        category: 'server',
+        tag1: 'tag 1',
+        tag2: 'tag 2',
+        name: 'Server #1',
+        fields: [
+          { label: 'username', value: 'root', type: 'text' },
+          { label: 'password', value: '****', type: 'password' },
+        ],
+      },
+      {
+        category: 'server',
+        tag1: 'tag 1',
+        tag2: 'tag 2',
+        name: 'Server #1',
+        fields: [
+          { label: 'username', value: 'root', type: 'text' },
+          { label: 'password', value: '****', type: 'password' },
+        ],
+      },
+      {
+        category: 'server',
+        tag1: 'tag 1',
+        tag2: 'tag 2',
+        name: 'Server #1',
+        fields: [
+          { label: 'username', value: 'root', type: 'text' },
+          { label: 'password', value: '****', type: 'password' },
+        ],
+      },
+      {
+        category: 'server',
+        tag1: 'tag 1',
+        tag2: 'tag 2',
+        name: 'Server #1',
+        fields: [
+          { label: 'username', value: 'root', type: 'text' },
+          { label: 'password', value: '****', type: 'password' },
+        ],
+      },
+      {
+        category: 'server',
+        tag1: 'tag 1',
+        tag2: 'tag 2',
+        name: 'Server #1',
+        fields: [
+          { label: 'username', value: 'root', type: 'text' },
+          { label: 'password', value: '****', type: 'password' },
+        ],
+      },
+      {
+        category: 'server',
+        tag1: 'tag 1',
+        tag2: 'tag 2',
+        name: 'Server #1',
+        fields: [
+          { label: 'username', value: 'root', type: 'text' },
+          { label: 'password', value: '****', type: 'password' },
+        ],
+      },
+      {
+        category: 'server',
+        tag1: 'tag 1',
+        tag2: 'tag 2',
+        name: 'Server #1',
+        fields: [
+          { label: 'username', value: 'root', type: 'text' },
+          { label: 'password', value: '****', type: 'password' },
+        ],
+      },
+      {
+        category: 'server',
+        tag1: 'tag 1',
+        tag2: 'tag 2',
+        name: 'Server #1',
+        fields: [
+          { label: 'username', value: 'root', type: 'text' },
+          { label: 'password', value: '****', type: 'password' },
         ],
       },
     ],
   }),
-};
+}
 </script>
 
 <style src="./assets/tailwind.css"></style>

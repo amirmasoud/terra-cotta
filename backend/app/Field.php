@@ -13,7 +13,7 @@ class Field extends Model
      * @var array
      */
     protected $fillable = [
-        'label', 'value', 'icon_id', 'type_id', 'group_id', 'safe_id'
+        'label', 'value', 'icon_id', 'type_id', 'group_id', 'safe_id', 'featured'
     ];
 
     /**

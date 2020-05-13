@@ -1,6 +1,9 @@
 module.exports = {
   theme: {
     extend: {
+      colors: {
+        'semi-75': 'rgba(0, 0, 0, 0.75)',
+      },
       spacing: {
         '1/2': '50%',
         '1/3': '33.333333%',
@@ -28,11 +31,30 @@ module.exports = {
         '9/12': '75%',
         '10/12': '83.333333%',
         '11/12': '91.666667%',
-      }
-    }
+        px: '1px',
+        '0': '0',
+        '1': '0.25rem',
+        '2': '0.5rem',
+        '3': '0.75rem',
+        '4': '1rem',
+        '5': '1.25rem',
+        '6': '1.5rem',
+        '8': '2rem',
+        '10': '2.5rem',
+        '12': '3rem',
+        '13': '3.25rem',
+        '16': '4rem',
+        '20': '5rem',
+        '24': '6rem',
+        '32': '8rem',
+        '40': '10rem',
+        '48': '12rem',
+        '56': '14rem',
+        '64': '16rem',
+        '128': '32rem',
+      },
+    },
   },
   variants: {},
-  plugins: [
-    require('@tailwindcss/custom-forms')
-  ]
+  plugins: [require('@tailwindcss/custom-forms')],
 }
