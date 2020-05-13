@@ -143,11 +143,11 @@
       </div>
       <!-- :class="{ 'sm:ml-64': isOpen }" -->
       <div class="overflow-scroll ml-0 md:ml-64">
-        <div class="h-40 pt-13 bg-gray-300 border border-gray-400">
-          <h1 class="flex items-center py-2 px-2 text-xl font-semibold text-gray-600">
+        <div class="flex flex-wrap h-40 pt-13 bg-gray-300 border border-gray-400">
+          <h1 class="flex w-full items-center py-2 px-2 text-xl font-semibold text-gray-600">
             <user-svg class="text-gray-600 mr-2" /> Users
           </h1>
-          <div class="flex flex-wrap justify-between sm:justify-start items-center px-2">
+          <div class="flex w-full flex-wrap justify-between sm:justify-start items-center px-2">
             <button
               class="flex uppercase tracking-wide text-green-500 text-xs font-bold appearance-none border-none bg-green-700 text-green-200 rounded leading-tight"
               href="#"
