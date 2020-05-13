@@ -3,9 +3,10 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\hasMany;
 use Illuminate\Database\Eloquent\Relations\belongsTo;
 
-class Field extends Model
+class Group extends Model
 {
     /**
      * The attributes that are mass assignable.
@@ -13,11 +14,11 @@ class Field extends Model
      * @var array
      */
     protected $fillable = [
-        'label', 'value', 'icon_id', 'type_id', 'group_id', 'safe_id', 'featured'
+        'name', 'icon_id', 'safe_id'
     ];
 
     /**
-     * A field belongs to an icon.
+     * A group belong to an icon.
      *
      * @return \Illuminate\Database\Eloquent\Relations\belongsTo
      */
@@ -27,27 +28,17 @@ class Field extends Model
     }
 
     /**
-     * A field belongs to a type.
+     * A field has many groups.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\belongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
      */
-    public function type(): belongsTo
+    public function fields(): hasMany
     {
-        return $this->belongsTo(Type::class);
+        return $this->hasMany(Field::class);
     }
 
     /**
-     * A field belongs to a group.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\belongsTo
-     */
-    public function group(): belongsTo
-    {
-        return $this->belongsTo(Group::class);
-    }
-
-    /**
-     * A field belongs to a safe.
+     * A group belongs to a safe.
      *
      * @return \Illuminate\Database\Eloquent\Relations\belongsTo
      */

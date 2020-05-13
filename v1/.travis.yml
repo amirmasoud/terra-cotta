@@ -1,0 +1,47 @@
+matrix:
+  include:
+    - language: php
+
+      php:
+        - 7.1
+        - 7.2
+
+      before_script:
+        - cp .env.travis .env
+        - composer self-update
+        - composer install --prefer-source --no-interaction --dev
+        - php artisan key:generate
+        - php artisan jwt:secret
+        - php artisan migrate
+
+      before_install:
+        - mysql -e 'CREATE DATABASE passwords;'
+
+      script:
+        - phpunit
+
+      services:
+        - mysql
+
+      notifications:
+        email: false
+
+
+    - language: node_js
+
+      node_js:
+        - '10'
+
+      sudo: false
+
+      cache:
+        yarn: true
+        directories:
+          - '.eslintcache'
+          - 'node_modules'
+
+      before_script:
+        - yarn install
+
+      script:
+        - yarn run test

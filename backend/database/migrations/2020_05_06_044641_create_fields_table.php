@@ -17,6 +17,7 @@ class CreateFieldsTable extends Migration
             $table->id();
             $table->string('label');
             $table->string('value')->nullable();
+            $table->boolean('featured')->default(false);
             $table->foreignId('icon_id')->constrained()->onDelete('cascade');
             $table->foreignId('type_id')->constrained()->onDelete('cascade');
             $table->foreignId('group_id')->constrained()->onDelete('cascade');
