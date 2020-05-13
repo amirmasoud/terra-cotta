@@ -2,13 +2,13 @@
   <Transition name="fade">
     <div
       v-if="showing"
-      class="fixed inset-0 w-full max-h-screen flex items-center justify-center overflow-scroll px-2 shadow-lg bg-semi-75"
+      class="fixed inset-0 w-full h-screen max-h-screen flex items-center justify-center overflow-hidden px-2 shadow-lg bg-semi-75"
       @click.self="close"
     >
-      <div class="relative w-full max-w-2xl bg-white shadow-lg rounded-lg p-2">
+      <div class="relative w-full max-h-(screen-24) max-w-2xl bg-white shadow-lg rounded-lg p-2 overflow-scroll">
         <button
           aria-label="close"
-          class="absolute bg-white w-8 h-8 pb-1 text-self-center rounded-full top-0 right-0 text-xl text-gray-500 -mt-10"
+          class="absolute bg-white w-8 h-8 pb-1 text-self-center rounded-full top-0 right-0 text-xl text-gray-500"
           @click.prevent="close"
         >
           ×
@@ -33,6 +33,118 @@
                   <span class="text-gray-700">Tags</span>
                   <v-select multiple class="w-full" :options="['foo', 'bar']" placeholder="Tags"></v-select>
                 </label>
+              </div>
+            </div>
+            <div class="flex flex-wrap w-full mt-4">
+              <div class="w-2/3 pr-1 mb-2">
+                <input class="form-input w-full input input-indigo" type="text" placeholder="Label" />
+              </div>
+              <div class="flex flex-wrap w-1/3 px-1 mb-2">
+                <select class="form-select w-(full-6) block px-1 pb-1">
+                  <option>Text</option>
+                  <option>Password</option>
+                  <option>Textarea</option>
+                </select>
+                <button class="self-center text-gray-600 hover:text-red-600"><trash-svg class="w-6 h-6 pl-1" /></button>
+              </div>
+              <div class="w-full mb-2">
+                <input class="form-input w-full input input-indigo" type="text" placeholder="Value" />
+              </div>
+            </div>
+            <div class="flex flex-wrap w-full mt-4">
+              <div class="w-2/3 pr-1 mb-2">
+                <input class="form-input w-full input input-indigo" type="text" placeholder="Label" />
+              </div>
+              <div class="flex flex-wrap w-1/3 px-1 mb-2">
+                <select class="form-select w-(full-6) block px-1 pb-1">
+                  <option>Text</option>
+                  <option>Password</option>
+                  <option>Textarea</option>
+                </select>
+                <button class="self-center text-gray-600 hover:text-red-600"><trash-svg class="w-6 h-6 pl-1" /></button>
+              </div>
+              <div class="w-full mb-2">
+                <input class="form-input w-full input input-indigo" type="text" placeholder="Value" />
+              </div>
+            </div>
+            <div class="flex flex-wrap w-full mt-4">
+              <div class="w-2/3 pr-1 mb-2">
+                <input class="form-input w-full input input-indigo" type="text" placeholder="Label" />
+              </div>
+              <div class="flex flex-wrap w-1/3 px-1 mb-2">
+                <select class="form-select w-(full-6) block px-1 pb-1">
+                  <option>Text</option>
+                  <option>Password</option>
+                  <option>Textarea</option>
+                </select>
+                <button class="self-center text-gray-600 hover:text-red-600"><trash-svg class="w-6 h-6 pl-1" /></button>
+              </div>
+              <div class="w-full mb-2">
+                <input class="form-input w-full input input-indigo" type="text" placeholder="Value" />
+              </div>
+            </div>
+            <div class="flex flex-wrap w-full mt-4">
+              <div class="w-2/3 pr-1 mb-2">
+                <input class="form-input w-full input input-indigo" type="text" placeholder="Label" />
+              </div>
+              <div class="flex flex-wrap w-1/3 px-1 mb-2">
+                <select class="form-select w-(full-6) block px-1 pb-1">
+                  <option>Text</option>
+                  <option>Password</option>
+                  <option>Textarea</option>
+                </select>
+                <button class="self-center text-gray-600 hover:text-red-600"><trash-svg class="w-6 h-6 pl-1" /></button>
+              </div>
+              <div class="w-full mb-2">
+                <input class="form-input w-full input input-indigo" type="text" placeholder="Value" />
+              </div>
+            </div>
+            <div class="flex flex-wrap w-full mt-4">
+              <div class="w-2/3 pr-1 mb-2">
+                <input class="form-input w-full input input-indigo" type="text" placeholder="Label" />
+              </div>
+              <div class="flex flex-wrap w-1/3 px-1 mb-2">
+                <select class="form-select w-(full-6) block px-1 pb-1">
+                  <option>Text</option>
+                  <option>Password</option>
+                  <option>Textarea</option>
+                </select>
+                <button class="self-center text-gray-600 hover:text-red-600"><trash-svg class="w-6 h-6 pl-1" /></button>
+              </div>
+              <div class="w-full mb-2">
+                <input class="form-input w-full input input-indigo" type="text" placeholder="Value" />
+              </div>
+            </div>
+            <div class="flex flex-wrap w-full mt-4">
+              <div class="w-2/3 pr-1 mb-2">
+                <input class="form-input w-full input input-indigo" type="text" placeholder="Label" />
+              </div>
+              <div class="flex flex-wrap w-1/3 px-1 mb-2">
+                <select class="form-select w-(full-6) block px-1 pb-1">
+                  <option>Text</option>
+                  <option>Password</option>
+                  <option>Textarea</option>
+                </select>
+                <button class="self-center text-gray-600 hover:text-red-600"><trash-svg class="w-6 h-6 pl-1" /></button>
+              </div>
+              <div class="w-full mb-2">
+                <input class="form-input w-full input input-indigo" type="text" placeholder="Value" />
+              </div>
+            </div>
+            <div class="flex flex-wrap w-full mt-4">
+              <div class="w-2/3 pr-1 mb-2">
+                <input class="form-input w-full input input-indigo" type="text" placeholder="Label" />
+              </div>
+              <div class="flex flex-wrap w-1/3 px-1 mb-2">
+                <select class="form-select w-(full-6) block px-1 pb-1">
+                  <option>Text</option>
+                  <option>Password</option>
+                  <option>Textarea</option>
+                </select>
+                <button class="self-center text-gray-600 hover:text-red-600"><trash-svg class="w-6 h-6 pl-1" /></button>
+              </div>
+              <div class="w-full mb-2">
+                <input class="form-input w-full input input-indigo" type="text" placeholder="Value" />
               </div>
             </div>
             <div class="flex flex-wrap w-full mt-4">
@@ -126,6 +238,7 @@ export default {
       type: Boolean,
     },
   },
+  data: () => ({}),
   watch: {
     showing(value) {
       if (value) {

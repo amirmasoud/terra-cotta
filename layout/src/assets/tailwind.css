@@ -5,6 +5,10 @@
 	height: calc(100vh - 3rem) !important;
 }
 
+.max-h-\(screen-24\) {
+	height: calc(100vh - 6rem);
+}
+
 .w-\(screen-4\) {
 	width: calc(100vw - 1rem);
 }
