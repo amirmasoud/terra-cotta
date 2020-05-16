@@ -31,6 +31,13 @@ trait ResourceModel
         return $model ?? static::$namespace . Str::of(Route::current()->resource)->singular()->title();
     }
 
+    /**
+     * Invoke method on the model.
+     *
+     * @param string $name
+     * @param array $arguments
+     * @return mixed
+     */
     public static function __callStatic($name, $arguments)
     {
         if (empty($arguments)) {
@@ -38,5 +45,15 @@ trait ResourceModel
         } else {
             return [self::model(), $name]($arguments);
         }
+    }
+
+    /**
+     * Return model name.
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return self::model();
     }
 }
