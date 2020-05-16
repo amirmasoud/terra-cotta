@@ -3,18 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\hasMany;
-use Illuminate\Database\Eloquent\Relations\belongsToMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Safe extends Model
 {
-    /**
-     * The table associated with the model.
-     *
-     * @var string
-     */
-    protected $table = 'safes';
-
     /**
      * The attributes that are mass assignable.
      *
@@ -25,42 +19,42 @@ class Safe extends Model
     ];
 
     /**
-     * A safe has many fields.
+     * A safe belongs to a user.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\hasMany
+     * @return BelongsTo
      */
-    public function fields(): hasMany
+    public function user(): BelongsTo
     {
-        return $this->hasMany(Field::class);
+        return $this->belongsTo(User::class);
     }
 
     /**
-     * A safe has many groups.
+     * A safe has many fields.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\hasMany
+     * @return HasMany
      */
-    public function groups(): hasMany
+    public function fields(): HasMany
     {
-        return $this->hasMany(Group::class);
+        return $this->HasMany(Field::class);
     }
 
     /**
      * A safe belongs to many categories.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
+     * @return BelongsToMany
      */
-    public function categories(): belongsToMany
+    public function categories(): BelongsToMany
     {
-        return $this->belongsToMany(Category::class)->withTimestamps();
+        return $this->BelongsToMany(Category::class)->withTimestamps();
     }
 
     /**
      * A safe belongs to many tags.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
+     * @return BelongsToMany
      */
-    public function tags(): belongsToMany
+    public function tags(): BelongsToMany
     {
-        return $this->belongsToMany(Tag::class)->withTimestamps();
+        return $this->BelongsToMany(Tag::class)->withTimestamps();
     }
 }

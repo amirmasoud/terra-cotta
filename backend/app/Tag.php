@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\belongsToMany;
 
 class Tag extends Model
@@ -26,12 +27,22 @@ class Tag extends Model
     ];
 
     /**
-     * A tag belongs to a safe.
+     * A tag belongs to many safe.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
+     * @return belongsToMany
      */
     public function safes(): belongsToMany
     {
         return $this->belongsToMany(Safe::class)->withTimestamps();
+    }
+
+    /**
+     * A tag belongs to a user.
+     *
+     * @return BelongsTo
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 }

@@ -26,19 +26,9 @@ class Category extends Model
     ];
 
     /**
-     * A category belongs to an icon.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\belongsTo
-     */
-    public function icon(): belongsTo
-    {
-        return $this->belongsTo(Icon::class);
-    }
-
-    /**
      * A category belongs to many safe.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return BelongsToMany
      */
     public function safes()
     {

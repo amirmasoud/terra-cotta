@@ -29,12 +29,6 @@ Route::group(['middleware' => 'guest:api'], function () {
     Route::patch('settings/profile', 'Settings\ProfileController@update');
     Route::patch('settings/password', 'Settings\PasswordController@update');
 
-    Route::get('settings/icons/search', 'Settings\IconController@search')
-        ->name('icons.search');
-    Route::resource('settings/icons', 'Settings\IconController')->except([
-        'create'
-    ]);
-
     Route::get('settings/tags/search', 'Settings\TagController@search')
         ->name('tags.search');
     Route::resource('settings/tags', 'Settings\TagController')->except([
@@ -44,18 +38,6 @@ Route::group(['middleware' => 'guest:api'], function () {
     Route::get('settings/categories/search', 'Settings\CategoryController@search')
         ->name('categories.search');
     Route::resource('settings/categories', 'Settings\CategoryController')->except([
-        'create'
-    ]);
-
-    Route::get('settings/types/search', 'Settings\TypeController@search')
-        ->name('types.search');
-    Route::resource('settings/types', 'Settings\TypeController')->except([
-        'create'
-    ]);
-
-    Route::get('settings/groups/search', 'Settings\GroupController@search')
-        ->name('groups.search');
-    Route::resource('settings/groups', 'Settings\GroupController')->except([
         'create'
     ]);
 
