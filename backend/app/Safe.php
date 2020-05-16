@@ -10,6 +10,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class Safe extends Model
 {
     /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'safes';
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
