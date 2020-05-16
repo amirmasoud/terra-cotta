@@ -14,11 +14,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/crud/{resource}', 'Resource\IndexController@index');
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 
     Route::get('/user', 'UserController@user');
     Route::get('/home', 'HomeController@get');
+
 
     Route::get('settings/users/search', 'Settings\UserController@search')
         ->name('users.search');
