@@ -39,7 +39,7 @@ class ForgotPasswordController extends Controller
             'email' => ['required', 'string', 'email', 'max:255'],
         ]);
         if ($validator->fails()) {
-            return new Response($validator->errors(), 400);
+            return new JsonResponse($validator->errors(), 400);
         }
 
         // We will send the password reset link to this user. Once we have attempted
