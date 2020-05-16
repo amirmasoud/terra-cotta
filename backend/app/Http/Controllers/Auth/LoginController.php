@@ -9,6 +9,8 @@ use Illuminate\Validation\ValidationException;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -63,5 +65,18 @@ class LoginController extends Controller
             'token' => User::where('email', $request->email)->first()
                 ->createToken('web')->plainTextToken
         ];
+    }
+
+    /**
+     * Log the user out of the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function logout(Request $request)
+    {
+        Auth::user()->tokens()->delete();
+
+        return new Response('', 204);
     }
 }
