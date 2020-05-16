@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
-    Route::post('logout', 'Auth\LoginController@logout');
+    Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 
     Route::get('/user', 'UserController@user');
     Route::get('/home', 'HomeController@get');
@@ -53,8 +53,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 });
 
 Route::group(['middleware' => 'guest:api'], function () {
-    Route::post('login', 'Auth\LoginController@login');
-    Route::post('register', 'Auth\RegisterController@register');
-    Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
-    Route::post('password/reset', 'Auth\ResetPasswordController@reset');
+    Route::post('login', 'Auth\LoginController@login')->name('login');
+    Route::post('register', 'Auth\RegisterController@register')->name('register');
+    Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
+    Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('password.reset');
 });
