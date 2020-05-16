@@ -8,13 +8,6 @@ use Illuminate\Support\Facades\Route;
 trait ResourceModel
 {
     /**
-     * Default model namespace.
-     *
-     * @var string
-     */
-    public static $namespace = '\App\\';
-
-    /**
      * Custom model.
      *
      * @var String|Null
@@ -28,7 +21,7 @@ trait ResourceModel
      */
     public static function model()
     {
-        return $model ?? static::$namespace . Str::of(Route::current()->resource)->singular()->title();
+        return $model ?? config('terracotta.model.namespace') . Str::of(Route::current()->resource)->singular()->title();
     }
 
     /**
