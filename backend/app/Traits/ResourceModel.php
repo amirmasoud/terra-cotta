@@ -40,13 +40,17 @@ trait ResourceModel
         }
     }
 
-    /**
-     * Return model name.
-     *
-     * @return string
-     */
-    public function __toString()
+    public function __construct()
     {
-        return self::model();
+        return new self::model();
+    }
+
+    public function __call($name, $arguments)
+    {
+        if (empty($arguments)) {
+            return [self::model(), $name]();
+        } else {
+            return [self::model(), $name]($arguments);
+        }
     }
 }

@@ -14,8 +14,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/crud/{resource}', 'Resource\IndexController');
-Route::get('/crud/{resource}/{id}', 'Resource\ShowController');
+Route::get('/crud/{resource}', 'Resource\IndexController')->name('resource.index');
+Route::post('/crud/{resource}', 'Resource\CreateController')->name('resource.create');
+Route::get('/crud/{resource}/{id}', 'Resource\ShowController')->name('resource.show');
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 

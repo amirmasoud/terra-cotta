@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Resource;
 
-use App\Http\Controllers\Controller;
 use App\Traits\ResourceModel;
 use Illuminate\Http\JsonResponse;
+use App\Http\Controllers\Controller;
 
 class IndexController extends Controller
 {
