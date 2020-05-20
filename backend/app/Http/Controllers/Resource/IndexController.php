@@ -17,6 +17,6 @@ class IndexController extends Controller
      */
     public function __invoke()
     {
-        return new JsonResponse(ResourceModel::paginate(), 200);
+        return new JsonResponse($this->model::paginate(), 200);
     }
 }

@@ -12,6 +12,6 @@ class ShowController extends Controller
 
     public function __invoke(Request $request)
     {
-        return ResourceModel::findOrFail($request->id)->first();
+        return $this->model::findOrFail($request->id)->first();
     }
 }
