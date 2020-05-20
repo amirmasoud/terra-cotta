@@ -60,12 +60,12 @@ class User extends Authenticatable
     }
 
     /**
-     * A user has many safes.
+     * A user has many keys.
      *
      * @return HasMany
      */
-    public function safes(): HasMany
+    public function keys(): HasMany
     {
-        return $this->hasMany(Safe::class);
+        return $this->hasMany(Key::class);
     }
 }

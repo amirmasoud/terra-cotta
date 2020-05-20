@@ -26,12 +26,12 @@ class Category extends Model
     ];
 
     /**
-     * A category belongs to many safe.
+     * A category belongs to many key.
      *
      * @return BelongsToMany
      */
-    public function safes()
+    public function keys()
     {
-        return $this->belongsToMany(Safe::class)->withTimestamps();
+        return $this->belongsToMany(Key::class)->withTimestamps();
     }
 }

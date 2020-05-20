@@ -14,7 +14,7 @@ class Tag extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'color',
+        'name', 'color'
     ];
 
     /**
@@ -27,13 +27,13 @@ class Tag extends Model
     ];
 
     /**
-     * A tag belongs to many safe.
+     * A tag belongs to many key.
      *
      * @return belongsToMany
      */
-    public function safes(): belongsToMany
+    public function keys(): belongsToMany
     {
-        return $this->belongsToMany(Safe::class)->withTimestamps();
+        return $this->belongsToMany(Key::class)->withTimestamps();
     }
 
     /**

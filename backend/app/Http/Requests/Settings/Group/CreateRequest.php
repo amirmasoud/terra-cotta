@@ -26,7 +26,7 @@ class CreateRequest extends FormRequest
         return [
             'name'    => 'required|max:255',
             'icon_id' => 'nullable|exists:icons,id',
-            'safe_id' => 'required|exists:safes,id'
+            'key_id' => 'required|exists:keys,id'
         ];
     }
 }

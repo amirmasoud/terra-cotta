@@ -82,64 +82,8 @@
             <div class="p-2 mt-1">Field</div></a
           >
         </div>
-        <div class="mt-6 block">
-          <span class="block uppercase tracking-wide text-gray-500 text-xs font-bold"> Tags</span>
-          <div class="mt-2">
-            <div>
-              <label class="inline-flex items-center">
-                <input type="checkbox" class="form-checkbox bg-indigo-800 text-indigo-500" checked />
-                <span class="text-gray-200 ml-2">All</span>
-              </label>
-            </div>
-            <div>
-              <label class="inline-flex items-center mt-2">
-                <input type="checkbox" class="form-checkbox bg-gray-700 border-none text-indigo-500" />
-                <span class="text-gray-200 ml-2">Important</span>
-              </label>
-            </div>
-            <div>
-              <label class="inline-flex items-center mt-2">
-                <input type="checkbox" class="form-checkbox bg-gray-700 border-none text-indigo-500" />
-                <span class="text-gray-200 ml-2">Work</span>
-              </label>
-            </div>
-          </div>
-        </div>
-        <div class="my-6 block">
-          <span class="block uppercase tracking-wide text-gray-500 text-xs font-bold">Categories</span>
-          <div class="">
-            <div>
-              <label class="inline-flex items-center mt-2">
-                <input type="checkbox" class="form-checkbox bg-indigo-800 text-indigo-500" checked />
-                <span class="text-gray-200 ml-2">All</span>
-              </label>
-            </div>
-            <div>
-              <label class="inline-flex items-center mt-2">
-                <input type="checkbox" class="form-checkbox bg-gray-700 border-none text-indigo-500" />
-                <span class="text-gray-200 ml-2">Servers</span>
-              </label>
-            </div>
-            <div>
-              <label class="inline-flex items-center mt-2">
-                <input type="checkbox" class="form-checkbox bg-gray-700 border-none text-indigo-500" />
-                <span class="text-gray-200 ml-2">Databases</span>
-              </label>
-            </div>
-            <div>
-              <label class="inline-flex items-center mt-2">
-                <input type="checkbox" class="form-checkbox bg-gray-700 border-none text-indigo-500" />
-                <span class="text-gray-200 ml-2">Logins</span>
-              </label>
-            </div>
-            <div>
-              <label class="inline-flex items-center mt-2">
-                <input type="checkbox" class="form-checkbox bg-gray-700 border-none text-indigo-500" />
-                <span class="text-gray-200 ml-2">Credit Cards</span>
-              </label>
-            </div>
-          </div>
-        </div>
+        <filter-checkbox resource="tags" title="tags" />
+        <filter-checkbox resource="categories" title="categories" />
       </div>
       <!-- :class="{ 'sm:ml-64': isOpen }" -->
       <div class="overflow-scroll ml-0 md:ml-64">
@@ -211,6 +155,9 @@ import TypeSvg from './components/svg/Type'
 import UserSvg from './components/svg/User'
 import EmptySvg from './components/svg/Empty'
 import PlusSvg from './components/svg/Plus'
+import axios from 'axios'
+import Filter from './components/Filter'
+
 export default {
   name: 'app',
   components: {
@@ -228,8 +175,19 @@ export default {
     // "search-svg": SearchSvg,
     'empty-svg': EmptySvg,
     'plus-svg': PlusSvg,
+    'filter-checkbox': Filter,
   },
+  mounted() {},
   created() {
+    axios
+      .get('http://localhost:8000/api/admin/keys')
+      .then(data => {
+        this.keys = data.data
+      })
+      .catch(error => {
+        console.log(error)
+      })
+
     this.$root.$on('menu-is-open', isOpen => {
       this.isOpen = isOpen
       if (isOpen) {
@@ -248,6 +206,7 @@ export default {
     },
   },
   data: () => ({
+    keys: [],
     modalShowing: false,
     isOpen: false,
     priceRangeSelect: {

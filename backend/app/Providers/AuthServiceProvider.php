@@ -8,7 +8,7 @@ use App\Tag;
 use App\Role;
 use App\Type;
 use App\User;
-use App\Safe;
+use App\Key;
 use App\Icon;
 use App\Field;
 use App\Group;
@@ -16,7 +16,7 @@ use App\Category;
 use App\Policies\TagPolicy;
 use App\Policies\IconPolicy;
 use App\Policies\RolePolicy;
-use App\Policies\SafePolicy;
+use App\Policies\KeyPolicy;
 use App\Policies\TypePolicy;
 use App\Policies\UserPolicy;
 use App\Policies\FieldPolicy;
@@ -35,7 +35,7 @@ class AuthServiceProvider extends ServiceProvider
         Field::class      => FieldPolicy::class,
         Group::class      => GroupPolicy::class,
         Icon::class       => IconPolicy::class,
-        Safe::class       => SafePolicy::class,
+        Key::class       => KeyPolicy::class,
         Tag::class        => TagPolicy::class,
         Type::class       => TypePolicy::class,
         User::class       => UserPolicy::class,

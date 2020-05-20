@@ -17,7 +17,7 @@ class CreateFieldsTable extends Migration
             $table->id();
             $table->text('label');
             $table->text('value')->nullable();
-            $table->foreignId('safe_id')->constrained()->onDelete('cascade');
+            $table->foreignId('key_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

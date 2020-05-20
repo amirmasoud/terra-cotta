@@ -8,7 +8,7 @@ use App\Http\Resources\Category as CategoryResource;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class Safe extends JsonResource
+class Key extends JsonResource
 {
     /**
      * Transform the resource into an array.

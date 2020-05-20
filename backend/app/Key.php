@@ -7,15 +7,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class Safe extends Model
+class Key extends Model
 {
-    /**
-     * The table associated with the model.
-     *
-     * @var string
-     */
-    protected $table = 'safes';
-
     /**
      * The attributes that are mass assignable.
      *
@@ -26,7 +19,7 @@ class Safe extends Model
     ];
 
     /**
-     * A safe belongs to a user.
+     * A key belongs to a user.
      *
      * @return BelongsTo
      */
@@ -36,7 +29,7 @@ class Safe extends Model
     }
 
     /**
-     * A safe has many fields.
+     * A key has many fields.
      *
      * @return HasMany
      */
@@ -46,7 +39,7 @@ class Safe extends Model
     }
 
     /**
-     * A safe belongs to many categories.
+     * A key belongs to many categories.
      *
      * @return BelongsToMany
      */
@@ -56,7 +49,7 @@ class Safe extends Model
     }
 
     /**
-     * A safe belongs to many tags.
+     * A key belongs to many tags.
      *
      * @return BelongsToMany
      */

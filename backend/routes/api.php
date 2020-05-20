@@ -50,9 +50,9 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         'create'
     ]);
 
-    Route::get('safes/search', 'SafeController@search')
-        ->name('safes.search');
-    Route::resource('safes', 'SafeController')->except([
+    Route::get('keys/search', 'KeyController@search')
+        ->name('keys.search');
+    Route::resource('keys', 'KeyController')->except([
         'create'
     ]);
 });

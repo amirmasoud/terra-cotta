@@ -2,13 +2,13 @@
 
 namespace App\Policies;
 
-use App\Safe;
+use App\Key;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class SafePolicy
+class KeyPolicy
 {
     use HandlesAuthorization;
 
-    private $modelName = 'safes';
-    private $modelClass = Safe::class;
+    private $modelName = 'keys';
+    private $modelClass = Key::class;
 }
