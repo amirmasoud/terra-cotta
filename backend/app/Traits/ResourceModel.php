@@ -17,40 +17,63 @@ trait ResourceModel
     /**
      * Return model based on route resource.
      *
-     * @return Illuminate\Database\Eloquent\Model
+     * @return Illuminate\Database\Eloquent\Model|null
      */
-    public static function model()
+    public function __construct()
     {
-        return $model ?? config('terracotta.model.namespace') . Str::of(Route::current()->resource)->singular()->title();
+        $class = config('terracotta.model.namespace') . Str::of(Route::current()->resource)->singular()->title();
+        if (class_exists($class)) {
+            $this->model = $class;
+        }
     }
 
     /**
-     * Invoke method on the model.
+     * List of model relations.
      *
-     * @param string $name
-     * @param array $arguments
-     * @return mixed
+     * @return array
      */
-    public static function __callStatic($name, $arguments)
+    public function relations()
     {
-        if (empty($arguments)) {
-            return [self::model(), $name]();
-        } else {
-            return [self::model(), $name]($arguments);
+        $reflector = new \ReflectionClass($this->model);
+        foreach ($reflector->getMethods() as $reflectionMethod) {
+            $returnType = $reflectionMethod->getReturnType();
+            if ($returnType) {
+                if (in_array(class_basename($returnType->getName()), ['HasOne', 'HasMany', 'BelongsTo', 'BelongsToMany', 'MorphToMany', 'MorphTo'])) {
+                    $relation = [];
+                    $relation['type'] = class_basename($returnType->getName());
+                    $relation['name'] = $reflectionMethod->name;
+                    $relation['class'] = $reflectionMethod->class;
+                    $relations[] = $relation;
+                }
+            }
         }
+        return $relations;
     }
 
-    public function __construct()
-    {
-        return new self::model();
-    }
+    // /**
+    //  * Invoke method on the model.
+    //  *
+    //  * @param string $name
+    //  * @param array $arguments
+    //  * @return mixed
+    //  */
+    // public static function __callStatic($name, $arguments)
+    // {
+    //     if (empty($arguments)) {
+    //         return [self::model(), $name]();
+    //     } else {
+    //         return [self::model(), $name]($arguments);
+    //     }
+    // }
 
-    public function __call($name, $arguments)
-    {
-        if (empty($arguments)) {
-            return [self::model(), $name]();
-        } else {
-            return [self::model(), $name]($arguments);
-        }
-    }
+    // public function __construct()
+    // {
+    //     $model = self::model();
+    //     $this->model = new $model;
+    // }
+
+    // public function __call($name, $arguments)
+    // {
+    //     self::model()->{$name}($arguments);
+    // }
 }

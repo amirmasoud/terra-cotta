@@ -12,10 +12,7 @@ class CreateController extends Controller
 
     public function __invoke(Request $request)
     {
-        $model = new ResourceModel();
-
-        $model->save($request->all());
-
-        $model->save();
+        $model = new $this->model;
+        return $model->forceCreate($request->all());
     }
 }
