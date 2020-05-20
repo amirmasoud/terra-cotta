@@ -2,8 +2,6 @@
 
 return [
 
-    'model' => [
-        'namespace' => '\App\\'
-    ]
+    'namespace' => '\App\\Admin\\'
 
 ];
