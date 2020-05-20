@@ -49,31 +49,4 @@ trait ResourceModel
         }
         return $relations;
     }
-
-    // /**
-    //  * Invoke method on the model.
-    //  *
-    //  * @param string $name
-    //  * @param array $arguments
-    //  * @return mixed
-    //  */
-    // public static function __callStatic($name, $arguments)
-    // {
-    //     if (empty($arguments)) {
-    //         return [self::model(), $name]();
-    //     } else {
-    //         return [self::model(), $name]($arguments);
-    //     }
-    // }
-
-    // public function __construct()
-    // {
-    //     $model = self::model();
-    //     $this->model = new $model;
-    // }
-
-    // public function __call($name, $arguments)
-    // {
-    //     self::model()->{$name}($arguments);
-    // }
 }
