@@ -45,4 +45,14 @@ class Tag extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    /**
+     * A tag belongs to a user.
+     *
+     * @return BelongsTo
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 }
