@@ -2,7 +2,19 @@
 
 namespace App\Admin;
 
-class User
+use App\TerraCotta;
+
+class User extends TerraCotta
 {
     public static $model = '\App\User';
+
+    public static function priority(): int
+    {
+        return 20;
+    }
+
+    public static function icon(): string
+    {
+        return 'user-svg';
+    }
 }

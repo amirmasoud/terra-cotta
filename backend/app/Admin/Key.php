@@ -2,7 +2,14 @@
 
 namespace App\Admin;
 
-class Key
+use App\TerraCotta;
+
+class Key extends TerraCotta
 {
     public static $model = '\App\Key';
+
+    public static function icon(): string
+    {
+        return 'safe-svg';
+    }
 }

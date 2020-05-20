@@ -21,9 +21,11 @@ trait ResourceModel
      */
     public function __construct()
     {
-        $admin = config('terracotta.namespace') . Str::of(Route::current()->resource)->singular()->title();
-        if (class_exists($admin)) {
-            $this->model = $admin::$model;
+        if (!is_null(Route::current())) {
+            $admin = config('terracotta.namespace') . Str::of(Route::current()->resource)->singular()->title();
+            if (class_exists($admin)) {
+                $this->model = $admin::$model;
+            }
         }
     }
 

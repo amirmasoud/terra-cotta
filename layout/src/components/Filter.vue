@@ -21,7 +21,7 @@ export default {
   data: () => ({
     resourceResponse: [],
   }),
-  created() {
+  mounted() {
     axios
       .get('http://localhost:8000/api/admin/' + this.resource)
       .then(response => {

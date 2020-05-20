@@ -14,10 +14,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/admin/menu-list', 'MenuController')->name('menu');
+
 Route::get('/admin/{resource}', 'Resource\IndexController')->name('resource.index');
 Route::post('/admin/{resource}', 'Resource\CreateController')->name('resource.create');
 Route::get('/admin/{resource}/{id}', 'Resource\ShowController')->name('resource.show');
 Route::post('/admin/{resource}/{id}', 'Resource\UpdateController')->name('resource.update');
+
+
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 
