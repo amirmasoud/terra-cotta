@@ -15,13 +15,9 @@ class CreateFieldsTable extends Migration
     {
         Schema::create('fields', function (Blueprint $table) {
             $table->id();
-            $table->string('label');
-            $table->string('value')->nullable();
-            $table->boolean('featured')->default(false);
-            $table->foreignId('icon_id')->constrained()->onDelete('cascade');
-            $table->foreignId('type_id')->constrained()->onDelete('cascade');
-            $table->foreignId('group_id')->constrained()->onDelete('cascade');
-            $table->foreignId('safe_id')->constrained()->onDelete('cascade');
+            $table->text('label');
+            $table->text('value')->nullable();
+            $table->foreignId('key_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

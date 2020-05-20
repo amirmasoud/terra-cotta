@@ -8,18 +8,18 @@
         </h1>
       </div>
     </div>
-    <nav class="py-2 w-full md:-ml-64">
+    <nav class="w-full md:-ml-64">
       <div class="flex items-center ml-2 md:ml-64">
         <button type="button" @click="toggle" class="block md:hidden text-gray-400 sm:px-2 hover:text-gray-600">
           <menu-svg v-if="!isOpen" class="w-6" />
           <close-svg v-else class="w-6 p-1 relative z-10 bg-red-700 text-white rounded-full" />
         </button>
         <div
-          class="w-full relative max-w-screen-lg uppercase tracking-wide text-gray-500 text-xs font-bold appearance-none border-none text-gray-200 mx-auto pr-2"
+          class="w-full relative max-w-screen-lg uppercase tracking-wide text-gray-500 text-xs font-bold appearance-none border-none text-gray-200 mx-auto md:pr-3"
         >
           <input
             type="search"
-            class="w-full ml-1 md:ml-2 py-2 pl-2 pr-8 bg-gray-200 text-gray-500 border border-transparent focus:bg-white focus:border-gray-300 tracking-wide text-xs font-bold rounded outline-none focus:shadow-outline"
+            class="w-full ml-1 md:ml-8 py-2 pl-2 pr-8 bg-gray-200 text-gray-500 border border-transparent focus:bg-white focus:border-gray-300 tracking-wide text-xs font-bold rounded outline-none focus:shadow-outline"
             placeholder="SEARCH"
           />
           <button class="absolute right-0 top-0 mr-1 px-2 pb-2 pt-1 outline-none focus:shadow-outline">

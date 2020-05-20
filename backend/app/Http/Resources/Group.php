@@ -2,7 +2,7 @@
 
 namespace App\Http\Resources;
 
-use App\Http\Resources\Safe as SafeResource;
+use App\Http\Resources\Key as KeyResource;
 use App\Http\Resources\Field as FieldResource;
 use App\Http\Resources\Icon as IconResource;
 
@@ -21,8 +21,8 @@ class Group extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'icon' => new SafeResource($this->whenLoaded('icon')),
-            'safe' => new SafeResource($this->whenLoaded('safe')),
+            'icon' => new KeyResource($this->whenLoaded('icon')),
+            'key' => new KeyResource($this->whenLoaded('key')),
             'fields' => FieldResource::collection($this->whenLoaded('fields')),
         ];
     }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCategorySafeTable extends Migration
+class CreateCategoryKeyTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateCategorySafeTable extends Migration
      */
     public function up()
     {
-        Schema::create('category_safe', function (Blueprint $table) {
+        Schema::create('category_key', function (Blueprint $table) {
             $table->id();
             $table->foreignId('category_id')->constrained()->onDelete('cascade');
-            $table->foreignId('safe_id')->constrained()->onDelete('cascade');
+            $table->foreignId('key_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class CreateCategorySafeTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('category_safe');
+        Schema::dropIfExists('category_key');
     }
 }

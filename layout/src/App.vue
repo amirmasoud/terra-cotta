@@ -15,131 +15,9 @@
         :class="[isOpen ? 'translate-x-0' : '-translate-x-64']"
         id="menu"
       >
-        <span class="block uppercase tracking-wide text-gray-500 text-xs font-bold"> Settings</span>
-        <div class="mt-2 block">
-          <a
-            class="flex uppercase tracking-wide text-gray-500 text-xs font-bold mb-2 appearance-none w-full border-none bg-gray-700 text-gray-200 rounded leading-tight"
-            href="#"
-            ><div class="bg-gray-800 p-2 rounded-tl rounded-bl shadow-lg ">
-              <user-svg class="text-gray-600" />
-            </div>
-            <div class="p-2 mt-1">User</div></a
-          >
-          <a
-            class="flex uppercase tracking-wide text-gray-500 text-xs font-bold mb-2 appearance-none w-full border-none bg-gray-700 text-gray-200 rounded leading-tight"
-            href="#"
-            ><div class="bg-gray-800 p-2 rounded-tl rounded-bl shadow-lg ">
-              <icon-svg class="text-gray-600" />
-            </div>
-            <div class="p-2 mt-1">Icon</div></a
-          >
-          <a
-            class="flex uppercase tracking-wide text-gray-500 text-xs font-bold mb-2 appearance-none w-full border-none bg-gray-700 text-gray-200 rounded leading-tight"
-            href="#"
-            ><div class="bg-gray-800 p-2 rounded-tl rounded-bl shadow-lg ">
-              <tag-svg class="text-gray-600" />
-            </div>
-            <div class="p-2 mt-1">Tag</div></a
-          >
-          <a
-            class="flex uppercase tracking-wide text-gray-500 text-xs font-bold mb-2 appearance-none w-full border-none bg-gray-700 text-gray-200 rounded leading-tight"
-            href="#"
-            ><div class="bg-gray-800 p-2 rounded-tl rounded-bl shadow-lg ">
-              <category-svg class="text-gray-600" />
-            </div>
-            <div class="p-2 mt-1">Category</div></a
-          >
-          <a
-            class="flex uppercase tracking-wide text-gray-500 text-xs font-bold mb-2 appearance-none w-full border-none bg-gray-700 text-gray-200 rounded leading-tight"
-            href="#"
-            ><div class="bg-gray-800 p-2 rounded-tl rounded-bl shadow-lg ">
-              <type-svg class="text-gray-600" />
-            </div>
-            <div class="p-2 mt-1">Type</div></a
-          >
-          <a
-            class="flex uppercase tracking-wide text-gray-500 text-xs font-bold mb-2 appearance-none w-full border-none bg-gray-700 text-gray-200 rounded leading-tight"
-            href="#"
-            ><div class="bg-gray-800 p-2 rounded-tl rounded-bl shadow-lg ">
-              <safe-svg class="text-gray-600" />
-            </div>
-            <div class="p-2 mt-1">Safe</div></a
-          >
-          <a
-            class="flex uppercase tracking-wide text-gray-500 text-xs font-bold mb-2 appearance-none w-full border-none bg-gray-700 text-gray-200 rounded leading-tight"
-            href="#"
-            ><div class="bg-gray-800 p-2 rounded-tl rounded-bl shadow-lg ">
-              <group-svg class="text-gray-600" />
-            </div>
-            <div class="p-2 mt-1">Group</div></a
-          >
-          <a
-            class="flex uppercase tracking-wide text-gray-500 text-xs font-bold mb-2 appearance-none w-full border-none bg-gray-700 text-gray-200 rounded leading-tight"
-            href="#"
-            ><div class="bg-gray-800 p-2 rounded-tl rounded-bl shadow-lg ">
-              <field-svg class="text-gray-600" />
-            </div>
-            <div class="p-2 mt-1">Field</div></a
-          >
-        </div>
-        <div class="mt-6 block">
-          <span class="block uppercase tracking-wide text-gray-500 text-xs font-bold"> Tags</span>
-          <div class="mt-2">
-            <div>
-              <label class="inline-flex items-center">
-                <input type="checkbox" class="form-checkbox bg-indigo-800 text-indigo-500" checked />
-                <span class="text-gray-200 ml-2">All</span>
-              </label>
-            </div>
-            <div>
-              <label class="inline-flex items-center mt-2">
-                <input type="checkbox" class="form-checkbox bg-gray-700 border-none text-indigo-500" />
-                <span class="text-gray-200 ml-2">Important</span>
-              </label>
-            </div>
-            <div>
-              <label class="inline-flex items-center mt-2">
-                <input type="checkbox" class="form-checkbox bg-gray-700 border-none text-indigo-500" />
-                <span class="text-gray-200 ml-2">Work</span>
-              </label>
-            </div>
-          </div>
-        </div>
-        <div class="my-6 block">
-          <span class="block uppercase tracking-wide text-gray-500 text-xs font-bold">Categories</span>
-          <div class="">
-            <div>
-              <label class="inline-flex items-center mt-2">
-                <input type="checkbox" class="form-checkbox bg-indigo-800 text-indigo-500" checked />
-                <span class="text-gray-200 ml-2">All</span>
-              </label>
-            </div>
-            <div>
-              <label class="inline-flex items-center mt-2">
-                <input type="checkbox" class="form-checkbox bg-gray-700 border-none text-indigo-500" />
-                <span class="text-gray-200 ml-2">Servers</span>
-              </label>
-            </div>
-            <div>
-              <label class="inline-flex items-center mt-2">
-                <input type="checkbox" class="form-checkbox bg-gray-700 border-none text-indigo-500" />
-                <span class="text-gray-200 ml-2">Databases</span>
-              </label>
-            </div>
-            <div>
-              <label class="inline-flex items-center mt-2">
-                <input type="checkbox" class="form-checkbox bg-gray-700 border-none text-indigo-500" />
-                <span class="text-gray-200 ml-2">Logins</span>
-              </label>
-            </div>
-            <div>
-              <label class="inline-flex items-center mt-2">
-                <input type="checkbox" class="form-checkbox bg-gray-700 border-none text-indigo-500" />
-                <span class="text-gray-200 ml-2">Credit Cards</span>
-              </label>
-            </div>
-          </div>
-        </div>
+        <menu-list title="" />
+        <filter-checkbox resource="tags" title="tags" />
+        <filter-checkbox resource="categories" title="categories" />
       </div>
       <!-- :class="{ 'sm:ml-64': isOpen }" -->
       <div class="overflow-scroll ml-0 md:ml-64">
@@ -201,35 +79,34 @@
 import Navbar from './components/Navbar'
 import SafeCard from './components/SafeCard'
 import Modal from './components/Modal'
-import CategorySvg from './components/svg/Category'
-import FieldSvg from './components/svg/Field'
-import GroupSvg from './components/svg/Group'
-import IconSvg from './components/svg/Icon'
-import SafeSvg from './components/svg/Safe'
-import TagSvg from './components/svg/Tag'
-import TypeSvg from './components/svg/Type'
-import UserSvg from './components/svg/User'
 import EmptySvg from './components/svg/Empty'
 import PlusSvg from './components/svg/Plus'
+import axios from 'axios'
+import Filter from './components/Filter'
+import MenuList from './components/MenuList'
+
 export default {
   name: 'app',
   components: {
     navbar: Navbar,
     modal: Modal,
     'safe-card': SafeCard,
-    'category-svg': CategorySvg,
-    'field-svg': FieldSvg,
-    'group-svg': GroupSvg,
-    'icon-svg': IconSvg,
-    'safe-svg': SafeSvg,
-    'tag-svg': TagSvg,
-    'type-svg': TypeSvg,
-    'user-svg': UserSvg,
-    // "search-svg": SearchSvg,
     'empty-svg': EmptySvg,
     'plus-svg': PlusSvg,
+    'filter-checkbox': Filter,
+    'menu-list': MenuList,
   },
+  mounted() {},
   created() {
+    axios
+      .get('http://localhost:8000/api/admin/keys')
+      .then(data => {
+        this.keys = data.data
+      })
+      .catch(error => {
+        console.log(error)
+      })
+
     this.$root.$on('menu-is-open', isOpen => {
       this.isOpen = isOpen
       if (isOpen) {
@@ -248,6 +125,7 @@ export default {
     },
   },
   data: () => ({
+    keys: [],
     modalShowing: false,
     isOpen: false,
     priceRangeSelect: {

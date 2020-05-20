@@ -3,7 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\belongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Field extends Model
 {
@@ -13,46 +13,16 @@ class Field extends Model
      * @var array
      */
     protected $fillable = [
-        'label', 'value', 'icon_id', 'type_id', 'group_id', 'safe_id', 'featured'
+        'label', 'value', 'icon_id', 'type_id', 'group_id', 'key_id', 'featured'
     ];
 
     /**
-     * A field belongs to an icon.
+     * A field belongs to a key.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\belongsTo
+     * @return BelongsTo
      */
-    public function icon(): belongsTo
+    public function key(): BelongsTo
     {
-        return $this->belongsTo(Icon::class);
-    }
-
-    /**
-     * A field belongs to a type.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\belongsTo
-     */
-    public function type(): belongsTo
-    {
-        return $this->belongsTo(Type::class);
-    }
-
-    /**
-     * A field belongs to a group.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\belongsTo
-     */
-    public function group(): belongsTo
-    {
-        return $this->belongsTo(Group::class);
-    }
-
-    /**
-     * A field belongs to a safe.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\belongsTo
-     */
-    public function safe(): belongsTo
-    {
-        return $this->belongsTo(Safe::class);
+        return $this->belongsTo(Key::class);
     }
 }

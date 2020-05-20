@@ -29,7 +29,7 @@ class UpdateRequest extends FormRequest
             'icon_id'  => 'nullable|exists:icons,id',
             'type_id'  => 'required|exists:types,id',
             'group_id' => 'required|exists:groups,id',
-            'safe_id'  => 'required|exists:safes,id'
+            'key_id'  => 'required|exists:keys,id'
         ];
     }
 }

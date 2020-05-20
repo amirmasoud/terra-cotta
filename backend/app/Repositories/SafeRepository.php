@@ -4,21 +4,21 @@ namespace App\Repositories;
 
 use App\Tag;
 use App\Type;
-use App\Safe;
+use App\Key;
 use App\Field;
 use App\Category;
 use Illuminate\Http\Request;
 
-class SafeRepository
+class KeyRepository
 {
     /**
      * Attach categories.
      *
      * @param  \Illuminate\Http\Request $request
-     * @param  \App\Safe $safe
-     * @return \App\Safe
+     * @param  \App\Key $key
+     * @return \App\Key
      */
-    public function attachCategories(Request $request, Safe $safe): Safe
+    public function attachCategories(Request $request, Key $key): Key
     {
         if ($request->categories) {
             foreach ($request->categories as $categoryName) {
@@ -28,21 +28,21 @@ class SafeRepository
                 } else {
                     $category = Category::create(['name' => $categoryName]);
                 }
-                $safe->categories()->attach($category->id);
+                $key->categories()->attach($category->id);
             }
         }
 
-        return $safe;
+        return $key;
     }
 
     /**
      * Attach tags.
      *
      * @param  \Illuminate\Http\Request $request
-     * @param  \App\Safe $safe
-     * @return \App\Safe
+     * @param  \App\Key $key
+     * @return \App\Key
      */
-    public function attachTags(Request $request, Safe $safe): Safe
+    public function attachTags(Request $request, Key $key): Key
     {
         if ($request->tags) {
             foreach ($request->tags as $tagName) {
@@ -52,48 +52,49 @@ class SafeRepository
                 } else {
                     $tag = Tag::create(['name' => $tagName, 'color' => '#ffffff']);
                 }
-                $safe->tags()->attach($tag->id);
+                $key->tags()->attach($tag->id);
             }
         }
 
-        return $safe;
+        return $key;
     }
 
     /**
      * Attach groups.
      *
      * @param  \Illuminate\Http\Request $request
-     * @param  \App\Safe $safe
-     * @return \App\Safe
+     * @param  \App\Key $key
+     * @return \App\Key
      */
-    public function attachGroupsAndFields(Request $request, Safe $safe): Safe
+    public function attachGroupsAndFields(Request $request, Key $key): Key
     {
         // Create and save groups and fields
         if ($request->groups) {
             foreach ($request->groups as $g) {
-                $group = $safe->groups()->create($g);
+                $group = $key->groups()->create($g);
                 if (array_key_exists('fields', $g)) {
                     foreach ($g['fields'] as $f) {
                         $field = new Field($f);
-                        $field->type_id = $f['type']['id'] ?? Type::default()->id;
+                        $field->type_id = $f['type']['id'] ?? Type::
+                            default()->id;
                         $field->group_id = $group->id;
-                        $safe->fields()->save($field);
+                        $key->fields()->save($field);
                     }
                 }
             }
         }
 
-        return $safe;
+        return $key;
     }
 
     /**
      * Sync categories.
      *
      * @param  \Illuminate\Http\Request $request
-     * @param  \App\Safe $safe
-     * @return \App\Safe
+     * @param  \App\Key $key
+     * @return \App\Key
      */
-    public function syncCategories(Request $request, Safe $safe): Safe
+    public function syncCategories(Request $request, Key $key): Key
     {
         if ($request->categories) {
             $categories = [];
@@ -107,20 +108,20 @@ class SafeRepository
                     $categories[] = $category->id;
                 }
             }
-            $safe->categories()->sync($categories);
+            $key->categories()->sync($categories);
         }
 
-        return $safe;
+        return $key;
     }
 
     /**
      * Sync tags.
      *
      * @param  \Illuminate\Http\Request $request
-     * @param  \App\Safe $safe
-     * @return \App\Safe
+     * @param  \App\Key $key
+     * @return \App\Key
      */
-    public function syncTags(Request $request, Safe $safe): Safe
+    public function syncTags(Request $request, Key $key): Key
     {
         if ($request->tags) {
             $tags = [];
@@ -134,37 +135,38 @@ class SafeRepository
                     $tags[] = $tag->id;
                 }
             }
-            $safe->tags()->sync($tags);
+            $key->tags()->sync($tags);
         }
 
-        return $safe;
+        return $key;
     }
 
     /**
      * Sync groups and fields.
      *
      * @param  \Illuminate\Http\Request $request
-     * @param  \App\Safe $safe
-     * @return \App\Safe
+     * @param  \App\Key $key
+     * @return \App\Key
      */
-    public function syncGroupsAndFields(Request $request, Safe $safe): Safe
+    public function syncGroupsAndFields(Request $request, Key $key): Key
     {
-        $safe->groups()->delete();
-        $safe->fields()->delete();
+        $key->groups()->delete();
+        $key->fields()->delete();
         if ($request->groups) {
             foreach ($request->groups as $g) {
-                $group = $safe->groups()->create($g);
+                $group = $key->groups()->create($g);
                 if (array_key_exists('fields', $g)) {
                     foreach ($g['fields'] as $f) {
                         $field = new Field($f);
-                        $field->type_id = $f['type']['id'] ?? Type::default()->id;
+                        $field->type_id = $f['type']['id'] ?? Type::
+                            default()->id;
                         $field->group_id = $group->id;
-                        $safe->fields()->save($field);
+                        $key->fields()->save($field);
                     }
                 }
             }
         }
 
-        return $safe;
+        return $key;
     }
 }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateIconsTable extends Migration
+class CreateKeysTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateIconsTable extends Migration
      */
     public function up()
     {
-        Schema::create('icons', function (Blueprint $table) {
+        Schema::create('keys', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('class');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class CreateIconsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('icons');
+        Schema::dropIfExists('keys');
     }
 }

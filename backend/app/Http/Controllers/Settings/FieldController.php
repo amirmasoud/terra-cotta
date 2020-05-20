@@ -29,7 +29,7 @@ class FieldController extends Controller
     {
         $this->authorizeResource(Field::class);
         $this->content = $content;
-        $this->content->model = Field::with('type', 'group', 'safe', 'icon');
+        $this->content->model = Field::with('type', 'group', 'key', 'icon');
     }
 
     /**
@@ -62,7 +62,7 @@ class FieldController extends Controller
      */
     public function show(Field $field)
     {
-        return new FieldResource($this->content->show($field->load('icon', 'group', 'safe', 'type')));
+        return new FieldResource($this->content->show($field->load('icon', 'group', 'key', 'type')));
     }
 
     /**
@@ -73,7 +73,7 @@ class FieldController extends Controller
      */
     public function edit(Field $field)
     {
-        return new FieldResource($this->content->edit($field->load('icon', 'group', 'safe', 'type')));
+        return new FieldResource($this->content->edit($field->load('icon', 'group', 'key', 'type')));
     }
 
     /**

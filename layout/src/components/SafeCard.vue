@@ -14,8 +14,8 @@
       <h4 class="mt-1 font-semibold text-lg leading-tight truncate">
         {{ safe.title }}
       </h4>
-      <div class="flex flex-wrap mt-1">
-        <div v-for="(field, index) in safe.fields" :key="index" class="w-full mt-2">
+      <div class="flex flex-wrap">
+        <div v-for="(field, index) in safe.fields" :key="index" class="w-full mt-1">
           <button class="float-left hover:bg-gray-300 rounded-full">
             <copy-svg class="p-1" /></button
           ><span class="uppercase text-xs font-semibold">{{ field.label }}: </span>

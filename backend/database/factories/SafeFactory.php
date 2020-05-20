@@ -2,7 +2,7 @@
 
 use Faker\Generator as Faker;
 
-$factory->define(App\Safe::class, function (Faker $faker) {
+$factory->define(App\Key::class, function (Faker $faker) {
     return [
         'name' => $faker->name
     ];

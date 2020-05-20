@@ -26,22 +26,12 @@ class Category extends Model
     ];
 
     /**
-     * A category belongs to an icon.
+     * A category belongs to many key.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\belongsTo
+     * @return BelongsToMany
      */
-    public function icon(): belongsTo
+    public function keys()
     {
-        return $this->belongsTo(Icon::class);
-    }
-
-    /**
-     * A category belongs to many safe.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function safes()
-    {
-        return $this->belongsToMany(Safe::class)->withTimestamps();
+        return $this->belongsToMany(Key::class)->withTimestamps();
     }
 }

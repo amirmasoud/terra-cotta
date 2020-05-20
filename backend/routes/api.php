@@ -14,11 +14,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['middleware' => 'guest:api'], function () {
-    Route::post('logout', 'Auth\LoginController@logout');
+Route::get('/admin/menu-list', 'MenuController')->name('menu');
+
+Route::get('/admin/{resource}', 'Resource\IndexController')->name('resource.index');
+Route::post('/admin/{resource}', 'Resource\CreateController')->name('resource.create');
+Route::get('/admin/{resource}/{id}', 'Resource\ShowController')->name('resource.show');
+Route::post('/admin/{resource}/{id}', 'Resource\UpdateController')->name('resource.update');
+
+
+Route::group(['middleware' => 'auth:sanctum'], function () {
+    Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 
     Route::get('/user', 'UserController@user');
     Route::get('/home', 'HomeController@get');
+
 
     Route::get('settings/users/search', 'Settings\UserController@search')
         ->name('users.search');
@@ -28,12 +37,6 @@ Route::group(['middleware' => 'guest:api'], function () {
 
     Route::patch('settings/profile', 'Settings\ProfileController@update');
     Route::patch('settings/password', 'Settings\PasswordController@update');
-
-    Route::get('settings/icons/search', 'Settings\IconController@search')
-        ->name('icons.search');
-    Route::resource('settings/icons', 'Settings\IconController')->except([
-        'create'
-    ]);
 
     Route::get('settings/tags/search', 'Settings\TagController@search')
         ->name('tags.search');
@@ -47,32 +50,20 @@ Route::group(['middleware' => 'guest:api'], function () {
         'create'
     ]);
 
-    Route::get('settings/types/search', 'Settings\TypeController@search')
-        ->name('types.search');
-    Route::resource('settings/types', 'Settings\TypeController')->except([
-        'create'
-    ]);
-
-    Route::get('settings/groups/search', 'Settings\GroupController@search')
-        ->name('groups.search');
-    Route::resource('settings/groups', 'Settings\GroupController')->except([
-        'create'
-    ]);
-
     Route::resource('settings/fields', 'Settings\FieldController')->except([
         'create'
     ]);
 
-    Route::get('safes/search', 'SafeController@search')
-        ->name('safes.search');
-    Route::resource('safes', 'SafeController')->except([
+    Route::get('keys/search', 'KeyController@search')
+        ->name('keys.search');
+    Route::resource('keys', 'KeyController')->except([
         'create'
     ]);
 });
 
 Route::group(['middleware' => 'guest:api'], function () {
-    Route::post('login', 'Auth\LoginController@login');
-    Route::post('register', 'Auth\RegisterController@register');
-    Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
-    Route::post('password/reset', 'Auth\ResetPasswordController@reset');
+    Route::post('login', 'Auth\LoginController@login')->name('login');
+    Route::post('register', 'Auth\RegisterController@register')->name('register');
+    Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
+    Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('password.reset');
 });
