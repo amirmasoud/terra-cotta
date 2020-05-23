@@ -105,7 +105,9 @@
           </div>
           <div class="w-full flex flex-wrap">
             <button
+              type="submit"
               class="uppercase tracking-wide text-indigo-500 text-xs font-bold appearance-none border-none bg-indigo-700 rounded leading-tight"
+              @click.prevent="submit()"
             >
               <div class="px-2 pt-1 pb-2 mt-1 text-indigo-100">Save</div>
             </button>
@@ -138,6 +140,8 @@ export default {
     },
   },
   data: () => ({
+    categories: [],
+    tags: [],
     form: {
       name: '',
       categories: [],
@@ -150,7 +154,7 @@ export default {
       axios
         .get('http://localhost:8000/api/admin/' + resource)
         .then(response => {
-          this[resource] = response.data.data.map(r => r.name)
+          this[resource] = response.data.data.map(r => ({ label: r.name, value: r.id }))
         })
         .catch(error => {
           console.error(error)
@@ -178,6 +182,16 @@ export default {
     newField() {
       const field = { label: '', type: 'text', value: '', deleted: false }
       this.form.fields.push(field)
+    },
+    submit() {
+      axios
+        .post('http://localhost:8000/api/admin/keys', this.form)
+        .then(response => {
+          console.log(response)
+        })
+        .catch(error => {
+          console.error(error)
+        })
     },
   },
 }
