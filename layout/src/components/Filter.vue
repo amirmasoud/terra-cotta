@@ -31,5 +31,8 @@ export default {
         console.error(error)
       })
   },
+  created() {
+    this.$emit('data-' + this.resource, this.resourceResponse)
+  },
 }
 </script>
