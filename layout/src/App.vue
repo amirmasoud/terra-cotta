@@ -40,34 +40,38 @@
           </div>
         </div>
         <div class="flex flex-wrap py-8 max-w-screen-lg mx-auto">
-          <empty-svg class="h-64 mt-8" />
-          <div class="w-full mt-8">
-            <p class="text-center uppercase font-semibold">
-              Ready to put your first key in the safe?
-            </p>
-          </div>
-          <div class="w-full px-2 sm:w-1/4 mt-4 mx-auto">
-            <button
-              class="flex mx-auto uppercase tracking-wide text-green-500 text-xs font-bold mb-2 appearance-none border-none bg-green-700 text-green-200 rounded leading-tight"
-            >
-              <div class="bg-green-800 p-2 rounded-tl rounded-bl shadow-lg ">
-                <plus-svg class="text-green-200" />
-              </div>
-              <div class="p-2 mt-1 text-green-100">START HERE</div>
-            </button>
-          </div>
-          <div class="w-full flex flex-wrap items-center justify-between">
-            <h1 class="p-2 font-semibold uppercase">Safes</h1>
-            <p class="px-2 text-gray-500 text-sm">12 results</p>
-          </div>
-          <safe-card
-            v-for="(safe, index) in safes"
-            :key="index"
-            @click.prevent="modalShowing = true"
-            @open="modalShowing = true"
-            class="w-full p-2"
-            :safe="safe"
-          />
+          <template v-if="keys.total">
+            <div class="w-full flex flex-wrap items-center justify-between">
+              <h1 class="p-2 font-semibold uppercase">Safes</h1>
+              <p class="px-2 text-gray-500 text-sm">12 results</p>
+            </div>
+            <safe-card
+              v-for="(safe, index) in keys.data"
+              :key="index"
+              @click.prevent="modalShowing = true"
+              @open="modalShowing = true"
+              class="w-full p-2"
+              :safe="safe"
+            />
+          </template>
+          <template v-else>
+            <empty-svg class="h-64 mt-8" />
+            <div class="w-full mt-8">
+              <p class="text-center uppercase font-semibold">
+                Ready to put your first key in the safe?
+              </p>
+            </div>
+            <div class="w-full px-2 sm:w-1/4 mt-4 mx-auto">
+              <button
+                class="flex mx-auto uppercase tracking-wide text-green-500 text-xs font-bold mb-2 appearance-none border-none bg-green-700 text-green-200 rounded leading-tight"
+              >
+                <div class="bg-green-800 p-2 rounded-tl rounded-bl shadow-lg ">
+                  <plus-svg class="text-green-200" />
+                </div>
+                <div class="p-2 mt-1 text-green-100">START HERE</div>
+              </button>
+            </div>
+          </template>
         </div>
       </div>
     </div>
@@ -96,17 +100,17 @@ export default {
     'filter-checkbox': Filter,
     'menu-list': MenuList,
   },
-  mounted() {},
-  created() {
+  mounted() {
     axios
       .get('http://localhost:8000/api/admin/keys')
-      .then(data => {
-        this.keys = data.data
+      .then(response => {
+        this.keys = response.data
       })
       .catch(error => {
-        console.log(error)
+        console.error(error)
       })
-
+  },
+  created() {
     this.$root.$on('menu-is-open', isOpen => {
       this.isOpen = isOpen
       if (isOpen) {
@@ -128,243 +132,6 @@ export default {
     keys: [],
     modalShowing: false,
     isOpen: false,
-    priceRangeSelect: {
-      label: 'Price Range',
-      options: [
-        { name: 'Up to $500 /wk', value: 500 },
-        { name: 'Up to $1000 /wk', value: 1000 },
-        { name: 'Up to $2000 /wk', value: 2000 },
-        { name: 'Up to $4000 /wk', value: 4000 },
-      ],
-    },
-    roomSelect: {
-      label: 'Room',
-      options: [
-        { name: 1, value: 1 },
-        { name: 2, value: 2 },
-        { name: 3, value: 3 },
-        { name: 4, value: 4 },
-      ],
-    },
-    bathroomSelect: {
-      label: 'Bathroom',
-      options: [
-        { name: 1, value: 1 },
-        { name: 2, value: 2 },
-        { name: 3, value: 3 },
-        { name: 4, value: 4 },
-      ],
-    },
-    property: {
-      imageUrl: 'img/colorado.jpg',
-      imageAlt: 'Colorado',
-      beds: 3,
-      baths: 2,
-      title: 'Modern home in city center',
-      priceCents: '190000',
-      formattedPrice: '$1,900.00',
-      reviewCount: 34,
-      rating: 3,
-    },
-    safes: [
-      {
-        category: 'server',
-        tag1: 'tag 1',
-        tag2: 'tag 2',
-        name: 'Server #1',
-        fields: [
-          { label: 'username', value: 'root', type: 'text' },
-          { label: 'password', value: '****', type: 'password' },
-        ],
-      },
-      {
-        category: 'server',
-        tag1: 'tag 1',
-        tag2: 'tag 2',
-        name: 'Server #2',
-        fields: [{ label: 'password', value: '****', type: 'password' }],
-      },
-      {
-        category: 'server',
-        tag1: 'tag 1',
-        tag2: 'tag 2',
-        name: 'Server #1',
-        fields: [
-          { label: 'username', value: 'root', type: 'text' },
-          { label: 'password', value: '****', type: 'password' },
-        ],
-      },
-      {
-        category: 'server',
-        tag1: 'tag 1',
-        tag2: 'tag 2',
-        name: 'Server #1',
-        fields: [
-          { label: 'username', value: 'root', type: 'text' },
-          { label: 'password', value: '****', type: 'password' },
-        ],
-      },
-      {
-        category: 'server',
-        tag1: 'tag 1',
-        tag2: 'tag 2',
-        name: 'Server #1',
-        fields: [
-          { label: 'username', value: 'root', type: 'text' },
-          { label: 'password', value: '****', type: 'password' },
-        ],
-      },
-      {
-        category: 'server',
-        tag1: 'tag 1',
-        tag2: 'tag 2',
-        name: 'Server #1',
-        fields: [
-          { label: 'username', value: 'root', type: 'text' },
-          { label: 'password', value: '****', type: 'password' },
-        ],
-      },
-      {
-        category: 'server',
-        tag1: 'tag 1',
-        tag2: 'tag 2',
-        name: 'Server #1',
-        fields: [
-          { label: 'username', value: 'root', type: 'text' },
-          { label: 'password', value: '****', type: 'password' },
-        ],
-      },
-      {
-        category: 'server',
-        tag1: 'tag 1',
-        tag2: 'tag 2',
-        name: 'Server #1',
-        fields: [
-          { label: 'username', value: 'root', type: 'text' },
-          { label: 'password', value: '****', type: 'password' },
-        ],
-      },
-      {
-        category: 'server',
-        tag1: 'tag 1',
-        tag2: 'tag 2',
-        name: 'Server #1',
-        fields: [
-          { label: 'username', value: 'root', type: 'text' },
-          { label: 'password', value: '****', type: 'password' },
-        ],
-      },
-      {
-        category: 'server',
-        tag1: 'tag 1',
-        tag2: 'tag 2',
-        name: 'Server #1',
-        fields: [
-          { label: 'username', value: 'root', type: 'text' },
-          { label: 'password', value: '****', type: 'password' },
-        ],
-      },
-      {
-        category: 'server',
-        tag1: 'tag 1',
-        tag2: 'tag 2',
-        name: 'Server #1',
-        fields: [
-          { label: 'username', value: 'root', type: 'text' },
-          { label: 'password', value: '****', type: 'password' },
-        ],
-      },
-      {
-        category: 'server',
-        tag1: 'tag 1',
-        tag2: 'tag 2',
-        name: 'Server #1',
-        fields: [
-          { label: 'username', value: 'root', type: 'text' },
-          { label: 'password', value: '****', type: 'password' },
-        ],
-      },
-      {
-        category: 'server',
-        tag1: 'tag 1',
-        tag2: 'tag 2',
-        name: 'Server #1',
-        fields: [
-          { label: 'username', value: 'root', type: 'text' },
-          { label: 'password', value: '****', type: 'password' },
-        ],
-      },
-      {
-        category: 'server',
-        tag1: 'tag 1',
-        tag2: 'tag 2',
-        name: 'Server #1',
-        fields: [
-          { label: 'username', value: 'root', type: 'text' },
-          { label: 'password', value: '****', type: 'password' },
-        ],
-      },
-      {
-        category: 'server',
-        tag1: 'tag 1',
-        tag2: 'tag 2',
-        name: 'Server #1',
-        fields: [
-          { label: 'username', value: 'root', type: 'text' },
-          { label: 'password', value: '****', type: 'password' },
-        ],
-      },
-      {
-        category: 'server',
-        tag1: 'tag 1',
-        tag2: 'tag 2',
-        name: 'Server #1',
-        fields: [
-          { label: 'username', value: 'root', type: 'text' },
-          { label: 'password', value: '****', type: 'password' },
-        ],
-      },
-      {
-        category: 'server',
-        tag1: 'tag 1',
-        tag2: 'tag 2',
-        name: 'Server #1',
-        fields: [
-          { label: 'username', value: 'root', type: 'text' },
-          { label: 'password', value: '****', type: 'password' },
-        ],
-      },
-      {
-        category: 'server',
-        tag1: 'tag 1',
-        tag2: 'tag 2',
-        name: 'Server #1',
-        fields: [
-          { label: 'username', value: 'root', type: 'text' },
-          { label: 'password', value: '****', type: 'password' },
-        ],
-      },
-      {
-        category: 'server',
-        tag1: 'tag 1',
-        tag2: 'tag 2',
-        name: 'Server #1',
-        fields: [
-          { label: 'username', value: 'root', type: 'text' },
-          { label: 'password', value: '****', type: 'password' },
-        ],
-      },
-      {
-        category: 'server',
-        tag1: 'tag 1',
-        tag2: 'tag 2',
-        name: 'Server #1',
-        fields: [
-          { label: 'username', value: 'root', type: 'text' },
-          { label: 'password', value: '****', type: 'password' },
-        ],
-      },
-    ],
   }),
 }
 </script>
