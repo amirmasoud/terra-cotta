@@ -64,6 +64,8 @@
             <div class="w-full px-2 sm:w-1/4 mt-4 mx-auto">
               <button
                 class="flex mx-auto uppercase tracking-wide text-green-500 text-xs font-bold mb-2 appearance-none border-none bg-green-700 text-green-200 rounded leading-tight"
+                @click.prevent="modalShowing = true"
+                @open="modalShowing = true"
               >
                 <div class="bg-green-800 p-2 rounded-tl rounded-bl shadow-lg ">
                   <plus-svg class="text-green-200" />
