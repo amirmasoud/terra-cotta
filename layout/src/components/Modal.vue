@@ -111,6 +111,7 @@
             >
               <div class="px-2 pt-1 pb-2 mt-1 text-indigo-100">Save</div>
             </button>
+            {{ form }}
           </div>
         </div>
         <slot />
@@ -149,8 +150,6 @@ export default {
     },
   }),
   mounted() {
-    axios.get('http://localhost:8000/sanctum/csrf-cookie').then(response => {})
-    console.log(document.cookie)
     for (let resource of ['tags', 'categories']) {
       axios
         .get('http://localhost:8000/api/admin/' + resource)
