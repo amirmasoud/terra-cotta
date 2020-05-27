@@ -6,7 +6,8 @@ export default {
   env: {
     appName: process.env.APP_NAME,
     baseUrl: process.env.BASE_URL,
-    apiUrl: process.env.API_URL
+    apiUrl: process.env.API_URL,
+    appLocale: process.env.APP_LOCALE
   },
 
   /*
@@ -55,7 +56,7 @@ export default {
    */
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
-    '@nuxtjs/axios',
+    ['@nuxtjs/axios', { baseURL: process.env.apiUrl }],
     '@nuxtjs/pwa'
   ],
   /*
