@@ -40,21 +40,6 @@
         <div class="mx-2">
           <AccountDropdown class="sm:px-2" />
         </div>
-        <!-- <div class="px-4 py-5 border-t border-gray-800 sm:hidden">
-          <div class="flex items-center">
-            <img
-              class="h-8 w-8 border-2 border-gray-600 rounded-full object-cover"
-              src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=256&q=80"
-              alt="Your avatar"
-            />
-            <span class="ml-3 font-semibold text-black">Jane Doe</span>
-          </div>
-          <div class="mt-4">
-            <a href="#" class="block text-gray-900 hover:text-black">Account settings</a>
-            <a href="#" class="mt-2 block text-gray-900 hover:text-black">Support</a>
-            <a href="#" class="mt-2 block text-gray-900 hover:text-black">Sign out</a>
-          </div>
-        </div> -->
       </div>
     </nav>
   </header>
