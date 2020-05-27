@@ -1,33 +1,9 @@
 <template>
-  <div class="container">
-    <div>
-      <account-dropdown />
-      <logo />
-      <h1 class="title">
-        frontend
-      </h1>
-      <h2 class="subtitle">
-        Terra cotta frontend
-      </h2>
-      <div class="links">
-        <nuxt-link
-          v-for="locale in availableLocales"
-          :key="locale.code"
-          :to="switchLocalePath(locale.code)"
-          >{{ locale.name }}</nuxt-link
-        >
-
-        <a @click="setLocale" target="_blank" class="button--green">
-          {{ $store.state.i18n }}
-        </a>
-      </div>
-    </div>
-  </div>
+  <tc-header />
 </template>
 
 <script>
-import AccountDropdown from '~/components/elements/AccountDropdown'
-import Logo from '~/components/Logo.vue'
+import TcHeader from '~/components/partials/Header'
 
 export default {
   computed: {
@@ -37,8 +13,7 @@ export default {
   },
 
   components: {
-    Logo,
-    AccountDropdown
+    TcHeader
   },
   methods: {
     setLocale() {

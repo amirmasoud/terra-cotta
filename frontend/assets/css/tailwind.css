@@ -1,5 +1,90 @@
-/* purgecss start ignore */
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-/* purgecss end ignore */
-@import 'tailwindcss/utilities';
+@tailwind base;
+@tailwind components;
+
+.h-\(screen-12\) {
+  height: calc(100vh - 3rem) !important;
+}
+
+.max-h-\(screen-24\) {
+  height: calc(100vh - 6rem);
+}
+
+.w-\(screen-4\) {
+  width: calc(100vw - 1rem);
+}
+
+.w-\(full-6\) {
+  width: calc(100% - 1.5rem);
+}
+
+.heroicon-ui {
+  @apply fill-current;
+}
+
+.animate {
+  @apply transition-all duration-300 ease-linear;
+}
+
+.input {
+  @apply appearance-none rounded w-full py-2 px-3 border border-gray-300 text-gray-700 leading-tight;
+}
+
+.input:hover {
+  @apply bg-gray-200;
+}
+
+.input:focus {
+  @apply outline-none shadow outline-none bg-white;
+}
+
+.input-indigo:focus {
+  @apply border-indigo-400;
+}
+
+.vs__dropdown-toggle {
+  @apply appearance-none bg-no-repeat bg-white border-gray-300 border rounded py-1 pr-10 pl-0 text-base leading-normal;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23a0aec0'%3e%3cpath d='M15.3 9.3a1 1 0 0 1 1.4 1.4l-4 4a1 1 0 0 1-1.4 0l-4-4a1 1 0 0 1 1.4-1.4l3.3 3.29 3.3-3.3z'/%3e%3c/svg%3e");
+  -webkit-print-color-adjust: exact;
+  color-adjust: exact;
+  background-position: right 0.5rem center;
+  background-size: 1.5em 1.5em;
+}
+
+.vs__dropdown-toggle::-ms-expand {
+  @apply text-gray-500 border-none;
+}
+
+@media not print {
+  .vs__dropdown-toggle::-ms-expand {
+    @apply hidden;
+  }
+}
+
+@media print and (-ms-high-contrast: active),
+print and (-ms-high-contrast: none) {
+  .vs__dropdown-toggle {
+    @apply pr-3;
+  }
+}
+
+.vs__dropdown-toggle:hover {
+  @apply bg-gray-200;
+}
+
+.vs__dropdown-toggle:focus {
+  @apply outline-none shadow shadow-outline border-indigo-400 bg-white;
+}
+
+.vs__selected {
+  @apply bg-indigo-400 border-transparent text-indigo-100 rounded my-0 ml-1 mr-0;
+}
+
+.vs__actions {
+  @apply hidden;
+}
+
+.vs__deselect>svg {
+  @apply fill-current text-indigo-100;
+}
+
+@tailwind utilities;
