@@ -2,7 +2,7 @@
   <div class="relative">
     <button
       @click="isOpen = !isOpen"
-      class="relative block h-8 w-8 rounded-full overflow-hidden border-2 border-gray-300 focus:outline-none focus:border-white"
+      class="account-btn relative block h-8 w-8 rounded-full overflow-hidden border-2 border-gray-300 focus:outline-none focus:border-white"
       :class="[isOpen ? 'z-10' : 'z-0']"
     >
       <img
@@ -15,7 +15,7 @@
       v-if="isOpen"
       @click="isOpen = false"
       tabindex="-1"
-      class="fixed inset-0 h-full w-full bg-black opacity-50 cursor-default"
+      class="full-w-close-btn fixed inset-0 h-full w-full bg-black opacity-50 cursor-default"
     ></button>
     <div
       v-if="isOpen"
