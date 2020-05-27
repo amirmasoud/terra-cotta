@@ -57,7 +57,26 @@ export default {
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     ['@nuxtjs/axios', { baseURL: process.env.apiUrl }],
-    '@nuxtjs/pwa'
+    '@nuxtjs/pwa',
+    [
+      'nuxt-i18n',
+      {
+        vueI18nLoader: true,
+        defaultLocale: 'en',
+        locales: [
+          { name: 'English', code: 'en', file: 'en.js' },
+          { name: 'فارسی', code: 'fa', file: 'fa.js' }
+        ],
+        lazy: true,
+        langDir: 'lang/',
+        vuex: {
+          moduleName: 'i18n',
+          syncLocale: true,
+          syncMessages: true,
+          syncRouteParams: true
+        }
+      }
+    ]
   ],
   /*
    ** Axios module configuration

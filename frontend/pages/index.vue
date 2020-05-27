@@ -1,6 +1,7 @@
 <template>
   <div class="container">
     <div>
+      <account-dropdown />
       <logo />
       <h1 class="title">
         frontend
@@ -9,11 +10,15 @@
         Terra cotta frontend
       </h2>
       <div class="links">
-        <a href="https://nuxtjs.org/" target="_blank" class="button--green">
-          Documentation
-        </a>
-        <a @click="addTodo" target="_blank" class="button--grey">
-          GitHub
+        <nuxt-link
+          v-for="locale in availableLocales"
+          :key="locale.code"
+          :to="switchLocalePath(locale.code)"
+          >{{ locale.name }}</nuxt-link
+        >
+
+        <a @click="setLocale" target="_blank" class="button--green">
+          {{ $store.state.i18n }}
         </a>
       </div>
     </div>
@@ -21,11 +26,25 @@
 </template>
 
 <script>
+import AccountDropdown from '~/components/elements/AccountDropdown'
 import Logo from '~/components/Logo.vue'
 
 export default {
+  computed: {
+    availableLocales() {
+      return this.$i18n.locales.filter((i) => i.code !== this.$i18n.locale)
+    }
+  },
+
   components: {
-    Logo
+    Logo,
+    AccountDropdown
+  },
+  methods: {
+    setLocale() {
+      console.log(this.app)
+      // this.$store.state.i18n.setLocale('fa')
+    }
   }
 }
 </script>
