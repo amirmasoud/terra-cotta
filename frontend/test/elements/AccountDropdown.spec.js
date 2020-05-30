@@ -2,7 +2,6 @@ import { shallowMount } from '@vue/test-utils'
 import AccountDropdown from '@/components/elements/AccountDropdown.vue'
 
 describe('AccountDropdown', () => {
-  const $t = () => {}
   const wrapper = shallowMount(AccountDropdown, {
     mocks: {
       $t: () => {}
@@ -10,13 +9,15 @@ describe('AccountDropdown', () => {
   })
 
   it('is a Vue instance', () => {
-    expect(wrapper.isVueInstance()).toBeTruthy()
+    expect(wrapper).toBeTruthy()
   })
 
-  it('button click should close the dropdown', () => {
-    wrapper.find('.account-btn').trigger('click')
+  it('background click should close the dropdown', async () => {
+    const button = wrapper.find('.account-btn')
+    await button.trigger('click')
     expect(wrapper.vm.isOpen).toBe(true)
-    const closeBtn = wrapper.find('full-w-close-btn')
-    expect(closeBtn.exists())
+    const close = wrapper.find('.full-w-close-btn')
+    await close.trigger('click')
+    expect(wrapper.vm.isOpen).toBe(false)
   })
 })
