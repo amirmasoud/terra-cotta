@@ -44,8 +44,7 @@ export default {
     }
   },
   created() {
-    if (process.client || process.env.NODE_ENV === 'test') {
-      console.log('fuck')
+    if (process.client) {
       const handleEscape = (e) => {
         if (e.key === 'Esc' || e.key === 'Escape') {
           this.isOpen = false
