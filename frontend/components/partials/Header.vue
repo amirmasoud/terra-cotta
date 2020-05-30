@@ -2,7 +2,9 @@
   <header
     class="flex items-center fixed w-full h-16 bg-white sm:flex sm:justify-between sm:items-center border-b border-gray-300"
   >
-    <div class="hidden md:block md:w-64 md:px-2 md:py-2 w-full bg-gray-900">
+    <div
+      class="hidden md:flex justify-center items-center md:w-64 md:px-2 md:py-2 w-full bg-gray-900 h-16"
+    >
       <div>
         <h1 class="text-2xl font-bold text-white">
           <key-svg class="inline mr-2 text-indigo-400" />

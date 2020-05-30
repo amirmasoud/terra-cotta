@@ -1,9 +1,14 @@
 <template>
-  <tc-header />
+  <div>
+    <tc-header />
+    <tc-aside />
+  </div>
 </template>
 
 <script>
+// import axios from 'axios'
 import TcHeader from '~/components/partials/Header'
+import TcAside from '~/components/partials/Aside'
 
 export default {
   computed: {
@@ -12,8 +17,29 @@ export default {
     }
   },
 
+  // asyncData({ params, error }) {
+  //   return axios
+  //     .get('menu-list')
+  //     .then((res) => {
+  //       console.log(res)
+  //       return { resourceResponse: res.data }
+  //     })
+  //     .catch((e) => {
+  //       console.log(e)
+  //       error({ statusCode: 404, message: 'Post not found' })
+  //     })
+  // },
+
+  async asyncData({ api }) {
+    console.log(api)
+    const ip = await api.$get('http://localhost:8000/api/menu-list')
+    console.log(ip)
+    return { ip }
+  },
+
   components: {
-    TcHeader
+    TcHeader,
+    TcAside
   },
   methods: {
     setLocale() {

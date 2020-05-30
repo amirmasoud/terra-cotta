@@ -3,25 +3,18 @@ require('dotenv').config()
 export default {
   mode: 'universal',
 
-  env: {
-    appName: process.env.APP_NAME,
-    baseUrl: process.env.BASE_URL,
-    apiUrl: process.env.API_URL,
-    appLocale: process.env.APP_LOCALE
-  },
-
   /*
    ** Headers of the page
    */
   head: {
-    title: process.env.appName,
+    title: process.env.APP_NAME,
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       {
         hid: 'description',
         name: 'description',
-        content: process.env.appName
+        content: process.env.APP_NAME
       }
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
@@ -37,7 +30,7 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [],
+  plugins: ['~/plugins/axios'],
   /*
    ** Nuxt.js dev-modules
    */
@@ -56,7 +49,7 @@ export default {
    */
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
-    ['@nuxtjs/axios', { baseURL: process.env.apiUrl }],
+    '@nuxtjs/axios',
     '@nuxtjs/pwa',
     [
       'nuxt-i18n',
@@ -78,11 +71,7 @@ export default {
       }
     ]
   ],
-  /*
-   ** Axios module configuration
-   ** See https://axios.nuxtjs.org/options
-   */
-  axios: {},
+
   /*
    ** Build configuration
    */
