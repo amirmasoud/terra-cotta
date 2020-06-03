@@ -1,7 +1,7 @@
-export default function({ $axios, redirect }, inject) {
-  const api = $axios.create()
-
-  api.setBaseURL(process.env.API_URL)
-
-  inject('api', api)
+export default async function({ $axios }) {
+  $axios.setBaseURL(process.env.API_URL)
+  $axios.setHeader('Content-Type', 'application/json')
+  await $axios.get('/sanctum/csrf-cookie', {
+    withCredentials: true
+  })
 }
