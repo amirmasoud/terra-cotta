@@ -4,18 +4,19 @@
     <tc-aside :list="menuList" :tags="tags" :categories="categories" />
 
     <div class="overflow-scroll ml-0 md:ml-64">
-      <div class="flex flex-wrap h-32 pt-13 bg-gray-300 border border-gray-400">
+      <div class="flex flex-wrap h-16 pt-13 bg-gray-300 border border-gray-400">
         <div
-          class="flex w-full flex-wrap justify-between items-center px-2 max-w-screen-lg mx-auto"
+          class="flex items-center w-full flex-wrap justify-between items-center px-2 max-w-screen-lg mx-auto"
         >
           <button
-            class="flex uppercase tracking-wide text-green-500 text-xs font-bold appearance-none border-none bg-green-700 text-green-200 rounded leading-tight"
-            href="#"
+            class="flex items-stretch py-1 uppercase tracking-wide text-green-500 text-xs font-bold appearance-none border-none bg-green-700 text-green-200 rounded leading-tight"
           >
-            <div class="bg-green-800 p-1 rounded-tl rounded-bl shadow-lg ">
+            <div class="flex items-center bg-green-800 rounded shadow-lg mx-1">
               <plus-svg class="text-green-200" />
             </div>
-            <div class="p-2 mt-1 text-green-100">New user</div>
+            <div class="flex items-center text-green-100 pl-1 pr-2">
+              New user
+            </div>
           </button>
           <input
             type="search"
