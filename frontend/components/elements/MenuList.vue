@@ -5,7 +5,7 @@
     >
     <div class="mt-2 block">
       <a
-        v-for="item in resourceResponse"
+        v-for="item in list"
         :key="item.uuid"
         class="flex uppercase tracking-wide text-gray-500 text-xs font-bold mb-2 appearance-none w-full border-none bg-gray-700 text-gray-200 rounded leading-tight"
         href="#"
@@ -19,7 +19,6 @@
 </template>
 
 <script>
-// import axios from 'axios'
 import CategorySvg from '@/components/svg/Category'
 import FieldSvg from '@/components/svg/Field'
 import GroupSvg from '@/components/svg/Group'
@@ -31,7 +30,7 @@ import UserSvg from '@/components/svg/User'
 import FileSvg from '@/components/svg/File'
 
 export default {
-  props: ['title'],
+  props: ['title', 'list'],
   components: {
     'category-svg': CategorySvg,
     'field-svg': FieldSvg,
@@ -42,25 +41,6 @@ export default {
     'type-svg': TypeSvg,
     'user-svg': UserSvg,
     'file-svg': FileSvg
-  },
-  data: () => ({
-    resourceResponse: []
-  })
-
-  // asyncData() {
-  //   const { data } = axios.get('menu-list')
-  //   return { resourceResponse: data }
-  // }
-
-  // mounted() {
-  //   axios
-  //     .get('menu-list')
-  //     .then((response) => {
-  //       this.resourceResponse = response.data
-  //     })
-  //     .catch((error) => {
-  //       console.error(error)
-  //     })
-  // }
+  }
 }
 </script>

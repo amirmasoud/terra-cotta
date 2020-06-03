@@ -11,9 +11,9 @@
       class="transform fixed mt-13 md:translate-x-0 animate px-2 pt-2 bg-gray-900 overflow-scroll h-(screen-12) lg:block w-64"
       :class="[isOpen ? 'translate-x-0' : '-translate-x-64']"
     >
-      <menu-list title="" />
-      <filter-checkbox resource="tags" title="tags" />
-      <filter-checkbox resource="categories" title="categories" />
+      <menu-list title="" :list="list" />
+      <filter-checkbox :resource="tags" title="tags" />
+      <filter-checkbox :resource="categories" title="categories" />
     </div>
   </div>
 </template>
@@ -23,11 +23,11 @@ import MenuList from '@/components/elements/MenuList'
 import FilterCheckbox from '@/components/elements/Filter'
 
 export default {
+  props: ['list', 'tags', 'categories'],
   components: {
     FilterCheckbox,
     'menu-list': MenuList
   },
-
   data: () => ({
     isOpen: false
   }),

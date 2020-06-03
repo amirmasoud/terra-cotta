@@ -1,12 +1,11 @@
 <template>
   <div>
     <tc-header />
-    <tc-aside />
+    <tc-aside :list="menuList" :tags="tags" :categories="categories" />
   </div>
 </template>
 
 <script>
-// import axios from 'axios'
 import TcHeader from '~/components/partials/Header'
 import TcAside from '~/components/partials/Aside'
 
@@ -17,24 +16,11 @@ export default {
     }
   },
 
-  // asyncData({ params, error }) {
-  //   return axios
-  //     .get('menu-list')
-  //     .then((res) => {
-  //       console.log(res)
-  //       return { resourceResponse: res.data }
-  //     })
-  //     .catch((e) => {
-  //       console.log(e)
-  //       error({ statusCode: 404, message: 'Post not found' })
-  //     })
-  // },
-
-  async asyncData({ api }) {
-    console.log(api)
-    const ip = await api.$get('http://localhost:8000/api/menu-list')
-    console.log(ip)
-    return { ip }
+  async asyncData({ $axios }) {
+    const menuList = await $axios.$get('/admin/menu-list')
+    const tags = await $axios.$get('/admin/tags')
+    const categories = await $axios.$get('/admin/categories')
+    return { menuList, tags, categories }
   },
 
   components: {
@@ -51,11 +37,6 @@ export default {
 </script>
 
 <style>
-/* Sample `apply` at-rules with Tailwind CSS
-.container {
-  @apply min-h-screen flex justify-center items-center text-center mx-auto;
-}
-*/
 .container {
   margin: 0 auto;
   min-height: 100vh;

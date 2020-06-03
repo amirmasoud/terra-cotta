@@ -1,7 +1,4 @@
-export default function({ $axios, redirect }, inject) {
-  const api = $axios.create()
-
-  api.setBaseURL(process.env.API_URL)
-
-  inject('api', api)
+export default function({ $axios, redirect }) {
+  $axios.setBaseURL('http://localhost:8000/api')
+  $axios.setHeader('Content-Type', 'application/json')
 }
