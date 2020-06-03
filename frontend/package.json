@@ -16,8 +16,10 @@
     "@nuxtjs/axios": "^5.3.6",
     "@nuxtjs/dotenv": "^1.4.0",
     "@nuxtjs/pwa": "^3.0.0-0",
+    "@tailwindcss/custom-forms": "^0.2.1",
     "nuxt": "^2.0.0",
-    "nuxt-i18n": "^6.12.0"
+    "nuxt-i18n": "^6.12.0",
+    "vue-select": "^3.10.3"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^2.0.0",
