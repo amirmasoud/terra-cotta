@@ -8,7 +8,7 @@
         <div
           class="flex items-center w-full flex-wrap justify-between items-center px-2 max-w-screen-lg mx-auto"
         >
-          <tc-button>New user</tc-button>
+          <tc-button icon="plus">New user</tc-button>
           <input
             type="search"
             class="bg-gray-200 p-2 rounded border border-gray-400 text-sm tracking-wide font-semibold shadow-inner sm:ml-4"
@@ -32,34 +32,30 @@
           />
         </template>
         <template v-else>
-          <empty-svg class="h-64 mt-8" />
+          <tc-svg-empty class="h-64 mt-8" />
           <div class="w-full mt-8">
             <p class="text-center uppercase font-semibold">
               Ready to put your first key in the safe?
             </p>
           </div>
           <div class="w-full px-2 sm:w-1/4 mt-4 mx-auto">
-            <tc-button>START HERE</tc-button>
+            <tc-button icon="plus" @click.native="modalShowing = true"
+              >START HERE</tc-button
+            >
           </div>
         </template>
       </div>
-      <modal
+      <tc-modal
         :showing="modalShowing"
         @close="modalShowing = false"
         :tags="tags"
         :categories="categories"
-      ></modal>
+      ></tc-modal>
     </div>
   </div>
 </template>
 
 <script>
-import TcHeader from '~/components/partials/Header'
-import TcAside from '~/components/partials/Aside'
-import Modal from '~/components/elements/Modal'
-import TcButton from '~/components/elements/Button'
-import EmptySvg from '~/components/svg/Empty'
-
 export default {
   computed: {
     availableLocales() {
@@ -78,14 +74,6 @@ export default {
   data: () => ({
     modalShowing: false
   }),
-
-  components: {
-    TcHeader,
-    TcAside,
-    TcButton,
-    EmptySvg,
-    Modal
-  },
 
   methods: {
     setLocale() {

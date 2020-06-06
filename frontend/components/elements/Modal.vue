@@ -1,5 +1,5 @@
 <template>
-  <Transition name="fade">
+  <transition name="fade">
     <div
       v-if="showing"
       class="fixed inset-0 w-full h-screen max-h-screen flex items-center justify-center overflow-hidden px-2 shadow-lg bg-semi-75"
@@ -85,7 +85,7 @@
                   class="self-center text-gray-600 hover:text-red-600"
                   @click.prevent="field.deleted = true"
                 >
-                  <trash-svg class="w-6 h-6 pl-1" />
+                  <tc-svg-trash class="w-6 h-6 pl-1" />
                 </button>
               </div>
               <div class="w-full mb-2">
@@ -116,15 +116,7 @@
             </div>
           </div>
           <div class="w-full flex flex-wrap mb-4">
-            <button
-              class="flex uppercase tracking-wide text-green-500 text-xs font-bold mb-2 appearance-none border-none bg-green-700 text-green-200 rounded leading-tight"
-              @click="newField()"
-            >
-              <div class="bg-green-800 p-0 rounded-tl rounded-bl shadow-lg ">
-                <plus-svg class="mt-1 text-green-200" />
-              </div>
-              <div class="m-2 text-green-100">New field</div>
-            </button>
+            <tc-button @click.native="newField()">New field</tc-button>
           </div>
           <div class="w-full flex flex-wrap">
             <button
@@ -139,21 +131,17 @@
         <slot />
       </div>
     </div>
-  </Transition>
+  </transition>
 </template>
 
 <script>
 import axios from 'axios'
 import vSelect from 'vue-select'
-import TrashSvg from '~/components/svg/Trash'
-import PlusSvg from '~/components/svg/Plus'
 import 'vue-select/dist/vue-select.css'
 
 export default {
   components: {
-    'v-select': vSelect,
-    'trash-svg': TrashSvg,
-    'plus-svg': PlusSvg
+    vSelect
   },
   props: {
     showing: {

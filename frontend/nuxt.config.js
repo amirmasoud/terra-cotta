@@ -2,6 +2,7 @@ require('dotenv').config()
 
 export default {
   mode: 'universal',
+  components: true,
 
   /*
    ** Headers of the page
@@ -42,8 +43,16 @@ export default {
     // Doc: https://github.com/nuxt-community/nuxt-tailwindcss
     '@nuxtjs/tailwindcss',
     // Doc: https://github.com/nuxt-community/dotenv-module
-    '@nuxtjs/dotenv'
+    '@nuxtjs/dotenv',
+    '@nuxt/components'
   ],
+
+  components: [
+    { path: '~/components/elements', prefix: 'tc' },
+    { path: '~/components/partials', prefix: 'tc' },
+    { path: '~/components/svg', prefix: 'tc-svg' }
+  ],
+
   /*
    ** Nuxt.js modules
    */
