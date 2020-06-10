@@ -4,16 +4,18 @@
       {{ title }}</span
     >
     <div class="mt-2 block">
-      <a
+      <nuxt-link
         v-for="item in list"
         :key="item.uuid"
+        :to="
+          localePath({ name: 'resource', params: { resource: item.resource } })
+        "
         class="flex uppercase tracking-wide text-gray-500 text-xs font-bold mb-2 appearance-none w-full border-none bg-gray-700 text-gray-200 rounded leading-tight"
-        href="#"
         ><div class="bg-gray-800 p-2 rounded-tl rounded-bl shadow-lg ">
           <component :is="item.icon" class="text-gray-600"></component>
         </div>
-        <div class="p-2 mt-1">{{ item.title }}</div></a
-      >
+        <div class="p-2 mt-1">{{ item.title }}</div>
+      </nuxt-link>
     </div>
   </div>
 </template>
