@@ -19,6 +19,7 @@ class MenuController extends Controller
             $model = config('terracotta.namespace') . rtrim($item, '.php');
             $items[] = [
                 'title' => $model::title(),
+                'resource' => $model::resource(),
                 'icon' => $model::icon(),
                 'priority' => $model::priority(),
                 'uuid' => Str::uuid()

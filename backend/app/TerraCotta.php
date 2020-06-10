@@ -36,4 +36,14 @@ class TerraCotta
     {
         return 10;
     }
+
+    /**
+     * plural string of model. used to request the API.
+     *
+     * @return string
+     */
+    public static function resource(): string
+    {
+        return Str::of(static::title())->lower()->plural()->__toString();
+    }
 }
