@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <tc-container>
     <template v-if="resource.total">
       <div class="w-full flex flex-wrap items-center justify-between px-4">
         <h1 class="font-semibold uppercase">
@@ -37,7 +37,7 @@
     <template v-else>
       <tc-svg-empty class="h-64 mt-8" />
     </template>
-  </div>
+  </tc-container>
 </template>
 
 <script>

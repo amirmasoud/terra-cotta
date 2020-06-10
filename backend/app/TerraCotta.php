@@ -38,7 +38,7 @@ class TerraCotta
     }
 
     /**
-     * plural string of model. used to request the API.
+     * Plural string of model. used to request the API.
      *
      * @return string
      */

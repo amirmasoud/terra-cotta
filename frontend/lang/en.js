@@ -4,6 +4,8 @@ export default {
     signout: 'Sign out'
   },
   resource: {
-    results: 'results'
+    results: 'results',
+    search: 'SEARCH',
+    new: 'New'
   }
 }

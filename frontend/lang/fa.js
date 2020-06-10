@@ -4,6 +4,8 @@ export default {
     signout: 'خروج'
   },
   resource: {
-    results: 'نتیجه'
+    results: 'نتیجه',
+    search: 'جستجوی',
+    new: 'جدید'
   }
 }

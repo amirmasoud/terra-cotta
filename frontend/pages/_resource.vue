@@ -4,38 +4,16 @@
     <tc-aside :list="menuList" :tags="tags" :categories="categories" />
 
     <div class="overflow-scroll ml-0 md:ml-64">
-      <div class="flex flex-wrap h-16 pt-13 bg-gray-300 border border-gray-400">
-        <div
-          class="flex items-center w-full flex-wrap justify-between items-center px-2 max-w-screen-lg mx-auto"
-        >
-          <tc-button icon="plus">New user</tc-button>
-          <input
-            type="search"
-            class="bg-gray-200 p-2 rounded border border-gray-400 text-sm tracking-wide font-semibold shadow-inner sm:ml-4"
-            placeholder="SEARCH USERS"
-          />
-        </div>
-      </div>
-      <div class="flex flex-wrap py-8 max-w-screen-lg mx-auto">
-        <nuxt-child />
-      </div>
-      <tc-modal
-        :showing="modalShowing"
-        @close="modalShowing = false"
-        :tags="tags"
-        :categories="categories"
-      ></tc-modal>
+      <nuxt-child />
     </div>
   </div>
 </template>
 
 <script>
+import resource from '~/mixins/resource'
+
 export default {
-  computed: {
-    availableLocales() {
-      return this.$i18n.locales.filter((i) => i.code !== this.$i18n.locale)
-    }
-  },
+  mixins: [resource],
 
   async asyncData({ $axios }) {
     const menuList = await $axios.$get('/admin/menu-list')
