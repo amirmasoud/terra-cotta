@@ -1,8 +1,0 @@
-composer install
-cp .env.example .env
-php artisan jwt:secret
-SET DATABASE CREDENTIALS
-php artisan key:generate
-php artisan migrate --seed
-sudo ln -s /usr/bin/python3 /usr/bin/python (as root user)
-npm install
