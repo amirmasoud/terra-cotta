@@ -64,7 +64,7 @@ export default {
   },
 
   async asyncData({ $axios }) {
-    const menuList = await $axios.$get('/admin/menu-list')
+    const menuList = await $axios.$get('/config/menu-list')
     const tags = await $axios.$get('/admin/tags')
     const categories = await $axios.$get('/admin/categories')
     const keys = await $axios.$get('/admin/keys')
