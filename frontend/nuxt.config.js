@@ -29,7 +29,7 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: ['~/plugins/axios'],
+  plugins: [],
   /*
    ** Nuxt.js dev-modules
    */
@@ -55,25 +55,7 @@ export default {
   modules: [
     '@nuxtjs/apollo',
     '@nuxtjs/pwa',
-    [
-      'nuxt-i18n',
-      {
-        vueI18nLoader: true,
-        defaultLocale: 'en',
-        locales: [
-          { name: 'English', code: 'en', file: 'en.js' },
-          { name: 'فارسی', code: 'fa', file: 'fa.js' },
-        ],
-        lazy: true,
-        langDir: 'lang/',
-        vuex: {
-          moduleName: 'i18n',
-          syncLocale: true,
-          syncMessages: true,
-          syncRouteParams: true,
-        },
-      },
-    ],
+    'nuxt-i18n',
   ],
 
   /*
@@ -99,4 +81,13 @@ export default {
       },
     },
   },
+  i18n: {
+    locales: [
+      { name: 'English', code: 'en', file: 'en.js' },
+      { name: 'فارسی', code: 'fa', file: 'fa.js' },
+    ],
+    defaultLocale: 'en',
+    lazy: true,
+    langDir: 'lang/'
+  }
 }
