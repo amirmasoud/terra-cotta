@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\belongsToMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Tag extends Model
 {
@@ -14,7 +14,7 @@ class Tag extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'color'
+        'name', 'color', 'user_id'
     ];
 
     /**
@@ -29,9 +29,9 @@ class Tag extends Model
     /**
      * A tag belongs to many key.
      *
-     * @return belongsToMany
+     * @return BelongsToMany
      */
-    public function keys(): belongsToMany
+    public function keys(): BelongsToMany
     {
         return $this->belongsToMany(Key::class)->withTimestamps();
     }

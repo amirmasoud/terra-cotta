@@ -2,9 +2,6 @@
 	"folders": [
 		{
 			"path": "."
-		},
-		{
-			"path": "../../Downloads/laravel-nova-fb641afddcd23265e1a31754cd16a6c942f0f7ba"
 		}
 	],
 	"settings": {

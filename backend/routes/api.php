@@ -1,7 +1,15 @@
 <?php
 
+use Pepper\HasEndpoint;
+use Pepper\ResourceQuery;
+use Pepper\ResourceType;
+use App\Category;
+use App\GraphQL\Queries\UserSampleQuery;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
+use Rebing\GraphQL\Support\Facades\GraphQL;
+use HaydenPierce\ClassFinder\ClassFinder;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,9 +22,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Route::get('test', function () {
+//     dd(forward_static_call(['Pepper\Query', 'boot']));
+// });
+
 Route::get('/sanctum/csrf-cookie', '\Laravel\Sanctum\Http\Controllers\CsrfCookieController@show')->name('csrf-cookie');
 
-Route::get('/admin/menu-list', 'MenuController')->name('menu');
+Route::get('/config/menu-list', 'MenuController')->name('menu');
 
 Route::get('/admin/{resource}', 'Resource\IndexController')->name('resource.index');
 Route::post('/admin/{resource}', 'Resource\CreateController')->name('resource.create');
