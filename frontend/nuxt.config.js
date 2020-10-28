@@ -1,5 +1,3 @@
-require('dotenv').config()
-
 export default {
   mode: 'universal',
   components: true,
@@ -15,10 +13,10 @@ export default {
       {
         hid: 'description',
         name: 'description',
-        content: process.env.APP_NAME
-      }
+        content: process.env.APP_NAME,
+      },
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
+    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },
   /*
    ** Customize the progress-bar color
@@ -42,23 +40,20 @@ export default {
     '@nuxtjs/stylelint-module',
     // Doc: https://github.com/nuxt-community/nuxt-tailwindcss
     '@nuxtjs/tailwindcss',
-    // Doc: https://github.com/nuxt-community/dotenv-module
-    '@nuxtjs/dotenv',
-    '@nuxt/components'
+    '@nuxt/components',
   ],
 
   components: [
     { path: '~/components/elements', prefix: 'tc' },
     { path: '~/components/partials', prefix: 'tc' },
-    { path: '~/components/svg', prefix: 'tc-svg' }
+    { path: '~/components/svg', prefix: 'tc-svg' },
   ],
 
   /*
    ** Nuxt.js modules
    */
   modules: [
-    // Doc: https://axios.nuxtjs.org/usage
-    '@nuxtjs/axios',
+    '@nuxtjs/apollo',
     '@nuxtjs/pwa',
     [
       'nuxt-i18n',
@@ -67,7 +62,7 @@ export default {
         defaultLocale: 'en',
         locales: [
           { name: 'English', code: 'en', file: 'en.js' },
-          { name: 'فارسی', code: 'fa', file: 'fa.js' }
+          { name: 'فارسی', code: 'fa', file: 'fa.js' },
         ],
         lazy: true,
         langDir: 'lang/',
@@ -75,10 +70,10 @@ export default {
           moduleName: 'i18n',
           syncLocale: true,
           syncMessages: true,
-          syncRouteParams: true
-        }
-      }
-    ]
+          syncRouteParams: true,
+        },
+      },
+    ],
   ],
 
   /*
@@ -88,6 +83,20 @@ export default {
     /*
      ** You can extend webpack config here
      */
-    extend(config, ctx) {}
-  }
+    extend(config, ctx) {},
+  },
+  publicRuntimeConfig: {
+    appName: process.env.APP_NAME || 'Terra-Cotta',
+    baseUrl: process.env.BASE_URL || 'http://localhost:3000',
+    gqlUrl: process.env.GQL_URL || 'http://localhost:8000/graphql',
+    appLocale: process.env.LOCALE || 'en',
+  },
+  privateRuntimeConfig: {},
+  apollo: {
+    clientConfigs: {
+      default: {
+        httpEndpoint: process.env.GQL_URL || 'http://localhost:8000/graphql',
+      },
+    },
+  },
 }
