@@ -100,7 +100,7 @@ return [
     |
     */
     'auth' => [
-        'disabled' => true,
+        'disabled' => false,
         // default user model to look at
         'model' => \App\Models\User::class,
         'available' => [
