@@ -2,18 +2,22 @@
 
 namespace App;
 
+// use Pepper\HasEndpoint;
+// use Pepper\InteractsWithEndpoint;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\belongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Category extends Model
 {
+    // use InteractsWithEndpoint;
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name', 'icon_id',
+        'name', 'icon_id', 'user_id'
     ];
 
     /**
@@ -33,5 +37,10 @@ class Category extends Model
     public function keys()
     {
         return $this->belongsToMany(Key::class)->withTimestamps();
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 }

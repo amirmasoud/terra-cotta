@@ -1,7 +1,15 @@
 <?php
 
+use Pepper\HasEndpoint;
+use Pepper\ResourceQuery;
+use Pepper\ResourceType;
+use App\Category;
+use App\GraphQL\Queries\UserSampleQuery;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
+use Rebing\GraphQL\Support\Facades\GraphQL;
+use HaydenPierce\ClassFinder\ClassFinder;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +21,10 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+// Route::get('test', function () {
+//     dd(forward_static_call(['Pepper\Query', 'boot']));
+// });
 
 Route::get('/sanctum/csrf-cookie', '\Laravel\Sanctum\Http\Controllers\CsrfCookieController@show')->name('csrf-cookie');
 

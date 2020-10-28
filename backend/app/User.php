@@ -2,6 +2,8 @@
 
 namespace App;
 
+// use Pepper\HasEndpoint;
+// use Pepper\InteractsWithEndpoint;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -19,6 +21,14 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name', 'email', 'password',
+    ];
+
+    protected $hiddenFields = [
+        'id', 'created_at'
+    ];
+
+    protected $hiddenRelations = [
+        'tags'
     ];
 
     /**
