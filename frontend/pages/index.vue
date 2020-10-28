@@ -6,7 +6,7 @@
     <div class="overflow-scroll ml-0 md:ml-64">
       <div class="flex flex-wrap h-16 pt-13 bg-gray-300 border border-gray-400">
         <div
-          class="flex items-center w-full flex-wrap justify-between items-center px-2 max-w-screen-lg mx-auto"
+          class="flex items-center w-full flex-wrap justify-between px-2 max-w-screen-lg mx-auto"
         >
           <tc-button icon="plus">New user</tc-button>
           <input

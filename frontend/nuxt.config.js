@@ -29,7 +29,9 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [],
+  plugins: [
+    '~/plugins/axios'
+  ],
   /*
    ** Nuxt.js dev-modules
    */
@@ -56,6 +58,7 @@ export default {
     '@nuxtjs/apollo',
     '@nuxtjs/pwa',
     'nuxt-i18n',
+    '@nuxtjs/axios'
   ],
 
   /*
@@ -70,14 +73,22 @@ export default {
   publicRuntimeConfig: {
     appName: process.env.APP_NAME || 'Terra-Cotta',
     baseUrl: process.env.BASE_URL || 'http://localhost:3000',
-    gqlUrl: process.env.GQL_URL || 'http://localhost:8000/graphql',
+    apiUrl: process.env.API_URL || 'http://localhost:8000/api',
+    gqlUrl: process.env.GQL_URL,
     appLocale: process.env.LOCALE || 'en',
+    apollo: {
+      clientConfigs: {
+        default: {
+          httpEndpoint: process.env.GQL_URL
+        }
+      }
+    }
   },
   privateRuntimeConfig: {},
   apollo: {
     clientConfigs: {
       default: {
-        httpEndpoint: process.env.GQL_URL || 'http://localhost:8000/graphql',
+        httpEndpoint: 'http://localhost:8000/graphql',
       },
     },
   },
@@ -89,5 +100,8 @@ export default {
     defaultLocale: 'en',
     lazy: true,
     langDir: 'lang/'
-  }
+  },
+  // axios: {
+  //   baseURL: 'http://localhost:8000/api',
+  // },
 }
