@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Settings;
 
-use App\Category;
+use App\Models\Category;
 use App\Contracts\Content;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Settings\Category\IndexRequest;
@@ -59,7 +59,7 @@ class CategoryController extends Controller
     /**
      * Show an category.
      *
-     * @param  \App\Category $category
+     * @param  \App\Models\Category $category
      * @return \App\Http\Resources\Category
      */
     public function show(Category $category)
@@ -70,7 +70,7 @@ class CategoryController extends Controller
     /**
      * Show single category for edit.
      *
-     * @param  \App\Category $category
+     * @param  \App\Models\Category $category
      * @return \App\Http\Resources\Category
      */
     public function edit(Category $category)
@@ -82,7 +82,7 @@ class CategoryController extends Controller
      * Update an category.
      *
      * @param  \App\Http\Requests\Settings\Category\UpdateRequest $request
-     * @param  \App\Category $category
+     * @param  \App\Models\Category $category
      * @return Boolean
      */
     public function update(UpdateRequest $request, Category $category)
@@ -93,7 +93,7 @@ class CategoryController extends Controller
     /**
      * Destroy/delete an category.
      *
-     * @param  \App\Category $category
+     * @param  \App\Models\Category $category
      * @return Boolean
      */
     public function destroy(Category $category)

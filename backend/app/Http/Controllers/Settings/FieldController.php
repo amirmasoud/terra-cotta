@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Settings;
 
-use App\Field;
+use App\Models\Field;
 use App\Contracts\Content;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Settings\Field\CreateRequest;
@@ -57,7 +57,7 @@ class FieldController extends Controller
     /**
      * Show an field.
      *
-     * @param  \App\Field $field
+     * @param  \App\Models\Field $field
      * @return JSON
      */
     public function show(Field $field)
@@ -68,7 +68,7 @@ class FieldController extends Controller
     /**
      * Show single field for edit.
      *
-     * @param  \App\Field $field
+     * @param  \App\Models\Field $field
      * @return JSON
      */
     public function edit(Field $field)
@@ -80,7 +80,7 @@ class FieldController extends Controller
      * Update an field.
      *
      * @param  \App\Http\Requests\Settings\Field\UpdateRequest $request
-     * @param  \App\Field $field
+     * @param  \App\Models\Field $field
      * @return JSON
      */
     public function update(UpdateRequest $request, Field $field)
@@ -91,7 +91,7 @@ class FieldController extends Controller
     /**
      * Destroy/delete an field.
      *
-     * @param  \App\Field $field
+     * @param  \App\Models\Field $field
      * @return JSON
      */
     public function destroy(Field $field)

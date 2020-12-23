@@ -2,11 +2,11 @@
 
 namespace Tests\Feature;
 
-use App\Tag;
+use App\Models\Tag;
 use App\Type;
 use App\Safe;
-use App\User;
-use App\Category;
+use App\Models\User;
+use App\Models\Category;
 use Tests\TestCase;
 use Tests\Traits\Resource;
 use Tests\Interfaces\Resource as ResourceInterface;
@@ -18,10 +18,10 @@ class SafeTest extends TestCase implements ResourceInterface
     /** @var \App\Safe */
     protected $safe;
 
-    /** @var \App\Category */
+    /** @var \App\Models\Category */
     protected $category;
 
-    /** @var \App\Tag */
+    /** @var \App\Models\Tag */
     protected $tag;
 
     /** @var \App\Type */

@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Tag;
+use App\Models\Tag;
 use Tests\TestCase;
 use Tests\Traits\Resource;
 use Tests\Interfaces\Resource as ResourceInterface;
@@ -11,7 +11,7 @@ class TagTest extends TestCase implements ResourceInterface
 {
     use Resource;
 
-    /** @var \App\Tag */
+    /** @var \App\Models\Tag */
     protected $tag;
 
     /**
