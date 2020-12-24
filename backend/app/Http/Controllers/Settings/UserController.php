@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Settings;
 
-use App\User;
+use App\Models\User;
 use App\Contracts\Content;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -67,7 +67,7 @@ class UserController extends Controller
     /**
      * Show an User.
      *
-     * @param  \App\User $user
+     * @param  \App\Models\User $user
      * @return \App\Http\Resources\User
      */
     public function show(User $user)
@@ -78,7 +78,7 @@ class UserController extends Controller
     /**
      * Show single User for edit.
      *
-     * @param  \App\User $user
+     * @param  \App\Models\User $user
      * @return \App\Http\Resources\User
      */
     public function edit(User $user)
@@ -90,7 +90,7 @@ class UserController extends Controller
      * Update an User.
      *
      * @param  \App\Http\Requests\Settings\User\UpdateRequest $request
-     * @param  \App\User $user
+     * @param  \App\Models\User $user
      * @return Boolean
      */
     public function update(UpdateRequest $request, User $user)
@@ -107,7 +107,7 @@ class UserController extends Controller
     /**
      * Destroy/delete an User.
      *
-     * @param  \App\User $user
+     * @param  \App\Models\User $user
      * @return Boolean
      */
     public function destroy(User $user)

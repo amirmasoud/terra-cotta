@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Tag;
-use App\Type;
-use App\Key;
-use App\Field;
-use App\Category;
+use App\Models\Tag;
+use App\Models\Type;
+use App\Models\Key;
+use App\Models\Field;
+use App\Models\Category;
 use App\Contracts\Content;
 use App\Http\Requests\Key\IndexRequest;
 use App\Http\Requests\Key\CreateRequest;
@@ -73,7 +73,7 @@ class KeyController extends Controller
     /**
      * Show an key.
      *
-     * @param  \App\Key $key
+     * @param  \App\Models\Key $key
      * @return \App\Http\Resources\Key
      */
     public function show(Key $key)
@@ -84,7 +84,7 @@ class KeyController extends Controller
     /**
      * Show single key for edit.
      *
-     * @param  \App\Key $key
+     * @param  \App\Models\Key $key
      * @return \App\Http\Resources\Key
      */
     public function edit(Key $key)
@@ -96,7 +96,7 @@ class KeyController extends Controller
      * Update an key.
      *
      * @param  \App\Http\Requests\Keys\UpdateRequest $request
-     * @param  \App\Key $key
+     * @param  \App\Models\Key $key
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateRequest $request, Key $key)
@@ -118,7 +118,7 @@ class KeyController extends Controller
     /**
      * Destroy/delete an key.
      *
-     * @param  \App\Key $key
+     * @param  \App\Models\Key $key
      * @return \Illuminate\Http\Response
      */
     public function destroy(Key $key)

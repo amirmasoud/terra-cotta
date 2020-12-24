@@ -2,7 +2,7 @@
 
 namespace Tests;
 
-use App\User;
+use App\Models\User;
 use Laravel\Dusk\Page;
 use Laravel\Dusk\Browser;
 use Tests\Browser\Interfaces\Constants;

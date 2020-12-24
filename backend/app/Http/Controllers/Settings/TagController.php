@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Settings;
 
-use App\Tag;
+use App\Models\Tag;
 use App\Contracts\Content;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Settings\Tag\IndexRequest;
@@ -60,7 +60,7 @@ class TagController extends Controller
     /**
      * Show an tag.
      *
-     * @param  \App\Tag $tag
+     * @param  \App\Models\Tag $tag
      * @return JSON
      */
     public function show(Tag $tag)
@@ -71,7 +71,7 @@ class TagController extends Controller
     /**
      * Show single tag for edit.
      *
-     * @param  \App\Tag $tag
+     * @param  \App\Models\Tag $tag
      * @return JSON
      */
     public function edit(Tag $tag)
@@ -83,7 +83,7 @@ class TagController extends Controller
      * Update an tag.
      *
      * @param  \App\Http\Requests\Settings\Tag\UpdateRequest $request
-     * @param  \App\Tag $tag
+     * @param  \App\Models\Tag $tag
      * @return JSON
      */
     public function update(UpdateRequest $request, Tag $tag)
@@ -94,7 +94,7 @@ class TagController extends Controller
     /**
      * Destroy/delete an tag.
      *
-     * @param  \App\Tag $tag
+     * @param  \App\Models\Tag $tag
      * @return JSON
      */
     public function destroy(Tag $tag)

@@ -3,7 +3,7 @@
 namespace Tests\Feature;
 
 use App\Icon;
-use App\Category;
+use App\Models\Category;
 use Tests\TestCase;
 use Tests\Traits\Resource;
 use Tests\Interfaces\Resource as ResourceInterface;
@@ -13,7 +13,7 @@ class CategoryTest extends TestCase implements ResourceInterface
     use Resource;
 
     /**
-     * @var \App\Category
+     * @var \App\Models\Category
      */
     protected $category;
 

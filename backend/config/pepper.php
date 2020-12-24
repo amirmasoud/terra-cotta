@@ -29,7 +29,7 @@ return [
         |
         */
 
-        'models' => 'App',
+        'models' => 'App\Models',
     ],
 
     /*
@@ -100,7 +100,7 @@ return [
     |
     */
     'auth' => [
-        'disabled' => false,
+        'disabled' => true,
         // default user model to look at
         'model' => \App\Models\User::class,
         'available' => [

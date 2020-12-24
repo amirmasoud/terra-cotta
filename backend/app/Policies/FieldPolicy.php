@@ -2,7 +2,7 @@
 
 namespace App\Policies;
 
-use App\Field;
+use App\Models\Field;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class FieldPolicy

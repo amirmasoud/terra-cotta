@@ -2,7 +2,7 @@
 
 namespace Tests\Browser\Components;
 
-use App\User;
+use App\Models\User;
 use Laravel\Dusk\Browser;
 use Tests\Browser\Pages\Home;
 use Tests\Browser\Pages\Register;

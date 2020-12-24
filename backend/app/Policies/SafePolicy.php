@@ -2,7 +2,7 @@
 
 namespace App\Policies;
 
-use App\Key;
+use App\Models\Key;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class KeyPolicy

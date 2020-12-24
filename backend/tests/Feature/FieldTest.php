@@ -6,7 +6,7 @@ use App\Icon;
 use App\Type;
 use App\Safe;
 use App\Group;
-use App\Field;
+use App\Models\Field;
 use Tests\TestCase;
 use Tests\Traits\Resource;
 use Tests\Interfaces\Resource as ResourceInterface;
@@ -16,7 +16,7 @@ class FieldTest extends TestCase implements ResourceInterface
     use Resource;
 
     /**
-     * @var \App\Field
+     * @var \App\Models\Field
      */
     protected $field;
 

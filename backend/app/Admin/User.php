@@ -6,7 +6,7 @@ use App\TerraCotta;
 
 class User extends TerraCotta
 {
-    public static $model = '\App\User';
+    public static $model = '\App\Models\User';
 
     public static function priority(): int
     {

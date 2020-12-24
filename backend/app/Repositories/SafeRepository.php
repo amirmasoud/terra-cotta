@@ -2,11 +2,11 @@
 
 namespace App\Repositories;
 
-use App\Tag;
+use App\Models\Tag;
 use App\Type;
-use App\Key;
-use App\Field;
-use App\Category;
+use App\Models\Key;
+use App\Models\Field;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class KeyRepository
@@ -15,8 +15,8 @@ class KeyRepository
      * Attach categories.
      *
      * @param  \Illuminate\Http\Request $request
-     * @param  \App\Key $key
-     * @return \App\Key
+     * @param  \App\Models\Key $key
+     * @return \App\Models\Key
      */
     public function attachCategories(Request $request, Key $key): Key
     {
@@ -39,8 +39,8 @@ class KeyRepository
      * Attach tags.
      *
      * @param  \Illuminate\Http\Request $request
-     * @param  \App\Key $key
-     * @return \App\Key
+     * @param  \App\Models\Key $key
+     * @return \App\Models\Key
      */
     public function attachTags(Request $request, Key $key): Key
     {
@@ -63,8 +63,8 @@ class KeyRepository
      * Attach groups.
      *
      * @param  \Illuminate\Http\Request $request
-     * @param  \App\Key $key
-     * @return \App\Key
+     * @param  \App\Models\Key $key
+     * @return \App\Models\Key
      */
     public function attachGroupsAndFields(Request $request, Key $key): Key
     {
@@ -91,8 +91,8 @@ class KeyRepository
      * Sync categories.
      *
      * @param  \Illuminate\Http\Request $request
-     * @param  \App\Key $key
-     * @return \App\Key
+     * @param  \App\Models\Key $key
+     * @return \App\Models\Key
      */
     public function syncCategories(Request $request, Key $key): Key
     {
@@ -118,8 +118,8 @@ class KeyRepository
      * Sync tags.
      *
      * @param  \Illuminate\Http\Request $request
-     * @param  \App\Key $key
-     * @return \App\Key
+     * @param  \App\Models\Key $key
+     * @return \App\Models\Key
      */
     public function syncTags(Request $request, Key $key): Key
     {
@@ -145,8 +145,8 @@ class KeyRepository
      * Sync groups and fields.
      *
      * @param  \Illuminate\Http\Request $request
-     * @param  \App\Key $key
-     * @return \App\Key
+     * @param  \App\Models\Key $key
+     * @return \App\Models\Key
      */
     public function syncGroupsAndFields(Request $request, Key $key): Key
     {

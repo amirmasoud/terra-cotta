@@ -8,7 +8,7 @@ use Illuminate\Contracts\Console\Kernel;
 trait CreatesApplication
 {
     /**
-     * @var \App\User
+     * @var \App\Models\User
      */
     protected $user;
 

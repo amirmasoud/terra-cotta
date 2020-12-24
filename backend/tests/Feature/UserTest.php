@@ -3,7 +3,7 @@
 namespace Tests\Feature;
 
 use App\Icon;
-use App\User;
+use App\Models\User;
 use Tests\TestCase;
 use Tests\Traits\Resource;
 use Tests\Interfaces\Resource as ResourceInterface;
