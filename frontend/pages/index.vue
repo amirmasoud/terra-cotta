@@ -57,12 +57,6 @@
 
 <script>
 export default {
-  computed: {
-    availableLocales() {
-      return this.$i18n.locales.filter((i) => i.code !== this.$i18n.locale)
-    }
-  },
-
   async asyncData({ $axios }) {
     const menuList = await $axios.$get('/config/menu-list')
     const tags = await $axios.$get('/admin/tags')
@@ -72,15 +66,21 @@ export default {
   },
 
   data: () => ({
-    modalShowing: false
+    modalShowing: false,
   }),
+
+  computed: {
+    availableLocales() {
+      return this.$i18n.locales.filter((i) => i.code !== this.$i18n.locale)
+    },
+  },
 
   methods: {
     setLocale() {
       console.log(this.app)
       // this.$store.state.i18n.setLocale('fa')
-    }
-  }
+    },
+  },
 }
 </script>
 

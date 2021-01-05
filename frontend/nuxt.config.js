@@ -1,7 +1,4 @@
 export default {
-  mode: 'universal',
-  components: true,
-
   /*
    ** Headers of the page
    */
@@ -29,9 +26,7 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [
-    '~/plugins/axios'
-  ],
+  plugins: [],
   /*
    ** Nuxt.js dev-modules
    */
@@ -54,12 +49,7 @@ export default {
   /*
    ** Nuxt.js modules
    */
-  modules: [
-    '@nuxtjs/apollo',
-    '@nuxtjs/pwa',
-    'nuxt-i18n',
-    '@nuxtjs/axios'
-  ],
+  modules: ['@nuxtjs/apollo', '@nuxtjs/pwa', 'nuxt-i18n'],
 
   /*
    ** Build configuration
@@ -79,10 +69,10 @@ export default {
     apollo: {
       clientConfigs: {
         default: {
-          httpEndpoint: process.env.GQL_URL
-        }
-      }
-    }
+          httpEndpoint: process.env.GQL_URL,
+        },
+      },
+    },
   },
   privateRuntimeConfig: {},
   apollo: {
@@ -99,7 +89,7 @@ export default {
     ],
     defaultLocale: 'en',
     lazy: true,
-    langDir: 'lang/'
+    langDir: 'lang/',
   },
   // axios: {
   //   baseURL: 'http://localhost:8000/api',
