@@ -18,6 +18,8 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->foreignIdFor(Tag::class)->constrained()->nullOnDelete()->cascadeOnUpdate();
+            $table->timestamp('starred_at')->nullable();
+            $table->timestamp('protected_at')->nullable();
             $table->timestamps();
         });
     }
