@@ -4,7 +4,6 @@ namespace Database\Factories;
 
 use App\Models\Tag;
 use App\Models\User;
-use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class TagFactory extends Factory
@@ -23,13 +22,10 @@ class TagFactory extends Factory
      */
     public function definition()
     {
-        $name = $this->faker->unique();
-        $slug = Str::slug($name);
-
         return [
-            'name' => "{'en': '$name'}",
+            'name' => $this->faker->unique()->name,
             'user_id' => User::factory(),
-            'slug' => "{'en': '$slug'}",
+            'slug' => $this->faker->slug(),
         ];
     }
 }

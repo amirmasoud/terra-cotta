@@ -2,8 +2,10 @@
 
 namespace Database\Factories;
 
+use App\Models\Tag;
 use App\Models\Team;
 use App\Models\User;
+use App\Models\Item;
 use App\Models\Field;
 use App\Enums\TagTypeEnum;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -69,27 +71,13 @@ class UserFactory extends Factory
         );
     }
 
-    /**
-     * Indicate that the user should have a folder.
-     *
-     * @return $this
-     */
-    public function withFolders()
+    public function withTagsAsFolder()
     {
-        if (! Features::hasTeamFeatures()) {
-            return $this->state([]);
-        }
-
         return $this->has(
-            Field::factory()
+            Tag::factory()
                 ->state(function (array $attributes, User $user) {
-                    return [
-                        'name' => $user->name.'\'s Folder 1',
-                        'user_id' => $user->id,
-                        'type' => TagTypeEnum::FOLDER->value,
-                    ];
-                }),
-            'fields'
+                    return ['name' => $user->name.'\'s Folder', 'user_id' => $user->id];
+                })
         );
     }
 }

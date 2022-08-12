@@ -20,6 +20,7 @@ return new class extends Migration
             $table->text('name')->nullable();
             $table->text('value')->nullable();
             $table->string('type')->default(FieldTypeEnum::TEXT->value);
+            $table->softDeletes();
             $table->timestamps();
         });
     }
