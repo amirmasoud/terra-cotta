@@ -4,6 +4,8 @@ namespace Database\Factories;
 
 use App\Models\Team;
 use App\Models\User;
+use App\Models\Field;
+use App\Enums\TagTypeEnum;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 use Laravel\Jetstream\Features;
@@ -64,6 +66,30 @@ class UserFactory extends Factory
                     return ['name' => $user->name.'\'s Team', 'user_id' => $user->id, 'personal_team' => true];
                 }),
             'ownedTeams'
+        );
+    }
+
+    /**
+     * Indicate that the user should have a folder.
+     *
+     * @return $this
+     */
+    public function withFolders()
+    {
+        if (! Features::hasTeamFeatures()) {
+            return $this->state([]);
+        }
+
+        return $this->has(
+            Field::factory()
+                ->state(function (array $attributes, User $user) {
+                    return [
+                        'name' => $user->name.'\'s Folder 1',
+                        'user_id' => $user->id,
+                        'type' => TagTypeEnum::FOLDER->value,
+                    ];
+                }),
+            'fields'
         );
     }
 }
