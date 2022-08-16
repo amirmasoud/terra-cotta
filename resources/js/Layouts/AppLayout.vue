@@ -50,7 +50,13 @@ const logout = () => {
                             <!-- Navigation Links -->
                             <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                                 <JetNavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                                    Dashboard
+                                    All Items
+                                </JetNavLink>
+                                <JetNavLink :href="route('dashboard')" :active="route().current('dashboard')">
+                                    Starred
+                                </JetNavLink>
+                                <JetNavLink :href="route('dashboard')" :active="route().current('dashboard')">
+                                    Bin
                                 </JetNavLink>
                             </div>
                         </div>
@@ -209,7 +215,13 @@ const logout = () => {
                 <div :class="{'block': showingNavigationDropdown, 'hidden': ! showingNavigationDropdown}" class="sm:hidden">
                     <div class="pt-2 pb-3 space-y-1">
                         <JetResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                            Dashboard
+                            All Items
+                        </JetResponsiveNavLink>
+                        <JetResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
+                            Starred
+                        </JetResponsiveNavLink>
+                        <JetResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
+                            Bin
                         </JetResponsiveNavLink>
                     </div>
 
